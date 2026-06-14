@@ -15,7 +15,7 @@
 
   // ⬇️ RSVP delivery: paste your free Web3Forms access key here.
   //    Get one in 10 seconds at https://web3forms.com (just enter the email you want RSVPs sent to).
-  var WEB3FORMS_ACCESS_KEY = "PASTE-YOUR-WEB3FORMS-ACCESS-KEY-HERE";
+  var WEB3FORMS_ACCESS_KEY = "ec3dc208-3441-4467-b122-bdffd0b126c5";
 
   function injectStyles() {
     var css = [
