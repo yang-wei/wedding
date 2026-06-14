@@ -339,12 +339,12 @@
           "<div class='wt-dress'>" +
             "<div class='wt-dress-row'>" +
               "<span class='wt-swatch' style='background:#1c1c1c'></span>" +
-              "<div class='wt-dress-label'><strong>Gents</strong><br>Black suits <small>#1C1C1C</small></div>" +
+              "<div class='wt-dress-label'><strong>Gents</strong><br>Black suits</div>" +
             "</div>" +
             "<div class='wt-dress-row'>" +
               "<span class='wt-swatch' style='background:#e0cba8'></span>" +
               "<span class='wt-swatch' style='background:#8a6d4b'></span>" +
-              "<div class='wt-dress-label'><strong>Ladies</strong><br>Beige &amp; brown <small>#E0CBA8 \u00b7 #8A6D4B</small></div>" +
+              "<div class='wt-dress-label'><strong>Ladies</strong><br>Beige or brown</div>" +
             "</div>" +
           "</div>",
       },
