@@ -4,19 +4,82 @@
    gallery in the blue "Mark your calendars" band. Photos come from /images. */
 (function () {
   var PHOTOS = [
-    "images/gallery-1.jpg",
-    "images/gallery-2.jpg",
-    "images/gallery-3.jpg",
-    "images/gallery-4.jpg",
-    "images/gallery-5.jpg",
-    "images/gallery-6.jpg",
-    "images/gallery-7.jpg",
+    "images/photo-053.jpg",
+    "images/photo-014.jpg",
+    "images/photo-015.jpg",
+    "images/photo-059.jpg",
+    "images/photo-016.jpg",
+    "images/photo-036.jpg",
+    "images/photo-066.jpg",
+    "images/photo-023.jpg",
+    "images/photo-032.jpg",
+    "images/photo-038.jpg",
+    "images/photo-004.jpg",
+    "images/photo-064.jpg",
+    "images/photo-049.jpg",
+    "images/photo-061.jpg",
+    "images/photo-027.jpg",
+    "images/photo-008.jpg",
+    "images/photo-046.jpg",
+    "images/photo-026.jpg",
+    "images/photo-001.jpg",
+    "images/photo-031.jpg",
+    "images/photo-003.jpg",
+    "images/photo-002.jpg",
+    "images/photo-043.jpg",
+    "images/photo-006.jpg",
+    "images/photo-035.jpg",
+    "images/photo-060.jpg",
+    "images/photo-068.jpg",
+    "images/photo-028.jpg",
+    "images/photo-024.jpg",
+    "images/photo-056.jpg",
+    "images/photo-044.jpg",
+    "images/photo-018.jpg",
+    "images/photo-011.jpg",
+    "images/photo-058.jpg",
+    "images/photo-020.jpg",
+    "images/photo-041.jpg",
+    "images/photo-047.jpg",
+    "images/photo-019.jpg",
+    "images/photo-025.jpg",
+    "images/photo-063.jpg",
+    "images/photo-005.jpg",
+    "images/photo-055.jpg",
+    "images/photo-065.jpg",
+    "images/photo-052.jpg",
+    "images/photo-042.jpg",
+    "images/photo-045.jpg",
+    "images/photo-037.jpg",
+    "images/photo-030.jpg",
+    "images/photo-069.jpg",
+    "images/photo-007.jpg",
+    "images/photo-009.jpg",
+    "images/photo-039.jpg",
+    "images/photo-034.jpg",
+    "images/photo-051.jpg",
+    "images/photo-013.jpg",
+    "images/photo-062.jpg",
+    "images/photo-029.jpg",
+    "images/photo-012.jpg",
+    "images/photo-050.jpg",
+    "images/photo-067.jpg",
+    "images/photo-040.jpg",
+    "images/photo-010.jpg",
+    "images/photo-017.jpg",
+    "images/photo-054.jpg",
+    "images/photo-057.jpg",
+    "images/photo-070.jpg",
+    "images/photo-048.jpg",
+    "images/photo-033.jpg",
+    "images/photo-022.jpg",
+    "images/photo-021.jpg",
   ];
 
   // ⬇️ RSVP delivery: paste your Google Apps Script Web App URL here.
   //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
   //    and emails the guest a confirmation. The URL ends in /exec.
-  var RSVP_ENDPOINT = "PASTE-YOUR-APPS-SCRIPT-WEB-APP-URL-HERE";
+  var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbxOD2lNkoY6uQZM6xOXSDLF6B2JgYI-WndJOWExRMIuYlaYTKe9VJeFHgMc-vLfxMZvqg/exec";
 
   function injectStyles() {
     var css = [
@@ -75,6 +138,7 @@
       "#wedParty .wp-row input::placeholder{color:rgba(254,250,233,.6)}",
       "#wedParty .wp-row input:focus{outline:none;border-color:#fefae9}",
       "#wedParty .wp-remove{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(254,250,233,.55);background:transparent;color:#fefae9;cursor:pointer;font-size:1.1rem;line-height:1}",
+      "#wedParty .wp-remove-spacer{flex:0 0 auto;width:36px}",
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
@@ -204,16 +268,22 @@
     if (rsvpFor) { var l0 = rsvpFor.closest("label"); if (l0) l0.remove(); }
 
     // optional flight-code fields, cloned from the Name field so styling matches (clone before removing it)
-    function makeField(labelText, fieldName, ph) {
+    function makeField(labelText, fieldName, ph, type) {
       if (!nameLabel) return null;
       var c = nameLabel.cloneNode(true);
       var p = c.querySelector("p"); if (p) p.textContent = labelText;
       var inp = c.querySelector("input");
-      if (inp) { inp.name = fieldName; inp.placeholder = ph; inp.value = ""; inp.required = false; inp.removeAttribute("required"); }
+      if (inp) {
+        inp.name = fieldName; inp.value = ""; inp.required = false; inp.removeAttribute("required");
+        if (type) { inp.type = type; inp.removeAttribute("placeholder"); inp.style.colorScheme = "dark"; }
+        else { inp.placeholder = ph; }
+      }
       return c;
     }
-    var fa = makeField("Arrival flight \u2014 number, date & time (optional)", "Flight arrival code", "e.g. AK6293 \u00b7 Fri 13 Feb \u00b7 3:40pm");
-    var fr = makeField("Return flight \u2014 number, date & time (optional)", "Flight return code", "e.g. AK6296 \u00b7 Sun 15 Feb \u00b7 6:10pm");
+    var fa  = makeField("Arrival flight number (optional)", "Flight arrival code", "e.g. AK6293");
+    var faT = makeField("Arrival date & time (optional)", "Flight arrival time", "", "datetime-local");
+    var fr  = makeField("Return flight number (optional)", "Flight return code", "e.g. AK6296");
+    var frT = makeField("Return date & time (optional)", "Flight return time", "", "datetime-local");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -248,6 +318,12 @@
         rm.setAttribute("aria-label", "Remove guest"); rm.textContent = "×";
         rm.onclick = function () { row.remove(); };
         row.appendChild(rm);
+      } else {
+        // invisible spacer so the first row's fields match the width of rows that have a × button
+        var spacer = document.createElement("span");
+        spacer.className = "wp-remove-spacer";
+        spacer.setAttribute("aria-hidden", "true");
+        row.appendChild(spacer);
       }
       rows.appendChild(row);
       return nm;
@@ -265,8 +341,9 @@
     var emailInput = form.querySelector('input[name="Email"]');
     var emailLabel = emailInput ? emailInput.closest("label") : null;
     var anchor = emailLabel || party;
-    if (anchor && fa) anchor.parentNode.insertBefore(fa, anchor.nextSibling);
-    if (fa && fr) fa.parentNode.insertBefore(fr, fa.nextSibling);
+    [fa, faT, fr, frT].forEach(function (node) {
+      if (node && anchor) { anchor.parentNode.insertBefore(node, anchor.nextSibling); anchor = node; }
+    });
 
     // hotel question: clone the existing checkbox group so styling matches, then
     // repurpose it as "where are you staying?" with St. Regis / Westin options.
