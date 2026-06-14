@@ -194,6 +194,7 @@
                document.querySelector('[data-framer-name="rsvp"] form');
     if (!form || form.getAttribute("data-wed-rsvp")) return;
     form.setAttribute("data-wed-rsvp", "1");
+    var rsvpDone = false; // set true once submitted, to silence the leave warning
 
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
@@ -211,8 +212,8 @@
       if (inp) { inp.name = fieldName; inp.placeholder = ph; inp.value = ""; inp.required = false; inp.removeAttribute("required"); }
       return c;
     }
-    var fa = makeField("Flight arrival code (optional)", "Flight arrival code", "e.g. AK 6293");
-    var fr = makeField("Flight return code (optional)", "Flight return code", "e.g. AK 6296");
+    var fa = makeField("Arrival flight \u2014 number, date & time (optional)", "Flight arrival code", "e.g. AK6293 \u00b7 Fri 13 Feb \u00b7 3:40pm");
+    var fr = makeField("Return flight \u2014 number, date & time (optional)", "Flight return code", "e.g. AK6296 \u00b7 Sun 15 Feb \u00b7 6:10pm");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -306,7 +307,7 @@
       msg.textContent = ok
         ? "Yay, your RSVP is in! We can't wait to celebrate with you in Langkawi 🥂"
         : "Hmm, that didn't send. Please try again, or message us directly 💌";
-      if (ok) { form.style.display = "none"; }
+      if (ok) { rsvpDone = true; form.style.display = "none"; }
       else { var b = form.querySelector('button[type="submit"]'); if (b) { b.disabled = false; b.style.opacity = "1"; } }
       form.parentNode.insertBefore(msg, form.nextSibling);
       msg.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -339,6 +340,20 @@
       fetch(RSVP_ENDPOINT, { method: "POST", mode: "no-cors", body: params })
         .then(function () { showThanks(true); })
         .catch(function () { showThanks(false); });
+    });
+
+    // Guard against accidentally leaving before submitting — matters most for
+    // parties adding several guests. Warn only if they've started and not submitted.
+    window.addEventListener("beforeunload", function (e) {
+      if (rsvpDone) return;
+      var started = false;
+      [].forEach.call(form.querySelectorAll("input, textarea"), function (el) {
+        if (el.type === "checkbox" || el.type === "radio") { if (el.checked) started = true; }
+        else if (el.value && el.value.trim()) started = true;
+      });
+      if (!started) return;
+      e.preventDefault();
+      e.returnValue = "";
     });
   }
 
