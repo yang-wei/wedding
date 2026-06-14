@@ -79,6 +79,83 @@
   // ⬇️ RSVP delivery: paste your Google Apps Script Web App URL here.
   //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
   //    and emails the guest a confirmation. The URL ends in /exec.
+  // Hover captions, keyed by file name (order here does not matter).
+  // Fill in the place + your note for each photo, e.g.:
+  //   "images/photo-005.jpg": "Yen's 29th birthday @Bali",
+  // Leave a value as "" (empty) to show no caption for that photo.
+  var NOTES = {
+    "images/photo-001.jpg": "Ha Long Bay, Vietnam 🛶",
+    "images/photo-002.jpg": "Toyama, Japan 🏔️",
+    "images/photo-003.jpg": "",
+    "images/photo-004.jpg": "Summer Sonic 2023 🎶",
+    "images/photo-005.jpg": "",
+    "images/photo-006.jpg": "",
+    "images/photo-007.jpg": "Amsterdam canals 🇳🇱",
+    "images/photo-008.jpg": "Tokyo Tower 🗼",
+    "images/photo-009.jpg": "Windmills at Zaanse Schans 🇳🇱",
+    "images/photo-010.jpg": "Chiang Mai 🇹🇭",
+    "images/photo-011.jpg": "",
+    "images/photo-012.jpg": "",
+    "images/photo-013.jpg": "Twelve Apostles, Great Ocean Road 🇦🇺",
+    "images/photo-014.jpg": "Twelve Apostles, Great Ocean Road 🇦🇺",
+    "images/photo-015.jpg": "",
+    "images/photo-016.jpg": "Wedding dress shopping 👰",
+    "images/photo-017.jpg": "",
+    "images/photo-018.jpg": "",
+    "images/photo-019.jpg": "",
+    "images/photo-020.jpg": "Great Ocean Road 🇦🇺",
+    "images/photo-021.jpg": "Marina Bay Sands, Singapore 🇸🇬",
+    "images/photo-022.jpg": "Yosemite National Park 🇺🇸",
+    "images/photo-023.jpg": "The Louvre, Paris 🇫🇷",
+    "images/photo-024.jpg": "",
+    "images/photo-025.jpg": "Picnic by the Eiffel Tower 🇫🇷",
+    "images/photo-026.jpg": "Breakfast with an Eiffel Tower view 🇫🇷",
+    "images/photo-027.jpg": "Where the snow meets the sea — Suzu ❄️🌊",
+    "images/photo-028.jpg": "Kusama's Yellow Pumpkin, Naoshima 🎃",
+    "images/photo-029.jpg": "Mallorca 🇪🇸",
+    "images/photo-030.jpg": "",
+    "images/photo-031.jpg": "A little town in Spain 🇪🇸",
+    "images/photo-032.jpg": "",
+    "images/photo-033.jpg": "",
+    "images/photo-034.jpg": "AlUla desert, Saudi Arabia 🏜️",
+    "images/photo-035.jpg": "",
+    "images/photo-036.jpg": "AlUla desert, Saudi Arabia 🏜️",
+    "images/photo-037.jpg": "La Zambra Resort, Málaga 🇪🇸",
+    "images/photo-038.jpg": "",
+    "images/photo-039.jpg": "AlUla desert, Saudi Arabia 🏜️",
+    "images/photo-040.jpg": "AlUla desert, Saudi Arabia 🏜️",
+    "images/photo-041.jpg": "",
+    "images/photo-042.jpg": "AlUla desert, Saudi Arabia 🏜️",
+    "images/photo-043.jpg": "",
+    "images/photo-044.jpg": "",
+    "images/photo-045.jpg": "Kouan — our favourite campsite ⛺",
+    "images/photo-046.jpg": "Flying home from the proposal trip ✈️💍",
+    "images/photo-047.jpg": "Kochia season, Japan 🍂",
+    "images/photo-048.jpg": "Vorderer Gosausee, Austria 🇦🇹",
+    "images/photo-049.jpg": "",
+    "images/photo-050.jpg": "",
+    "images/photo-051.jpg": "",
+    "images/photo-052.jpg": "",
+    "images/photo-053.jpg": "The Bund, Shanghai 🇨🇳",
+    "images/photo-054.jpg": "Old Town Square, Prague 🇨🇿",
+    "images/photo-055.jpg": "A campsite somewhere in Nagano ⛺",
+    "images/photo-056.jpg": "",
+    "images/photo-057.jpg": "",
+    "images/photo-058.jpg": "",
+    "images/photo-059.jpg": "",
+    "images/photo-060.jpg": "",
+    "images/photo-061.jpg": "",
+    "images/photo-062.jpg": "Our secret cherry blossom spot 🌸",
+    "images/photo-063.jpg": "Cherry blossoms in Japan 🌸",
+    "images/photo-064.jpg": "",
+    "images/photo-065.jpg": "",
+    "images/photo-066.jpg": "Plaza de España, Seville 🇪🇸",
+    "images/photo-067.jpg": "Bali 🌴",
+    "images/photo-068.jpg": "",
+    "images/photo-069.jpg": "Ubud, Bali 🌴",
+    "images/photo-070.jpg": "Okinawa 🇯🇵",
+  };
+
   var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbxOD2lNkoY6uQZM6xOXSDLF6B2JgYI-WndJOWExRMIuYlaYTKe9VJeFHgMc-vLfxMZvqg/exec";
 
   function injectStyles() {
@@ -96,9 +173,14 @@
       "#wedGallery.is-dragging{cursor:grabbing}",
       "#wedGalleryTrack{display:flex;gap:22px;padding:0 clamp(20px,5vw,64px);overflow-x:auto;scrollbar-width:none}",
       "#wedGalleryTrack::-webkit-scrollbar{display:none}",
-      "#wedGalleryTrack img{flex:0 0 auto;width:clamp(190px,22vw,250px);height:clamp(240px,28vw,320px);object-fit:cover;border-radius:12px;pointer-events:none;box-shadow:0 14px 30px -16px rgba(0,0,0,.45)}",
-      "#wedGalleryTrack img:nth-child(odd){transform:rotate(-2deg)}",
-      "#wedGalleryTrack img:nth-child(even){transform:rotate(2deg)}",
+      "#wedGalleryTrack .wg-item{flex:0 0 auto;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 14px 30px -16px rgba(0,0,0,.45)}",
+      "#wedGalleryTrack .wg-item:nth-child(odd){transform:rotate(-2deg)}",
+      "#wedGalleryTrack .wg-item:nth-child(even){transform:rotate(2deg)}",
+      "#wedGalleryTrack .wg-item img{display:block;width:clamp(190px,22vw,250px);height:clamp(240px,28vw,320px);object-fit:cover;pointer-events:none}",
+      // hover caption (places + your note) over each photo
+      "#wedGalleryTrack .wg-cap{position:absolute;left:0;right:0;bottom:0;margin:0;padding:34px 14px 13px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.82rem;line-height:1.32;color:#fefae9;background:linear-gradient(to top,rgba(0,0,0,.82),rgba(0,0,0,.38) 55%,transparent);opacity:0;transition:opacity .25s ease;pointer-events:none}",
+      "#wedGalleryTrack .wg-item:hover .wg-cap{opacity:1}",
+      "#wedGallery.is-dragging .wg-cap{opacity:0!important}",
       "#wedGalleryHint{text-align:center;margin:22px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75}",
       // travel-info paper-note cards
       "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
@@ -159,12 +241,28 @@
     var track = document.createElement("div");
     track.id = "wedGalleryTrack";
     PHOTOS.forEach(function (src) {
+      var note = (NOTES[src] || "").trim();
+
+      var fig = document.createElement("figure");
+      fig.className = "wg-item";
+      fig.style.margin = "0";
+
       var img = new Image();
       img.src = src;
-      img.alt = "";
+      img.alt = note;
       img.draggable = false;
-      img.onerror = function () { img.remove(); }; // drop any missing file silently
-      track.appendChild(img);
+      img.onerror = function () { fig.remove(); }; // drop any missing file silently
+      fig.appendChild(img);
+
+      if (note) {
+        var cap = document.createElement("figcaption");
+        cap.className = "wg-cap";
+        cap.textContent = note;
+        fig.title = note; // native tooltip fallback (e.g. touch / no-hover)
+        fig.appendChild(cap);
+      }
+
+      track.appendChild(fig);
     });
 
     var hint = document.createElement("p");
