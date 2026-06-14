@@ -56,19 +56,23 @@ function doPost(e) {
     var welcome   = p["Welcome drinks"] ? "Yes" : "";
     var arrival   = p["Flight arrival code"] || "";
     var ret       = p["Flight return code"] || "";
+    var arrivalT  = p["Flight arrival time"] || "";
+    var retT      = p["Flight return time"] || "";
 
     // Header row, written once.
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(["Timestamp", "Email", "Guest name", "Dietary", "Party size",
-                       "Hotel", "Welcome dinner (Fri)", "Flight arrival", "Flight return"]);
+                       "Hotel", "Welcome dinner (Fri)",
+                       "Flight arrival", "Flight arrival time",
+                       "Flight return", "Flight return time"]);
     }
 
     // ONE ROW PER GUEST — shared fields repeat down the rows.
     if (guests.length === 0) {
-      sheet.appendRow([ts, email, "", "", partySize, hotel, welcome, arrival, ret]);
+      sheet.appendRow([ts, email, "", "", partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
     } else {
       guests.forEach(function (g) {
-        sheet.appendRow([ts, email, g.name, g.diet, partySize, hotel, welcome, arrival, ret]);
+        sheet.appendRow([ts, email, g.name, g.diet, partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
       });
     }
 
@@ -87,8 +91,8 @@ function doPost(e) {
         "  • Guests: " + guestSummary.join(", ") + "\n" +
         (hotel   ? "  • Staying at: " + hotel + "\n" : "") +
         (welcome ? "  • Joining the welcome dinner (Friday): Yes\n" : "") +
-        (arrival ? "  • Flight arrival: " + arrival + "\n" : "") +
-        (ret     ? "  • Flight return: " + ret + "\n" : "") +
+        (arrival || arrivalT ? "  • Flight arrival: " + [arrival, arrivalT].filter(String).join(", ") + "\n" : "") +
+        (ret || retT ? "  • Flight return: " + [ret, retT].filter(String).join(", ") + "\n" : "") +
         (hotel
           ? "\nWe've negotiated a group rate at your chosen hotel and will email " +
             "you a reservation link as soon as the hotel sends it through.\n"
@@ -111,8 +115,8 @@ function doPost(e) {
         "Guests: " + guestSummary.join("; ") + "\n" +
         "Hotel: " + (hotel || "(none selected)") + "\n" +
         "Welcome dinner: " + (welcome || "no") + "\n" +
-        "Flight arrival: " + arrival + "\n" +
-        "Flight return: " + ret + "\n");
+        "Flight arrival: " + [arrival, arrivalT].filter(String).join(", ") + "\n" +
+        "Flight return: " + [ret, retT].filter(String).join(", ") + "\n");
     }
 
     return ContentService.createTextOutput(JSON.stringify({ success: true }))
