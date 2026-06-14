@@ -13,9 +13,10 @@
     "images/gallery-7.jpg",
   ];
 
-  // ⬇️ RSVP delivery: paste your free Web3Forms access key here.
-  //    Get one in 10 seconds at https://web3forms.com (just enter the email you want RSVPs sent to).
-  var WEB3FORMS_ACCESS_KEY = "ec3dc208-3441-4467-b122-bdffd0b126c5";
+  // ⬇️ RSVP delivery: paste your Google Apps Script Web App URL here.
+  //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
+  //    and emails the guest a confirmation. The URL ends in /exec.
+  var RSVP_ENDPOINT = "PASTE-YOUR-APPS-SCRIPT-WEB-APP-URL-HERE";
 
   function injectStyles() {
     var css = [
@@ -269,12 +270,7 @@
     // strip Framer's honeypots and wire to Web3Forms
     [].forEach.call(form.querySelectorAll('input[aria-hidden="true"][tabindex="-1"]'), function (i) { i.remove(); });
     function hidden(n, v) { var i = document.createElement("input"); i.type = "hidden"; i.name = n; i.value = v; form.appendChild(i); return i; }
-    hidden("access_key", WEB3FORMS_ACCESS_KEY);
-    hidden("subject", "New wedding RSVP, Yen & Yang Wei 🎉");
-    hidden("from_name", "Yen & Yang Wei Wedding");
     var partySizeField = hidden("Party size", "1");
-    form.setAttribute("action", "https://api.web3forms.com/submit");
-    form.setAttribute("method", "POST");
 
     function showThanks(ok) {
       var msg = document.createElement("p");
@@ -300,15 +296,16 @@
       });
       partySizeField.value = String(rs.length);
       if (!form.checkValidity()) { form.reportValidity(); return; }
-      if (/PASTE-YOUR/.test(WEB3FORMS_ACCESS_KEY)) {
-        alert("RSVP isn't connected yet, add your Web3Forms access key near the top of enhance.js.");
+      if (/PASTE-YOUR/.test(RSVP_ENDPOINT)) {
+        alert("RSVP isn't connected yet, add your Apps Script Web App URL near the top of enhance.js.");
         return;
       }
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = ".6"; }
-      fetch("https://api.web3forms.com/submit", { method: "POST", body: new FormData(form) })
-        .then(function (r) { return r.json(); })
-        .then(function (j) { showThanks(!!j.success); })
+      // Apps Script replies with an opaque (no-cors) response, so we can't read it;
+      // the row is still written and the emails still send. Treat completion as success.
+      fetch(RSVP_ENDPOINT, { method: "POST", mode: "no-cors", body: new FormData(form) })
+        .then(function () { showThanks(true); })
         .catch(function () { showThanks(false); });
     });
   }
