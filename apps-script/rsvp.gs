@@ -1,6 +1,7 @@
 /**
  * Wedding RSVP backend — Google Apps Script.
- * Saves each RSVP to the bound Google Sheet AND emails the guest a confirmation.
+ * Writes ONE ROW PER GUEST to the bound Google Sheet AND emails the guest a
+ * confirmation. Also emails the couple a notification (your backup copy).
  *
  * ── ONE-TIME SETUP ──────────────────────────────────────────────────────────
  * 1. Create a Google Sheet (e.g. "Wedding RSVPs"). Do this from the Google
@@ -14,7 +15,7 @@
  *        Who has access:  Anyone
  *    Click Deploy, authorise the permissions it asks for, then copy the
  *    "Web app URL" (it ends in /exec).
- * 5. Paste that URL into enhance.js as RSVP_ENDPOINT.
+ * 5. Paste that URL into enhance.js as RSVP_ENDPOINT (or send it to Claude).
  *
  * When you change this script later: Deploy → Manage deployments → edit (pencil)
  * → Version: "New version" → Deploy. (The URL stays the same.)
@@ -34,46 +35,64 @@ var CONFIG = {
 
 function doPost(e) {
   var lock = LockService.getScriptLock();
-  lock.tryLock(10000); // avoid two submissions writing the same row
+  lock.tryLock(10000); // avoid two submissions writing at once
   try {
-    var p = (e && e.parameter) || {};
+    var p  = (e && e.parameter)  || {}; // single values
+    var pp = (e && e.parameters) || {}; // repeated values (e.g. multiple Hotel checkboxes)
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
 
-    // Collect the guest list: "Guest 1", "Guest 2", ... with matching "Guest N dietary".
+    // Guests: "Guest 1", "Guest 2", ... each with an optional "Guest N dietary".
     var guests = [];
     for (var i = 1; i <= 20; i++) {
       var name = p["Guest " + i];
       if (!name) continue;
-      var diet = p["Guest " + i + " dietary"] || "";
-      guests.push(diet ? (name + " (" + diet + ")") : name);
+      guests.push({ name: name, diet: p["Guest " + i + " dietary"] || "" });
     }
 
     var ts        = new Date();
     var email     = p["Email"] || "";
     var partySize = p["Party size"] || String(guests.length);
+    var hotel     = (pp["Hotel"] || (p["Hotel"] ? [p["Hotel"]] : [])).join(" + ");
     var welcome   = p["Welcome drinks"] ? "Yes" : "";
     var arrival   = p["Flight arrival code"] || "";
     var ret       = p["Flight return code"] || "";
 
-    // Write a header row the first time.
+    // Header row, written once.
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Email", "Party size", "Guests",
-                       "Welcome dinner (Fri)", "Flight arrival", "Flight return"]);
+      sheet.appendRow(["Timestamp", "Email", "Guest name", "Dietary", "Party size",
+                       "Hotel", "Welcome dinner (Fri)", "Flight arrival", "Flight return"]);
     }
-    sheet.appendRow([ts, email, partySize, guests.join("; "), welcome, arrival, ret]);
+
+    // ONE ROW PER GUEST — shared fields repeat down the rows.
+    if (guests.length === 0) {
+      sheet.appendRow([ts, email, "", "", partySize, hotel, welcome, arrival, ret]);
+    } else {
+      guests.forEach(function (g) {
+        sheet.appendRow([ts, email, g.name, g.diet, partySize, hotel, welcome, arrival, ret]);
+      });
+    }
+
+    var guestSummary = guests.map(function (g) {
+      return g.diet ? (g.name + " (" + g.diet + ")") : g.name;
+    });
 
     // Confirmation email to the guest.
     if (email) {
-      var who = p["Guest 1"] || "there";
+      var who = (guests[0] && guests[0].name) || "there";
       var body =
         "Hi " + who + ",\n\n" +
         "We've received your RSVP — thank you! 🥂 We can't wait to celebrate " +
         "with you in Langkawi.\n\n" +
         "Here's what we have on file:\n" +
-        "  • Guests: " + guests.join(", ") + "\n" +
+        "  • Guests: " + guestSummary.join(", ") + "\n" +
+        (hotel   ? "  • Staying at: " + hotel + "\n" : "") +
         (welcome ? "  • Joining the welcome dinner (Friday): Yes\n" : "") +
         (arrival ? "  • Flight arrival: " + arrival + "\n" : "") +
         (ret     ? "  • Flight return: " + ret + "\n" : "") +
+        (hotel
+          ? "\nWe've negotiated a group rate at your chosen hotel and will email " +
+            "you a reservation link as soon as the hotel sends it through.\n"
+          : "") +
         "\nIf anything looks wrong, just reply to this email and we'll fix it.\n\n" +
         "With love,\nYen & Yang Wei 💕";
       var opts = { name: CONFIG.fromName };
@@ -81,15 +100,16 @@ function doPost(e) {
       MailApp.sendEmail(email, "Your RSVP is in 🎉 — Yen & Yang Wei", body, opts);
     }
 
-    // Notification to the couple.
+    // Notification to the couple (your backup copy).
     if (CONFIG.notifyEmail) {
       MailApp.sendEmail(
         CONFIG.notifyEmail,
-        "New RSVP: " + (p["Guest 1"] || email || "(no name)"),
+        "New RSVP: " + ((guests[0] && guests[0].name) || email || "(no name)"),
         "New RSVP received:\n\n" +
         "Email: " + email + "\n" +
         "Party size: " + partySize + "\n" +
-        "Guests: " + guests.join("; ") + "\n" +
+        "Guests: " + guestSummary.join("; ") + "\n" +
+        "Hotel: " + (hotel || "(none selected)") + "\n" +
         "Welcome dinner: " + (welcome || "no") + "\n" +
         "Flight arrival: " + arrival + "\n" +
         "Flight return: " + ret + "\n");

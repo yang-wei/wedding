@@ -267,6 +267,34 @@
     if (anchor && fa) anchor.parentNode.insertBefore(fa, anchor.nextSibling);
     if (fa && fr) fa.parentNode.insertBefore(fr, fa.nextSibling);
 
+    // hotel question: clone the existing checkbox group so styling matches, then
+    // repurpose it as "where are you staying?" with St. Regis / Westin options.
+    var cbGroup = form.querySelector('[data-framer-name="Checkbox Group"]');
+    if (cbGroup) {
+      var hotelGroup = cbGroup.cloneNode(true);
+      var hprompt = hotelGroup.querySelector("p");
+      if (hprompt) hprompt.textContent = "Are you staying at one of our group-rate hotels?";
+      var hbox = hotelGroup.querySelector('[data-framer-name="checkboxes"]');
+      var tmpl = hbox ? hbox.querySelector("label") : null;
+      if (tmpl) {
+        var setHotel = function (label, value) {
+          var inp = label.querySelector("input");
+          if (inp) { inp.name = "Hotel"; inp.setAttribute("value", value); inp.checked = false; }
+          var lp = label.querySelector("p");
+          if (lp) lp.textContent = value;
+        };
+        setHotel(tmpl, "The St. Regis Langkawi");
+        var westin = tmpl.cloneNode(true);
+        setHotel(westin, "The Westin Langkawi");
+        hbox.appendChild(westin);
+        var note = document.createElement("p");
+        note.textContent = "We've negotiated group rates at both. Tick where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
+        note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
+        hotelGroup.appendChild(note);
+      }
+      cbGroup.parentNode.insertBefore(hotelGroup, cbGroup.nextSibling);
+    }
+
     // strip Framer's honeypots and wire to Web3Forms
     [].forEach.call(form.querySelectorAll('input[aria-hidden="true"][tabindex="-1"]'), function (i) { i.remove(); });
     function hidden(n, v) { var i = document.createElement("input"); i.type = "hidden"; i.name = n; i.value = v; form.appendChild(i); return i; }
@@ -302,9 +330,13 @@
       }
       var btn = form.querySelector('button[type="submit"]');
       if (btn) { btn.disabled = true; btn.style.opacity = ".6"; }
-      // Apps Script replies with an opaque (no-cors) response, so we can't read it;
-      // the row is still written and the emails still send. Treat completion as success.
-      fetch(RSVP_ENDPOINT, { method: "POST", mode: "no-cors", body: new FormData(form) })
+      // Build a url-encoded body (Apps Script parses these most reliably; keeps
+      // repeated fields like multiple Hotel checkboxes).
+      var fd = new FormData(form);
+      var params = new URLSearchParams();
+      fd.forEach(function (v, k) { params.append(k, v); });
+      // Opaque (no-cors) response — the row is still written and emails still send.
+      fetch(RSVP_ENDPOINT, { method: "POST", mode: "no-cors", body: params })
         .then(function () { showThanks(true); })
         .catch(function () { showThanks(false); });
     });
