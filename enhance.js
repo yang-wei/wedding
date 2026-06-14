@@ -204,6 +204,12 @@
       "#wedTravel .wt-note{font-size:.82rem;opacity:.8;margin-top:10px}",
       "#wedTravel .wt-link{color:#2f6fae;font-weight:700;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:2px;white-space:nowrap}",
       "#wedTravel .wt-link:hover{color:#1c4f86}",
+      "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:14px;margin-top:6px}",
+      "#wedTravel .wt-dress-row{display:flex;align-items:center;gap:10px}",
+      "#wedTravel .wt-swatch{flex:0 0 auto;width:26px;height:26px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 5px -2px rgba(0,0,0,.5)}",
+      "#wedTravel .wt-dress-label{font-size:.9rem;line-height:1.25}",
+      "#wedTravel .wt-dress-label strong{font-size:.98rem}",
+      "#wedTravel .wt-dress-label small{opacity:.7;font-size:.78rem}",
       // FAQ / Q&A (its own section, just before the RSVP)
       "#wedFaqSection{padding:clamp(50px,8vw,92px) 0}",
       "#wedFaq{max-width:660px;margin:0 auto;padding:0 24px;text-align:left;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
@@ -328,7 +334,19 @@
       },
       {
         icon: "👗", bg: "#9fc0d6", title: "Dress code",
-        html: "<p><strong>Formal</strong> ✨ Dress to impress!</p>",
+        html:
+          "<p><strong>Formal</strong> ✨ Dress to impress!</p>" +
+          "<div class='wt-dress'>" +
+            "<div class='wt-dress-row'>" +
+              "<span class='wt-swatch' style='background:#1c1c1c'></span>" +
+              "<div class='wt-dress-label'><strong>Gents</strong><br>Black suits <small>#1C1C1C</small></div>" +
+            "</div>" +
+            "<div class='wt-dress-row'>" +
+              "<span class='wt-swatch' style='background:#e0cba8'></span>" +
+              "<span class='wt-swatch' style='background:#8a6d4b'></span>" +
+              "<div class='wt-dress-label'><strong>Ladies</strong><br>Beige &amp; brown <small>#E0CBA8 \u00b7 #8A6D4B</small></div>" +
+            "</div>" +
+          "</div>",
       },
       {
         icon: "🧸", bg: "#c9d18a", title: "Kids",
