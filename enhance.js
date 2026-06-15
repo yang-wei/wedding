@@ -329,7 +329,7 @@
       {
         icon: "🔞", bg: "#c9d18a", title: "Kids",
         html:
-          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect free-flowing drinks, questionable dance moves and absolutely no bedtimes.</p>" +
+          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
           "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
       },
     ];
