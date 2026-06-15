@@ -181,7 +181,7 @@
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
       // hero photo: custom ARCH shape (replaces the standing-couple silhouette mask)
-      ".framer-1ns6yyg{flex:none!important;width:clamp(220px,32vw,360px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.755!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
+      ".framer-1ns6yyg{flex:none!important;width:clamp(220px,32vw,360px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.729!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
       ".framer-1ns6yyg img,.framer-1ns6yyg [data-framer-background-image-wrapper]{opacity:0!important}",
       // keep the title above the photo arch so 'Save the date' isn't blocked
       ".framer-1rgcutd{position:relative!important;z-index:10!important}",
@@ -567,8 +567,8 @@
     var items = [
       { q: "What if I need to bring my kids?",
         a: "We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! 👶 If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night." },
-      { q: "Can I book my own accommodation?",
-        a: "Of course! 🏨 Guests arrange and cover their own accommodation, so you're welcome to stay wherever suits you best. We've recommended a couple of nearby hotels to make booking easy — but feel free to choose your own. Just let us know where you'll be staying so we can keep you in the loop. 💌" },
+      { q: "Can I stay anywhere else besides St Regis and Westin?",
+        a: "Absolutely! 🏨 You're welcome to stay wherever suits you best — guests arrange and cover their own accommodation, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) to make booking easy, but feel free to pick your own spot. Just let us know where you'll be staying so we can keep you in the loop. 💌" },
       { q: "Any tips on booking flights?",
         a: "Book early! ✈️ Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
     ];
