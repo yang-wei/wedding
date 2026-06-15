@@ -5,7 +5,6 @@
 (function () {
   var PHOTOS = [
     "images/photo-070.jpg",
-    "images/photo-006.jpg",
     "images/photo-024.jpg",
     "images/photo-065.jpg",
     "images/photo-007.jpg",
@@ -81,7 +80,6 @@
     "images/photo-002.jpg": "Toyama, Japan 🏔️ · Sep 2025",
     "images/photo-003.jpg": "",
     "images/photo-005.jpg": "",
-    "images/photo-006.jpg": "",
     "images/photo-007.jpg": "Amsterdam canals 🇳🇱 · May 2022",
     "images/photo-008.jpg": "Tokyo Tower 🗼 · Aug 2024",
     "images/photo-012.jpg": "",
