@@ -540,7 +540,7 @@
       { q: "What if I need to bring my kids?",
         a: "We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! 👶 If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night." },
       { q: "Can I stay anywhere else besides St Regis and Westin?",
-        a: "Absolutely! 🏨 You're welcome to stay wherever suits you best — guests arrange and cover their own accommodation, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) to make booking easy, but feel free to pick your own spot. Just let us know where you'll be staying so we can keep you in the loop. 💌" },
+        a: "Absolutely! 🏨 You're welcome to stay wherever suits you best, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
       { q: "Any tips on booking flights?",
         a: "Book early! ✈️ Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
     ];
