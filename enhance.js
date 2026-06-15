@@ -139,10 +139,11 @@
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
       // hero photo: custom ARCH shape (replaces the standing-couple silhouette mask)
-      ".framer-1ns6yyg{flex:none!important;width:clamp(260px,40vw,440px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.692!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
+      ".framer-1ns6yyg{flex:none!important;width:clamp(300px,84vw,480px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.692!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
       ".framer-1ns6yyg img,.framer-1ns6yyg [data-framer-background-image-wrapper]{opacity:0!important}",
       // keep the title above the photo arch so 'Save the date' isn't blocked
       ".framer-1rgcutd{position:relative!important;z-index:10!important}",
+      "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%}",
       "#wedGallery.is-dragging{cursor:grabbing}",
       "#wedGalleryTrack{display:flex;gap:22px;padding:0 clamp(20px,5vw,64px);overflow-x:auto;scrollbar-width:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
