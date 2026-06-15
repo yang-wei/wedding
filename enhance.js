@@ -181,7 +181,7 @@
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
       // hero photo: custom ARCH shape (replaces the standing-couple silhouette mask)
-      ".framer-1ns6yyg{flex:none!important;width:clamp(220px,32vw,360px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.719!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
+      ".framer-1ns6yyg{flex:none!important;width:clamp(220px,32vw,360px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.755!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
       ".framer-1ns6yyg img,.framer-1ns6yyg [data-framer-background-image-wrapper]{opacity:0!important}",
       // keep the title above the photo arch so 'Save the date' isn't blocked
       ".framer-1rgcutd{position:relative!important;z-index:10!important}",
