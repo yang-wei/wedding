@@ -144,6 +144,7 @@
       // keep the title above the photo arch so 'Save the date' isn't blocked
       ".framer-1rgcutd{position:relative!important;z-index:10!important}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
+      "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%}",
       "#wedGallery.is-dragging{cursor:grabbing}",
       "#wedGalleryTrack{display:flex;gap:22px;padding:0 clamp(20px,5vw,64px);overflow-x:auto;scrollbar-width:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
