@@ -159,6 +159,8 @@
       // travel-info paper-note cards
       "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;cursor:grab;user-select:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
       "#wedTravel::-webkit-scrollbar{display:none}",
+      "#wedTravelHint{display:none;text-align:center;margin:16px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
+      "@media(max-width:809.98px){#wedTravelHint{display:block}}",
       "#wedTravel,#wedTravel *{box-sizing:border-box}",
       "#wedTravel .wt-card{flex:0 0 auto;width:262px;background:#f4edd2;border:2.5px solid #2a2018;border-radius:22px 16px 24px 18px/16px 22px 18px 24px;padding:44px 24px 26px;position:relative;box-shadow:0 12px 26px -16px rgba(0,0,0,.5);color:#2a2018}",
       "#wedTravel .wt-card:nth-child(odd){transform:rotate(-2deg)}",
@@ -336,6 +338,10 @@
     window.addEventListener("mousemove", function (e) { if (!tDown) return; e.preventDefault(); wrap.scrollLeft = tStartScroll - (e.pageX - tStartX); });
     window.addEventListener("mouseup", function () { tDown = false; wrap.style.cursor = ""; });
     section.appendChild(wrap);
+    var tHint = document.createElement("p");
+    tHint.id = "wedTravelHint";
+    tHint.textContent = "\u2190 Drag \u2192";
+    section.appendChild(tHint);
   }
 
   function enhanceRsvp() {
