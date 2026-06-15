@@ -290,14 +290,8 @@
         html:
           "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
           "<p><strong>For overseas guests:</strong> fly into KL or Singapore first, then a short connecting flight to Langkawi.</p>" +
-          "<p><strong>Airport transfer:</strong> the airport is about <strong>30 min</strong> from the hotels by taxi or Grab.</p>",
-      },
-      {
-        icon: "🏝️", bg: "#7fc2b8", title: "About Langkawi",
-        html:
-          "<p>A <strong>duty-free island</strong> 🍾 — alcohol is cheaper than bottled water (yes, really).</p>" +
-          "<p>Just <strong>1 hour</strong> from Yang Wei's hometown.</p>" +
-          "<p>Named after a reddish-brown eagle 🦅 — that's the giant statue greeting you at Eagle Square.</p>",
+          "<p><strong>Airport transfer:</strong> the airport is about <strong>30 min</strong> from the hotels by taxi or Grab.</p>" +
+          "<p><strong>Duty-free island</strong> 🍾 — alcohol is cheaper than bottled water (yes, really).</p>",
       },
       {
         icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
