@@ -145,7 +145,7 @@
       ".framer-1rgcutd{position:relative!important;z-index:10!important}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%}",
       "#wedGallery.is-dragging{cursor:grabbing}",
-      "#wedGalleryTrack{display:flex;gap:22px;padding:0 clamp(20px,5vw,64px);overflow-x:auto;scrollbar-width:none}",
+      "#wedGalleryTrack{display:flex;gap:22px;padding:0 clamp(20px,5vw,64px);overflow-x:auto;scrollbar-width:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
       "#wedGalleryTrack::-webkit-scrollbar{display:none}",
       "#wedGalleryTrack .wg-item{flex:0 0 auto;position:relative;border-radius:12px;overflow:hidden;box-shadow:0 14px 30px -16px rgba(0,0,0,.45)}",
       "#wedGalleryTrack .wg-item:nth-child(odd){transform:rotate(-2deg)}",
@@ -264,9 +264,9 @@
     wrap.addEventListener("mousedown", function (e) { start(e.pageX); });
     window.addEventListener("mousemove", function (e) { move(e.pageX); });
     window.addEventListener("mouseup", end);
-    wrap.addEventListener("touchstart", function (e) { start(e.touches[0].pageX); }, { passive: true });
-    wrap.addEventListener("touchmove", function (e) { move(e.touches[0].pageX); }, { passive: true });
-    wrap.addEventListener("touchend", end);
+    // Touch: rely on native horizontal scrolling (CSS touch-action:pan-x above)
+    // so a swipe pans left/right only and can never drift the page vertically.
+    // The mouse handlers above keep drag-to-scroll working on desktop.
   }
 
   function buildTravel() {
