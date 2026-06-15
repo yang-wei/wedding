@@ -329,9 +329,8 @@
       {
         icon: "🔞", bg: "#c9d18a", title: "Kids",
         html:
-          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect free-flowing drinks, questionable dance moves and absolutely no bedtimes. So the whole day (ceremony <em>and</em> reception) is strictly grown-ups only.</p>" +
-          "<p>We adore your little ones — we just adore you having a wild, kid-free night even more. 🍸 Leave them with grandma and come misbehave with us.</p>" +
-          "<p>If bringing them is truly unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
+          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect free-flowing drinks, questionable dance moves and absolutely no bedtimes.</p>" +
+          "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
       },
     ];
 
