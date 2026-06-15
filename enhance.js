@@ -295,6 +295,7 @@
         icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
         html:
           "<p>We have secured a group rate for the rates below.</p>" +
+          "<p>The two hotels are right next to each other, connected by a hotel buggy — so you can easily hop between them. 🛺</p>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis 🔗</a><span class='wt-off'>66% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM3,500</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
