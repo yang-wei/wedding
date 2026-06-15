@@ -288,8 +288,16 @@
       {
         icon: "✈️", bg: "#d9a7cf", title: "Logistics",
         html:
-          "<p>Langkawi International Airport is about <strong>30 minutes</strong> from The St. Regis Langkawi.</p>" +
-          "<p>Direct flights from <strong>KL, Penang &amp; Singapore</strong> only.</p>",
+          "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
+          "<p><strong>For overseas guests:</strong> fly into KL or Singapore first, then a short connecting flight to Langkawi.</p>" +
+          "<p><strong>Airport transfer:</strong> the airport is about <strong>30 min</strong> from the hotels by taxi or Grab.</p>",
+      },
+      {
+        icon: "🏝️", bg: "#7fc2b8", title: "About Langkawi",
+        html:
+          "<p>A <strong>duty-free island</strong> 🍾 — alcohol is cheaper than bottled water (yes, really).</p>" +
+          "<p>Just <strong>1 hour</strong> from Yang Wei's hometown.</p>" +
+          "<p>Named after a reddish-brown eagle 🦅 — that's the giant statue greeting you at Eagle Square.</p>",
       },
       {
         icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
@@ -319,10 +327,11 @@
           "</div>",
       },
       {
-        icon: "🧸", bg: "#c9d18a", title: "Kids",
+        icon: "🔞", bg: "#c9d18a", title: "Kids",
         html:
-          "<p>We love your little ones (truly!), but we've planned our wedding as a <strong>grown-ups' celebration</strong>, so the whole day (ceremony <em>and</em> reception) will be adults-only. Think of it as a well-earned night off. 💕</p>" +
-          "<p>If bringing your little one is unavoidable, just let us know, we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
+          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect free-flowing drinks, questionable dance moves and absolutely no bedtimes. So the whole day (ceremony <em>and</em> reception) is strictly grown-ups only.</p>" +
+          "<p>We adore your little ones — we just adore you having a wild, kid-free night even more. 🍸 Leave them with grandma and come misbehave with us.</p>" +
+          "<p>If bringing them is truly unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
       },
     ];
 
