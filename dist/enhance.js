@@ -180,7 +180,7 @@
       "#wedTravel .wt-per{font-size:.8rem;opacity:.8}",
       "#wedTravel .wt-room{font-size:.76rem;opacity:.7;margin-top:1px}",
       "#wedTravel .wt-note{font-size:.82rem;opacity:.8;margin-top:10px}",
-      "#wedTravel .wt-link{color:#2f6fae;font-weight:700;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:2px;white-space:nowrap}",
+      "#wedTravel .wt-link{color:#2f6fae;font-weight:700;font-size:1.18rem;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:2px;white-space:nowrap}",
       "#wedTravel .wt-link:hover{color:#1c4f86}",
       "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:8px;margin-top:6px}",
       "#wedTravel .wt-dress-row{font-size:.92rem;line-height:1.5}",
@@ -294,7 +294,7 @@
       {
         icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
         html:
-          "<p>We've secured a group rate, Yen negotiated hard for the rates below.</p>" +
+          "<p>We have secured a group rate for the rates below.</p>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis 🔗</a><span class='wt-off'>66% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM3,500</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
@@ -305,7 +305,8 @@
             "<div class='wt-prices'><span class='wt-was'>RM1,235</span><span class='wt-now'>RM680</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
-          "<p class='wt-note'>Available the nights of 12 &amp; 13 Feb.</p>",
+          "<p class='wt-note'>Group rate available 10–16 Feb at The St. Regis.</p>" +
+          "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
         icon: "👗", bg: "#9fc0d6", title: "Dress code",
