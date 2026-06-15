@@ -1,6 +1,9 @@
+.git
+node_modules
 rawimages
 dist
 apps-script
 server.js
 .gitignore
 .assetsignore
+.wrangler
