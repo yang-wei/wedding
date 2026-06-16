@@ -138,11 +138,11 @@
       ".framer-xwh9m6{display:none!important}",
       // hero: full-bleed photo with centered overlay text (ethereal-light style)
       "#hero{position:relative!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
-      "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:contain;background-position:center;background-repeat:no-repeat}",
+      "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat}",
       "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,30,.40) 0%,rgba(20,14,30,.30) 45%,rgba(20,14,30,.62) 100%),radial-gradient(120% 70% at 50% 50%,rgba(20,14,30,.34) 0%,rgba(20,14,30,0) 60%)}",
       "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 24px}",
       "#wedHeroText .wh-date{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1rem,2.6vw,1.4rem);letter-spacing:.2em;margin:0 0 .35em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
-      "#wedHeroText .wh-title{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-weight:700;font-size:clamp(2.9rem,10.5vw,8rem);line-height:.85;letter-spacing:-.02em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
+      "#wedHeroText .wh-title{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-weight:700;font-size:clamp(2.5rem,9.5vw,8rem);line-height:.85;letter-spacing:-.02em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
       "#wedHeroText .wh-names{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1.15rem,3.4vw,1.9rem);letter-spacing:.14em;margin:.55em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
       "#wedHeroText .wh-venue{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.62rem,1.5vw,.74rem);letter-spacing:.28em;text-transform:uppercase;margin:1.7em 0 0;opacity:.92;text-shadow:0 1px 12px rgba(0,0,0,.65)}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
