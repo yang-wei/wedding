@@ -1607,12 +1607,13 @@
       .framer-bnw82m{display:none!important}
       /* remove the interactive "build your cake" section */
       .framer-d8cd9l, [data-framer-name="game"]{display:none!important}
-      /* hero couple-cutout: fit our photo inside the silhouette mask */
+      /* hero couple-cutout: show our own background-removed silhouette (photo-042) */
       .framer-1ns6yyg{
-        background-image:url('images/hero.jpg')!important;
+        -webkit-mask:none!important;mask:none!important;
+        background-image:url('images/photo-042-cutout.png')!important;
         background-repeat:no-repeat!important;
-        background-size:400% auto!important;
-        background-position:48% 82%!important;
+        background-size:contain!important;
+        background-position:center bottom!important;
       }
       .framer-1ns6yyg img,
       .framer-1ns6yyg [data-framer-background-image-wrapper]{opacity:0!important}

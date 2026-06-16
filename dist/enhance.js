@@ -136,11 +136,15 @@
       ".framer-l0t3vs{display:none!important}",
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
-      // hero photo: custom ARCH shape (replaces the standing-couple silhouette mask)
-      ".framer-1ns6yyg{flex:none!important;width:clamp(300px,84vw,480px)!important;max-width:none!important;height:auto!important;aspect-ratio:0.692!important;-webkit-mask:none!important;mask:none!important;overflow:visible!important;border-radius:0!important;box-shadow:none!important;background-image:url('images/hero-cutout.png')!important;background-size:contain!important;background-position:bottom center!important;background-repeat:no-repeat!important}",
-      ".framer-1ns6yyg img,.framer-1ns6yyg [data-framer-background-image-wrapper]{opacity:0!important}",
-      // keep the title above the photo arch so 'Save the date' isn't blocked
-      ".framer-1rgcutd{position:relative!important;z-index:10!important}",
+      // hero: full-bleed photo with centered overlay text (ethereal-light style)
+      "#hero{position:relative!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
+      "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:contain;background-position:center;background-repeat:no-repeat}",
+      "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,30,.40) 0%,rgba(20,14,30,.30) 45%,rgba(20,14,30,.62) 100%),radial-gradient(120% 70% at 50% 50%,rgba(20,14,30,.34) 0%,rgba(20,14,30,0) 60%)}",
+      "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 24px}",
+      "#wedHeroText .wh-date{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1rem,2.6vw,1.4rem);letter-spacing:.2em;margin:0 0 .35em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
+      "#wedHeroText .wh-title{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-weight:700;font-size:clamp(2.9rem,10.5vw,8rem);line-height:.85;letter-spacing:-.02em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
+      "#wedHeroText .wh-names{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1.15rem,3.4vw,1.9rem);letter-spacing:.14em;margin:.55em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
+      "#wedHeroText .wh-venue{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.62rem,1.5vw,.74rem);letter-spacing:.28em;text-transform:uppercase;margin:1.7em 0 0;opacity:.92;text-shadow:0 1px 12px rgba(0,0,0,.65)}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%;touch-action:pan-x;overscroll-behavior-x:contain}",
@@ -560,7 +564,28 @@
     section.appendChild(wrap);
   }
 
-  function run() { build(); buildTravel(); buildFaq(); enhanceRsvp(); }
+  // Rebuild the hero as a full-bleed photo with centered overlay text.
+  function buildHero() {
+    var hero = document.getElementById("hero");
+    if (!hero || document.getElementById("wedHeroText")) return;
+    // hide the original Framer hero content (title bars, names, photo, invite/date)
+    Array.prototype.forEach.call(hero.children, function (c) {
+      c.style.display = "none";
+    });
+    var bg = document.createElement("div");
+    bg.id = "wedHeroBg";
+    var box = document.createElement("div");
+    box.id = "wedHeroText";
+    box.innerHTML =
+      '<p class="wh-date">13 February 2027</p>' +
+      '<h1 class="wh-title">Save the date</h1>' +
+      '<p class="wh-names">Yen &amp; Yang Wei</p>' +
+      '<p class="wh-venue">The St. Regis Langkawi &middot; Malaysia</p>';
+    hero.appendChild(bg);
+    hero.appendChild(box);
+  }
+
+  function run() { buildHero(); build(); buildTravel(); buildFaq(); enhanceRsvp(); }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
 })();
