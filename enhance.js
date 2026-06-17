@@ -136,14 +136,19 @@
       ".framer-l0t3vs{display:none!important}",
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
+      // invitation band lost its blue bg (now the default cream) -> flip its light text to dark
+      "#invitation .framer-text{--framer-text-color:#42421d!important;color:#42421d!important}",
+      // RSVP section was a full blue panel with white text by design; recolor it to the theme
+      // olive (not cream) so the whole form stays readable. Scoped token swap = bg + inputs.
+      ".framer-cpd6n{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#42421d!important}",
       // hero: full-bleed photo with centered overlay text (ethereal-light style)
       "#hero{position:relative!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
       "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat}",
       "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,30,.40) 0%,rgba(20,14,30,.30) 45%,rgba(20,14,30,.62) 100%),radial-gradient(120% 70% at 50% 50%,rgba(20,14,30,.34) 0%,rgba(20,14,30,0) 60%)}",
-      "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 24px}",
-      "#wedHeroText .wh-date{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1rem,2.6vw,1.4rem);letter-spacing:.2em;margin:0 0 .35em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
-      "#wedHeroText .wh-title{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-weight:700;font-size:clamp(2.5rem,9.5vw,8rem);line-height:.85;letter-spacing:-.02em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
-      "#wedHeroText .wh-names{font-family:'Hershey-Noailles-Times',serif;font-style:italic;font-size:clamp(1.15rem,3.4vw,1.9rem);letter-spacing:.14em;margin:.55em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
+      "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 18px}",
+      "#wedHeroText .wh-date{font-family:'Mynerve',cursive;font-size:clamp(1.05rem,2.8vw,1.55rem);letter-spacing:.08em;margin:0 0 .2em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
+      "#wedHeroText .wh-title{font-family:'BIZ UDPMincho',serif;font-weight:700;font-size:clamp(1.75rem,7.2vw,8.5rem);line-height:.98;letter-spacing:-.01em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
+      "#wedHeroText .wh-names{font-family:'Mynerve',cursive;font-size:clamp(1.3rem,3.8vw,2.1rem);letter-spacing:.05em;margin:.45em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
       "#wedHeroText .wh-venue{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.62rem,1.5vw,.74rem);letter-spacing:.28em;text-transform:uppercase;margin:1.7em 0 0;opacity:.92;text-shadow:0 1px 12px rgba(0,0,0,.65)}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
@@ -208,6 +213,14 @@
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
     ].join("");
+    // hero fonts, matching ethereal-light: BIZ UDPMincho (serif title) + Mynerve (script)
+    if (!document.getElementById("wedHeroFonts")) {
+      var link = document.createElement("link");
+      link.id = "wedHeroFonts";
+      link.rel = "stylesheet";
+      link.href = "https://fonts.googleapis.com/css2?family=BIZ+UDPMincho:wght@400;700&family=Mynerve&display=swap";
+      document.head.appendChild(link);
+    }
     var s = document.createElement("style");
     s.id = "wedGalleryCss";
     s.textContent = css;
