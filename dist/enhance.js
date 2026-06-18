@@ -138,16 +138,19 @@
       ".framer-xwh9m6{display:none!important}",
       // invitation band lost its blue bg (now the default cream) -> flip its light text to dark
       "#invitation .framer-text{--framer-text-color:#42421d!important;color:#42421d!important}",
-      // RSVP section was a full blue panel with white text by design; recolor it to the theme
-      // olive (not cream) so the whole form stays readable. Scoped token swap = bg + inputs.
+      // RSVP panel had blue bg + white text by design -> recolor to the theme olive (readable).
       ".framer-cpd6n{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#42421d!important}",
+      // 'important details' trio is olive / blue / peach by design; keep the middle (Date) card
+      // its original blue accent (the global blue removal had collapsed it into the background).
+      ".framer-1m4u735{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#5387b5!important}",
       // hero: full-bleed photo with centered overlay text (ethereal-light style)
       "#hero{position:relative!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
-      "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat}",
-      "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,14,30,.40) 0%,rgba(20,14,30,.30) 45%,rgba(20,14,30,.62) 100%),radial-gradient(120% 70% at 50% 50%,rgba(20,14,30,.34) 0%,rgba(20,14,30,0) 60%)}",
+      "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat;filter:saturate(.86) contrast(.95) brightness(1.0)}",
+      // gentle neutral grade: light mute + soft neutral dark gradient (keeps text legible)
+      "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,22,.30) 0%,rgba(20,20,22,.12) 45%,rgba(12,12,14,.50) 100%),radial-gradient(120% 70% at 50% 50%,rgba(15,15,17,.18) 0%,rgba(15,15,17,0) 60%)}",
       "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 18px}",
       "#wedHeroText .wh-date{font-family:'Mynerve',cursive;font-size:clamp(1.05rem,2.8vw,1.55rem);letter-spacing:.08em;margin:0 0 .2em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
-      "#wedHeroText .wh-title{font-family:'BIZ UDPMincho',serif;font-weight:700;font-size:clamp(1.75rem,7.2vw,8.5rem);line-height:.98;letter-spacing:-.01em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
+      "#wedHeroText .wh-title{font-family:'BIZ UDPMincho','BIZ UDPMincho Placeholder',serif;font-weight:400;font-size:clamp(1.9rem,7.8vw,8.5rem);line-height:1;letter-spacing:-.01em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
       "#wedHeroText .wh-names{font-family:'Mynerve',cursive;font-size:clamp(1.3rem,3.8vw,2.1rem);letter-spacing:.05em;margin:.45em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
       "#wedHeroText .wh-venue{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.62rem,1.5vw,.74rem);letter-spacing:.28em;text-transform:uppercase;margin:1.7em 0 0;opacity:.92;text-shadow:0 1px 12px rgba(0,0,0,.65)}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
@@ -166,7 +169,8 @@
       "#wedGallery.is-dragging .wg-cap{opacity:0!important}",
       "#wedGalleryHint{text-align:center;margin:22px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75}",
       // travel-info paper-note cards
-      "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;cursor:grab;user-select:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
+      "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:safe center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding:0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;cursor:grab;user-select:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
+      "#wedTravel .wt-card{scroll-snap-align:center}",
       "#wedTravel::-webkit-scrollbar{display:none}",
       "#wedTravelHint{display:none;text-align:center;margin:16px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
       "@media(max-width:809.98px){#wedTravelHint{display:block}}",
@@ -311,8 +315,8 @@
       {
         icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
         html:
-          "<p>We have secured a group rate for the rates below.</p>" +
-          "<p>The two hotels are right next to each other — you can travel between them by hotel buggy car. 🛺</p>" +
+          "<p>We've secured a group rate at the hotel below.</p>" +
+          "<p>The two hotels are connected, so you can travel between them by hotel buggy car. 🛺</p>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis 🔗</a><span class='wt-off'>66% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM3,500</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
@@ -323,7 +327,7 @@
             "<div class='wt-prices'><span class='wt-was'>RM1,235</span><span class='wt-now'>RM680</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
-          "<p class='wt-note'>Group rate available 10–16 Feb at The St. Regis.</p>" +
+          "<p class='wt-note'>Group rates are available at both hotels (10–16 Feb).</p>" +
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
