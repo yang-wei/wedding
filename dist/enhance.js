@@ -138,21 +138,34 @@
       ".framer-xwh9m6{display:none!important}",
       // invitation band lost its blue bg (now the default cream) -> flip its light text to dark
       "#invitation .framer-text{--framer-text-color:#42421d!important;color:#42421d!important}",
+      // approved palette pass: warmer beige/brown around story + itinerary; RSVP stays untouched.
+      "#invitation{background:#f2ebce!important;background-color:#f2ebce!important}",
+      ".framer-15dlodc>div{background:#f0efe9!important;background-color:#f0efe9!important}",
+      ".framer-1b44b6s{background:#4d2008!important;background-color:#4d2008!important}",
+      ".framer-5n4470>div{background:#4d2008!important;background-color:#4d2008!important}",
       // RSVP panel had blue bg + white text by design -> recolor to the theme olive (readable).
       ".framer-cpd6n{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#42421d!important}",
       // 'important details' trio is olive / blue / peach by design; keep the middle (Date) card
       // its original blue accent (the global blue removal had collapsed it into the background).
       ".framer-1m4u735{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#5387b5!important}",
-      // hero: full-bleed photo with centered overlay text (ethereal-light style)
-      "#hero{position:relative!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
+      // hero: full-bleed photo with reference-style centered overlay text
+      "#hero{position:relative!important;width:100%!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
       "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat;filter:saturate(.86) contrast(.95) brightness(1.0)}",
       // gentle neutral grade: light mute + soft neutral dark gradient (keeps text legible)
       "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,22,.30) 0%,rgba(20,20,22,.12) 45%,rgba(12,12,14,.50) 100%),radial-gradient(120% 70% at 50% 50%,rgba(15,15,17,.18) 0%,rgba(15,15,17,0) 60%)}",
-      "#wedHeroText{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;color:#fdf6ec;padding:7vh 18px}",
-      "#wedHeroText .wh-date{font-family:'Mynerve',cursive;font-size:clamp(1.05rem,2.8vw,1.55rem);letter-spacing:.08em;margin:0 0 .2em;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
-      "#wedHeroText .wh-title{font-family:'BIZ UDPMincho','BIZ UDPMincho Placeholder',serif;font-weight:400;font-size:clamp(1.9rem,7.8vw,8.5rem);line-height:1;letter-spacing:-.01em;margin:0;text-shadow:0 3px 36px rgba(0,0,0,.45)}",
-      "#wedHeroText .wh-names{font-family:'Mynerve',cursive;font-size:clamp(1.3rem,3.8vw,2.1rem);letter-spacing:.05em;margin:.45em 0 0;text-shadow:0 1px 16px rgba(0,0,0,.55)}",
-      "#wedHeroText .wh-venue{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.62rem,1.5vw,.74rem);letter-spacing:.28em;text-transform:uppercase;margin:1.7em 0 0;opacity:.92;text-shadow:0 1px 12px rgba(0,0,0,.65)}",
+      "#wedHeroText{position:absolute;top:0;bottom:0;left:0;right:auto;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;text-align:center;color:#f0efe9;width:100vw;max-width:900px;padding:0 18px;box-sizing:border-box;overflow:visible}",
+      "#wedHeroText .wh-date-row{display:flex;align-items:center;justify-content:center;gap:54px;width:100%;margin:0;font-family:'Mynerve',sans-serif;font-size:24px;font-weight:400;line-height:1.2;letter-spacing:0;text-shadow:none}",
+      "#wedHeroText .wh-date-row span{white-space:pre}",
+      "#wedHeroText .wh-date-row span:first-child{transform:rotate(-9deg)}",
+      "#wedHeroText .wh-date-row span:last-child{transform:rotate(6deg)}",
+      "#wedHeroText .wh-title{font-family:'BIZ UDPMincho','BIZ UDPMincho Placeholder',serif;font-weight:400;font-size:128px;line-height:1.1;letter-spacing:-.02em;margin:0;width:100%;height:135px;overflow:clip;text-wrap:balance;color:#f0efe9;text-shadow:none}",
+      "#wedHeroText .wh-names{display:flex;align-items:center;justify-content:center;gap:40px;width:100%;font-family:'Mynerve',sans-serif;font-size:24px;font-weight:400;line-height:1.2;letter-spacing:0;margin:0;text-shadow:none}",
+      "#wedHeroText .wh-names span{white-space:pre}",
+      "#wedHeroText .wh-names span:first-child{transform:rotate(6deg)}",
+      "#wedHeroText .wh-names .wh-amp,#wedHeroText .wh-names span:last-child{transform:rotate(-4deg)}",
+      "@media(min-width:810px){#wedHeroText{left:50%;transform:translateX(-50%)}}",
+      "@media(min-width:810px) and (max-width:1199.98px){#wedHeroText{max-width:600px}#wedHeroText .wh-date-row,#wedHeroText .wh-names{font-size:19px}#wedHeroText .wh-title{height:225px;font-size:103px}}",
+      "@media(max-width:809.98px){#wedHeroText{width:min(100%,390px);max-width:390px;padding:0;overflow:visible}#wedHeroText .wh-date-row{width:320px;gap:54px;font-size:20px}#wedHeroText .wh-title{height:155px;font-size:76px}#wedHeroText .wh-names{gap:40px;font-size:20px}}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%;touch-action:pan-x;overscroll-behavior-x:contain}",
@@ -217,7 +230,7 @@
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
     ].join("");
-    // hero fonts, matching ethereal-light: BIZ UDPMincho (serif title) + Mynerve (script)
+    // hero fonts, matching the ethereal-light Framer template
     if (!document.getElementById("wedHeroFonts")) {
       var link = document.createElement("link");
       link.id = "wedHeroFonts";
@@ -594,10 +607,9 @@
     var box = document.createElement("div");
     box.id = "wedHeroText";
     box.innerHTML =
-      '<p class="wh-date">13 February 2027</p>' +
+      '<p class="wh-date-row"><span>February 13</span><span>2027</span></p>' +
       '<h1 class="wh-title">Save the date</h1>' +
-      '<p class="wh-names">Yen &amp; Yang Wei</p>' +
-      '<p class="wh-venue">The St. Regis Langkawi &middot; Malaysia</p>';
+      '<p class="wh-names"><span>Yen</span><span class="wh-amp">&amp;</span><span>Yang Wei</span></p>';
     hero.appendChild(bg);
     hero.appendChild(box);
   }
