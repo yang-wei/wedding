@@ -149,7 +149,7 @@
       // its original blue accent (the global blue removal had collapsed it into the background).
       ".framer-1m4u735{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#5387b5!important}",
       // hero: full-bleed photo with reference-style centered overlay text
-      "#hero{position:relative!important;width:100%!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important}",
+      "#hero{position:relative!important;width:100%!important;min-height:100svh!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;padding:0!important;margin:0!important;overflow:hidden!important;background:#15101f!important;gap:0!important;isolation:isolate}",
       "#wedHeroBg{position:absolute;inset:0;background-image:url('images/photo-042-hero.jpg');background-size:cover;background-position:50% 35%;background-repeat:no-repeat;filter:saturate(.86) contrast(.95) brightness(1.0)}",
       // gentle neutral grade: light mute + soft neutral dark gradient (keeps text legible)
       "#wedHeroBg::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,20,22,.30) 0%,rgba(20,20,22,.12) 45%,rgba(12,12,14,.50) 100%),radial-gradient(120% 70% at 50% 50%,rgba(15,15,17,.18) 0%,rgba(15,15,17,0) 60%)}",
@@ -612,6 +612,7 @@
       '<p class="wh-names"><span>Yen</span><span class="wh-amp">&amp;</span><span>Yang Wei</span></p>';
     hero.appendChild(bg);
     hero.appendChild(box);
+    document.body.classList.add("wed-enhanced");
   }
 
   function run() { buildHero(); build(); buildTravel(); buildFaq(); enhanceRsvp(); }
