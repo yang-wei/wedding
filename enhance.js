@@ -136,18 +136,6 @@
       ".framer-l0t3vs{display:none!important}",
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
-      // invitation band lost its blue bg (now the default cream) -> flip its light text to dark
-      "#invitation .framer-text{--framer-text-color:#42421d!important;color:#42421d!important}",
-      // approved palette pass: warmer beige/brown around story + itinerary; RSVP stays untouched.
-      "#invitation{background:#f2ebce!important;background-color:#f2ebce!important}",
-      ".framer-15dlodc>div{background:#f0efe9!important;background-color:#f0efe9!important}",
-      ".framer-1b44b6s{background:#4d2008!important;background-color:#4d2008!important}",
-      ".framer-5n4470>div{background:#4d2008!important;background-color:#4d2008!important}",
-      // RSVP panel had blue bg + white text by design -> recolor to the theme olive (readable).
-      ".framer-cpd6n{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#42421d!important}",
-      // 'important details' trio is olive / blue / peach by design; keep the middle (Date) card
-      // its original blue accent (the global blue removal had collapsed it into the background).
-      ".framer-1m4u735{--token-eb733ec2-527f-4d50-a75e-2944bc43e0f5:#5387b5!important}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%;touch-action:pan-x;overscroll-behavior-x:contain}",
