@@ -85,7 +85,7 @@ function doPost(e) {
       var who = (guests[0] && guests[0].name) || "there";
       var body =
         "Hi " + who + ",\n\n" +
-        "We've received your RSVP — thank you! 🥂 We can't wait to celebrate " +
+        "We've received your RSVP — thank you! We can't wait to celebrate " +
         "with you in Langkawi.\n\n" +
         "Here's what we have on file:\n" +
         "  • Guests: " + guestSummary.join(", ") + "\n" +
@@ -98,10 +98,10 @@ function doPost(e) {
             "you a reservation link as soon as the hotel sends it through.\n"
           : "") +
         "\nIf anything looks wrong, just reply to this email and we'll fix it.\n\n" +
-        "With love,\nYen & Yang Wei 💕";
+        "With love,\nYen & Yang Wei";
       var opts = { name: CONFIG.fromName };
       if (CONFIG.fromAlias) opts.from = CONFIG.fromAlias;
-      MailApp.sendEmail(email, "Your RSVP is in 🎉 — Yen & Yang Wei", body, opts);
+      MailApp.sendEmail(email, "Your RSVP is in — Yen & Yang Wei", body, opts);
     }
 
     // Notification to the couple (your backup copy).
