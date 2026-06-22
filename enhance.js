@@ -69,7 +69,7 @@
     "images/photo-099.jpg",
   ];
 
-  // ⬇️ RSVP delivery: paste your Google Apps Script Web App URL here.
+  // ⬇ RSVP delivery: paste your Google Apps Script Web App URL here.
   //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
   //    and emails the guest a confirmation. The URL ends in /exec.
   // Hover captions, keyed by file name (order here does not matter).
@@ -77,55 +77,55 @@
   //   "images/photo-005.jpg": "Yen's 29th birthday @Bali",
   // Leave a value as "" (empty) to show no caption for that photo.
   var NOTES = {
-    "images/photo-002.jpg": "Toyama, Japan 🏔️ · Sep 2025",
+    "images/photo-002.jpg": "Toyama, Japan · Sep 2025",
     "images/photo-003.jpg": "",
     "images/photo-005.jpg": "",
-    "images/photo-007.jpg": "Amsterdam canals 🇳🇱 · May 2022",
-    "images/photo-008.jpg": "Tokyo Tower 🗼 · Aug 2024",
+    "images/photo-007.jpg": "Amsterdam canals · May 2022",
+    "images/photo-008.jpg": "Tokyo Tower · Aug 2024",
     "images/photo-012.jpg": "",
-    "images/photo-013.jpg": "Twelve Apostles, Great Ocean Road 🇦🇺 · Oct 2023",
+    "images/photo-013.jpg": "Twelve Apostles, Great Ocean Road · Oct 2023",
     "images/photo-015.jpg": "",
-    "images/photo-020.jpg": "Great Ocean Road 🇦🇺 · Oct 2023",
-    "images/photo-021.jpg": "Marina Bay Sands, Singapore 🇸🇬 · Mar 2025",
-    "images/photo-022.jpg": "Yosemite National Park 🇺🇸 · Sep 2024",
-    "images/photo-023.jpg": "The Louvre, Paris 🇫🇷 · May 2022",
+    "images/photo-020.jpg": "Great Ocean Road · Oct 2023",
+    "images/photo-021.jpg": "Marina Bay Sands, Singapore · Mar 2025",
+    "images/photo-022.jpg": "Yosemite National Park · Sep 2024",
+    "images/photo-023.jpg": "The Louvre, Paris · May 2022",
     "images/photo-024.jpg": "",
-    "images/photo-025.jpg": "Picnic by the Eiffel Tower 🇫🇷 · May 2022",
-    "images/photo-026.jpg": "Breakfast with an Eiffel Tower view 🇫🇷 · May 2022",
-    "images/photo-027.jpg": "Where the snow meets the sea — Suzu ❄️🌊 · Dec 2023",
-    "images/photo-028.jpg": "Kusama's Yellow Pumpkin, Naoshima 🎃 · Apr 2023",
+    "images/photo-025.jpg": "Picnic by the Eiffel Tower · May 2022",
+    "images/photo-026.jpg": "Breakfast with an Eiffel Tower view · May 2022",
+    "images/photo-027.jpg": "Where the snow meets the sea — Suzu · Dec 2023",
+    "images/photo-028.jpg": "Kusama's Yellow Pumpkin, Naoshima · Apr 2023",
     "images/photo-030.jpg": "",
-    "images/photo-031.jpg": "A little town in Spain 🇪🇸 · May 2023",
+    "images/photo-031.jpg": "A little town in Spain · May 2023",
     "images/photo-033.jpg": "",
-    "images/photo-034.jpg": "AlUla desert, Saudi Arabia 🏜️ · Dec 2024",
-    "images/photo-036.jpg": "AlUla desert, Saudi Arabia 🏜️ · Dec 2024",
-    "images/photo-037.jpg": "La Zambra Resort, Málaga 🇪🇸 · May 2023",
-    "images/photo-039.jpg": "AlUla desert, Saudi Arabia 🏜️ · Dec 2024",
-    "images/photo-042.jpg": "AlUla desert, Saudi Arabia 🏜️ · Dec 2024",
+    "images/photo-034.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
+    "images/photo-036.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
+    "images/photo-037.jpg": "La Zambra Resort, Málaga · May 2023",
+    "images/photo-039.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
+    "images/photo-042.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
     "images/photo-043.jpg": "",
     "images/photo-044.jpg": "",
-    "images/photo-045.jpg": "Kouan — our favourite campsite ⛺ · Sep 2022",
-    "images/photo-046.jpg": "Flying home from the proposal trip ✈️💍 · Dec 2024",
-    "images/photo-047.jpg": "Kochia season, Japan 🍂 · Oct 2022",
-    "images/photo-048.jpg": "Vorderer Gosausee, Austria 🇦🇹 · Feb 2024",
+    "images/photo-045.jpg": "Kouan — our favourite campsite · Sep 2022",
+    "images/photo-046.jpg": "Flying home from the proposal trip · Dec 2024",
+    "images/photo-047.jpg": "Kochia season, Japan · Oct 2022",
+    "images/photo-048.jpg": "Vorderer Gosausee, Austria · Feb 2024",
     "images/photo-049.jpg": "",
     "images/photo-050.jpg": "",
     "images/photo-051.jpg": "",
     "images/photo-052.jpg": "",
-    "images/photo-053.jpg": "The Bund, Shanghai 🇨🇳 · Apr 2025",
-    "images/photo-054.jpg": "Old Town Square, Prague 🇨🇿 · Feb 2024",
-    "images/photo-055.jpg": "A campsite somewhere in Nagano ⛺ · Aug 2023",
+    "images/photo-053.jpg": "The Bund, Shanghai · Apr 2025",
+    "images/photo-054.jpg": "Old Town Square, Prague · Feb 2024",
+    "images/photo-055.jpg": "A campsite somewhere in Nagano · Aug 2023",
     "images/photo-056.jpg": "",
     "images/photo-057.jpg": "",
     "images/photo-060.jpg": "",
     "images/photo-061.jpg": "",
     "images/photo-064.jpg": "",
     "images/photo-065.jpg": "",
-    "images/photo-066.jpg": "Plaza de España, Seville 🇪🇸 · May 2023",
-    "images/photo-067.jpg": "Bali 🌴 · Dec 2022",
+    "images/photo-066.jpg": "Plaza de España, Seville · May 2023",
+    "images/photo-067.jpg": "Bali · Dec 2022",
     "images/photo-068.jpg": "",
-    "images/photo-069.jpg": "Ubud, Bali 🌴 · Dec 2022",
-    "images/photo-070.jpg": "Okinawa 🇯🇵 · Jul 2021",
+    "images/photo-069.jpg": "Ubud, Bali · Dec 2022",
+    "images/photo-070.jpg": "Okinawa · Jul 2021",
   };
 
   var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbxOD2lNkoY6uQZM6xOXSDLF6B2JgYI-WndJOWExRMIuYlaYTKe9VJeFHgMc-vLfxMZvqg/exec";
@@ -280,25 +280,25 @@
 
     var cards = [
       {
-        icon: "✈️", bg: "#d9a7cf", title: "Logistics",
+        icon: "", bg: "#d9a7cf", title: "Logistics",
         html:
           "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
           "<p><strong>For overseas guests:</strong> fly into KL or Singapore first, then a short connecting flight to Langkawi.</p>" +
           "<p><strong>Airport transfer:</strong> the airport is about <strong>30 min</strong> from the hotels by taxi or Grab.</p>" +
-          "<p><strong>Duty-free island</strong> 🍾 — alcohol is cheaper than bottled water (yes, really).</p>",
+          "<p><strong>Duty-free island</strong> — alcohol is cheaper than bottled water (yes, really).</p>",
       },
       {
-        icon: "🛏️", bg: "#f4b89a", title: "Accommodation",
+        icon: "", bg: "#f4b89a", title: "Accommodation",
         html:
           "<p>We've secured a group rate at the hotel below.</p>" +
-          "<p>The two hotels are connected, so you can travel between them by hotel buggy car. 🛺</p>" +
+          "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis 🔗</a><span class='wt-off'>66% off!</span></div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>66% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM3,500</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Guest room</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkwi-the-westin-langkawi-resort-and-spa/overview/' target='_blank' rel='noopener'>Westin 🔗</a><span class='wt-off'>45% off!</span></div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkwi-the-westin-langkawi-resort-and-spa/overview/' target='_blank' rel='noopener'>Westin</a><span class='wt-off'>45% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM1,235</span><span class='wt-now'>RM680</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
@@ -306,18 +306,18 @@
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
-        icon: "👗", bg: "#9fc0d6", title: "Dress code",
+        icon: "", bg: "#9fc0d6", title: "Dress code",
         html:
-          "<p><strong>Formal</strong> ✨ Dress to impress!</p>" +
+          "<p><strong>Formal</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
             "<div class='wt-dress-row'><strong>Gents:</strong> Black suits <span class='wt-swatch' style='background:#1c1c1c'></span></div>" +
             "<div class='wt-dress-row'><strong>Ladies:</strong> Beige <span class='wt-swatch' style='background:#e0cba8'></span> or brown <span class='wt-swatch' style='background:#8a6d4b'></span></div>" +
           "</div>",
       },
       {
-        icon: "🔞", bg: "#c9d18a", title: "Kids",
+        icon: "", bg: "#c9d18a", title: "Kids",
         html:
-          "<p>Heads up: this wedding is rated <strong>R18</strong> 🔞 — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
+          "<p>Heads up: this wedding is rated <strong>R18</strong> — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
           "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
       },
     ];
@@ -473,8 +473,8 @@
       var msg = document.createElement("p");
       msg.style.cssText = "text-align:center;color:#fefae9;font-size:1.15rem;line-height:1.5;max-width:34ch;margin:26px auto 0";
       msg.textContent = ok
-        ? "Yay, your RSVP is in! We can't wait to celebrate with you in Langkawi 🥂"
-        : "Hmm, that didn't send. Please try again, or message us directly 💌";
+        ? "Yay, your RSVP is in! We can't wait to celebrate with you in Langkawi."
+        : "Hmm, that didn't send. Please try again, or message us directly.";
       if (ok) { rsvpDone = true; form.style.display = "none"; }
       else { var b = form.querySelector('button[type="submit"]'); if (b) { b.disabled = false; b.style.opacity = "1"; } }
       form.parentNode.insertBefore(msg, form.nextSibling);
@@ -535,17 +535,17 @@
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
       { q: "What if I need to bring my kids?",
-        a: "We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! 👶 If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night." },
+        a: "We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night." },
       { q: "Can I stay anywhere else besides St Regis and Westin?",
-        a: "Absolutely! 🏨 You're welcome to stay wherever suits you best, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
+        a: "Absolutely! You're welcome to stay wherever suits you best, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
       { q: "Any tips on booking flights?",
-        a: "Book early! ✈️ Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
+        a: "Book early! Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
     ];
 
     var wrap = document.createElement("div");
     wrap.id = "wedFaq";
     var h = document.createElement("h3");
-    h.textContent = "Questions? We've got you 💛";
+    h.textContent = "Questions? We've got you";
     wrap.appendChild(h);
     items.forEach(function (it) {
       var d = document.createElement("div"); d.className = "faq-item";

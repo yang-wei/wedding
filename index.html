@@ -116,7 +116,16 @@
         .wed-hero__title { height: 170px; font-size: 80px; }
       }
       @media (max-width: 809.98px) {
-        .wed-hero__text { width: min(100%, 390px); max-width: 390px; padding: 0; }
+        #hero.wed-hero {
+          align-items: center;
+          padding-bottom: max(72px, env(safe-area-inset-bottom));
+        }
+        .wed-hero__text {
+          width: min(100%, 390px);
+          max-width: 390px;
+          padding: 0;
+          transform: translateY(-48px);
+        }
         .wed-hero__date { width: 320px; gap: 54px; font-size: 20px; }
         .wed-hero__title { height: 120px; font-size: 60px; }
         .wed-hero__names { gap: 40px; font-size: 20px; }
