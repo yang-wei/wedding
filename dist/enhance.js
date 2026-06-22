@@ -157,6 +157,7 @@
       "#wedTravel::-webkit-scrollbar{display:none}",
       "#wedTravelHint{display:none;text-align:center;margin:16px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
       "@media(max-width:809.98px){#wedTravelHint{display:block}}",
+      "@media(max-width:809.98px){#wedTravel{flex-direction:column;align-items:center;overflow:visible;scroll-snap-type:none;touch-action:pan-y;overscroll-behavior:auto;cursor:default;user-select:auto;padding-bottom:10px}#wedTravel .wt-card{width:min(100%,320px);scroll-snap-align:none}#wedTravelHint{display:none}}",
       "#wedTravel,#wedTravel *{box-sizing:border-box}",
       "#wedTravel .wt-card{flex:0 0 auto;width:262px;background:#f4edd2;border:2.5px solid #2a2018;border-radius:22px 16px 24px 18px/16px 22px 18px 24px;padding:44px 24px 26px;position:relative;box-shadow:0 12px 26px -16px rgba(0,0,0,.5);color:#2a2018}",
       "#wedTravel .wt-card:nth-child(odd){transform:rotate(-2deg)}",
@@ -280,7 +281,7 @@
 
     var cards = [
       {
-        icon: "", bg: "#d9a7cf", title: "Logistics",
+        icon: "✈️", bg: "#d9a7cf", title: "Logistics",
         html:
           "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
           "<p><strong>For overseas guests:</strong> fly into KL or Singapore first, then a short connecting flight to Langkawi.</p>" +
@@ -288,7 +289,7 @@
           "<p><strong>Duty-free island</strong> — alcohol is cheaper than bottled water (yes, really).</p>",
       },
       {
-        icon: "", bg: "#f4b89a", title: "Accommodation",
+        icon: "🏨", bg: "#f4b89a", title: "Accommodation",
         html:
           "<p>We've secured a group rate at the hotel below.</p>" +
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
@@ -306,7 +307,7 @@
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
-        icon: "", bg: "#9fc0d6", title: "Dress code",
+        icon: "👗", bg: "#9fc0d6", title: "Dress code",
         html:
           "<p><strong>Formal</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
@@ -315,7 +316,7 @@
           "</div>",
       },
       {
-        icon: "", bg: "#c9d18a", title: "Kids",
+        icon: "🧸", bg: "#c9d18a", title: "Kids",
         html:
           "<p>Heads up: this wedding is rated <strong>R18</strong> — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
           "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
