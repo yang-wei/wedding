@@ -162,7 +162,8 @@
       "#wedTravel .wt-card{flex:0 0 auto;width:262px;background:#f4edd2;border:2.5px solid #2a2018;border-radius:22px 16px 24px 18px/16px 22px 18px 24px;padding:44px 24px 26px;position:relative;box-shadow:0 12px 26px -16px rgba(0,0,0,.5);color:#2a2018}",
       "#wedTravel .wt-card:nth-child(odd){transform:rotate(-2deg)}",
       "#wedTravel .wt-card:nth-child(even){transform:rotate(1.8deg)}",
-      "#wedTravel .wt-icon{position:absolute;top:-30px;left:28px;width:60px;height:60px;display:grid;place-items:center;border-radius:50%;font-size:28px;box-shadow:0 6px 14px -8px rgba(0,0,0,.5)}",
+      "#wedTravel .wt-icon{position:absolute;top:-30px;left:28px;width:60px;height:60px;display:grid;place-items:center;border-radius:50%;background:var(--wt-bg,#d9a7cf);box-shadow:0 6px 14px -8px rgba(0,0,0,.5)}",
+      "#wedTravel .wt-glyph{display:block;width:38px;height:38px;background:#f4edd2;-webkit-mask:var(--wt-icon) center/contain no-repeat;mask:var(--wt-icon) center/contain no-repeat}",
       "#wedTravel h3{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:1.7rem;margin:0 0 14px}",
       "#wedTravel p{margin:0 0 10px;font-size:.92rem;line-height:1.4}",
       "#wedTravel .wt-rate{padding:10px 0;border-bottom:1px dashed rgba(42,32,24,.25)}",
@@ -279,9 +280,16 @@
       ticker.style.display = "none";
     }
 
+    function iconMask(body) {
+      return 'url("data:image/svg+xml,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg>'
+      ) + '")';
+    }
+
     var cards = [
       {
-        icon: "✈️", bg: "#d9a7cf", title: "Logistics",
+        icon: '<path d="M9 36c11-4 22-8 42-20 3-2 6 1 3 4-12 15-23 25-36 36l-2-12-9-4 12-4 7-12"/><path d="M36 28l14 9"/><path d="M23 44l8 8"/>',
+        bg: "#d9a7cf", title: "Logistics",
         html:
           "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
           "<p><strong>For overseas guests:</strong> fly into KL or Singapore first, then a short connecting flight to Langkawi.</p>" +
@@ -289,7 +297,8 @@
           "<p><strong>Duty-free island</strong> — alcohol is cheaper than bottled water (yes, really).</p>",
       },
       {
-        icon: "🏨", bg: "#f4b89a", title: "Accommodation",
+        icon: '<path d="M10 42h44"/><path d="M13 42V25c0-4 3-7 7-7h24c4 0 7 3 7 7v17"/><path d="M18 42V31h12v11"/><path d="M34 42V31h12v11"/><path d="M20 22c2-4 6-7 12-7s10 3 12 7"/><path d="M18 50h28"/>',
+        bg: "#f4b89a", title: "Accommodation",
         html:
           "<p>We've secured a group rate at the hotel below.</p>" +
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
@@ -307,7 +316,8 @@
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
-        icon: "👗", bg: "#9fc0d6", title: "Dress code",
+        icon: '<path d="M25 11c3 4 11 4 14 0"/><path d="M25 11l-9 14 9 4-8 24c10 4 21 4 30 0l-8-24 9-4-9-14"/><path d="M24 31c5 3 12 3 17 0"/><path d="M21 50c8 2 15 2 22 0"/>',
+        bg: "#9fc0d6", title: "Dress code",
         html:
           "<p><strong>Formal</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
@@ -316,7 +326,8 @@
           "</div>",
       },
       {
-        icon: "🧸", bg: "#c9d18a", title: "Kids",
+        icon: '<circle cx="22" cy="19" r="7"/><circle cx="42" cy="19" r="7"/><path d="M18 36c0-11 6-18 14-18s14 7 14 18c0 12-6 19-14 19s-14-7-14-19z"/><path d="M25 35h.1"/><path d="M39 35h.1"/><path d="M29 42c2 2 4 2 6 0"/><path d="M16 48l-5 6"/><path d="M48 48l5 6"/>',
+        bg: "#c9d18a", title: "Kids",
         html:
           "<p>Heads up: this wedding is rated <strong>R18</strong> — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
           "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
@@ -328,8 +339,10 @@
     cards.forEach(function (c) {
       var card = document.createElement("article");
       card.className = "wt-card";
+      card.style.setProperty("--wt-bg", c.bg);
+      card.style.setProperty("--wt-icon", iconMask(c.icon));
       card.innerHTML =
-        '<div class="wt-icon" style="background:' + c.bg + '">' + c.icon + "</div>" +
+        '<div class="wt-icon"><span class="wt-glyph" aria-hidden="true"></span></div>' +
         "<h3>" + c.title + "</h3>" + c.html;
       wrap.appendChild(card);
     });
