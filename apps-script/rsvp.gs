@@ -53,6 +53,8 @@ function doPost(e) {
     var email     = p["Email"] || "";
     var partySize = p["Party size"] || String(guests.length);
     var hotel     = (pp["Hotel"] || (p["Hotel"] ? [p["Hotel"]] : [])).join(" + ");
+    // "No / staying elsewhere" is a valid answer but means NOT booking a group-rate room.
+    var stayingAtGroupHotel = hotel && hotel.indexOf("No /") !== 0;
     var welcome   = p["Welcome drinks"] ? "Yes" : "";
     var arrival   = p["Flight arrival code"] || "";
     var ret       = p["Flight return code"] || "";
@@ -89,11 +91,11 @@ function doPost(e) {
         "with you in Langkawi.\n\n" +
         "Here's what we have on file:\n" +
         "  • Guests: " + guestSummary.join(", ") + "\n" +
-        (hotel   ? "  • Staying at: " + hotel + "\n" : "") +
+        (hotel   ? "  • Hotel: " + hotel + "\n" : "") +
         (welcome ? "  • Joining the welcome dinner (Friday): Yes\n" : "") +
         (arrival || arrivalT ? "  • Flight arrival: " + [arrival, arrivalT].filter(String).join(", ") + "\n" : "") +
         (ret || retT ? "  • Flight return: " + [ret, retT].filter(String).join(", ") + "\n" : "") +
-        (hotel
+        (stayingAtGroupHotel
           ? "\nWe've negotiated a group rate at your chosen hotel and will email " +
             "you a reservation link as soon as the hotel sends it through.\n"
           : "") +

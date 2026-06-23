@@ -201,11 +201,87 @@
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
+      // hotel question rendered as single-select radios (override Framer's boolean-input look)
+      "#wedHotelGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
+      "#wedHotelGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
+      "#wedHotelGroup input[type=radio]:before,#wedHotelGroup input[type=radio]:after{display:none!important;content:none!important}",
+      // "What awaits us" — vertical timeline for the order of events
+      "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
+      "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
+      "#wedTimeline .tl-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:rgba(42,32,24,.2);border-radius:2px;z-index:0}",
+      "#wedTimeline .tl-fill{position:absolute;left:0;top:0;width:100%;height:0;background:#42421d;border-radius:2px}",
+      "#wedTimeline .tl-heart{position:absolute;left:50%;top:0;width:34px;height:34px;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}",
+      "#wedTimeline .tl-heart svg{width:100%;height:100%;fill:#b8534a;display:block}",
+      "#wedTimeline .tl-day{position:relative;width:50%;margin:0 0 56px;z-index:1}",
+      "#wedTimeline .tl-day:last-child{margin-bottom:0}",
+      "#wedTimeline .tl-left{margin-right:auto;padding-right:46px;text-align:right}",
+      "#wedTimeline .tl-right{margin-left:auto;padding-left:46px;text-align:left}",
+      "#wedTimeline .tl-node{position:absolute;top:30px;width:18px;height:18px;border-radius:50%;background:#fefae9;border:2.5px solid rgba(42,32,24,.45);z-index:2;transition:background .25s ease,border-color .25s ease,transform .25s ease}",
+      "#wedTimeline .tl-left .tl-node{right:-10px}",
+      "#wedTimeline .tl-right .tl-node{left:-10px}",
+      "#wedTimeline .tl-day.is-in .tl-node{background:#b8534a;border-color:#42421d;transform:scale(1.18)}",
+      "#wedTimeline .tl-card{display:block;text-align:left;background:#f4edd2;border:2.5px solid #2a2018;border-radius:22px 16px 24px 18px/16px 22px 18px 24px;padding:18px 22px 20px;box-shadow:0 12px 26px -16px rgba(0,0,0,.5);opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease}",
+      "#wedTimeline .tl-day.is-in .tl-card{opacity:1;transform:none}",
+      "#wedTimeline h3{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:1.6rem;line-height:1.05;margin:0 0 9px;color:#42421d}",
+      "#wedTimeline .tl-intro{font-size:.9rem;line-height:1.5;margin:0 0 13px}",
+      "#wedTimeline .tl-sched{list-style:none;margin:0;padding:0}",
+      "#wedTimeline .tl-sched li{font-size:.88rem;line-height:1.4;padding:7px 0;border-top:1px dashed rgba(42,32,24,.25)}",
+      "#wedTimeline .tl-time{font-weight:800;color:#42421d}",
+      "@media(max-width:809.98px){",
+      "#wedTimeline{max-width:520px;padding-left:4px}",
+      "#wedTimeline .tl-line{left:19px}",
+      "#wedTimeline .tl-heart{left:19px}",
+      "#wedTimeline .tl-day{width:100%;margin-bottom:34px;padding-left:44px!important;padding-right:14px!important;text-align:left!important}",
+      "#wedTimeline .tl-node{left:11px!important;right:auto!important}",
+      "}",
     ].join("");
     var s = document.createElement("style");
     s.id = "wedGalleryCss";
     s.textContent = css;
     document.head.appendChild(s);
+  }
+
+  // Parse a sortable month index from a photo's caption (e.g. "… · Dec 2024" -> 2024*12+11).
+  // Returns null when the caption has no date.
+  var MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+  function photoDate(src) {
+    var m = (NOTES[src] || "").match(/([A-Z][a-z]{2})\s+(\d{4})/);
+    return (m && m[1] in MONTHS) ? parseInt(m[2], 10) * 12 + MONTHS[m[1]] : null;
+  }
+
+  // Pick `n` photos at random on each load, spread across capture dates so we don't
+  // get several shots from the same trip. Photos are grouped by month; the distinct
+  // months are sorted and split into `n` equal time-ordered segments, and one random
+  // month (then one random photo from it) is drawn per segment — so the picks are
+  // always from different months. If there aren't enough distinct months, the rest
+  // are filled in from undated photos at random.
+  function pickPhotos(n) {
+    n = n || 6;
+    var byDate = {}, undated = [];
+    PHOTOS.forEach(function (src) {
+      var d = photoDate(src);
+      if (d == null) undated.push(src);
+      else (byDate[d] = byDate[d] || []).push(src);
+    });
+    var dates = Object.keys(byDate).map(Number).sort(function (a, b) { return a - b; });
+    function randOf(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+    var chosen = [];
+    if (dates.length >= n) {
+      for (var i = 0; i < n; i++) {
+        var lo = Math.floor(i * dates.length / n);
+        var hi = Math.floor((i + 1) * dates.length / n);
+        if (hi <= lo) hi = lo + 1;
+        chosen.push(randOf(byDate[dates[lo + Math.floor(Math.random() * (hi - lo))]]));
+      }
+    } else {
+      dates.forEach(function (d) { chosen.push(randOf(byDate[d])); });
+      var pool = undated.slice();
+      while (chosen.length < n && pool.length) {
+        chosen.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
+      }
+    }
+    return chosen;
   }
 
   function build() {
@@ -217,7 +293,7 @@
 
     var track = document.createElement("div");
     track.id = "wedGalleryTrack";
-    PHOTOS.forEach(function (src) {
+    pickPhotos(6).forEach(function (src) {
       var note = (NOTES[src] || "").trim();
 
       var fig = document.createElement("figure");
@@ -282,13 +358,13 @@
 
     function iconMask(body) {
       return 'url("data:image/svg+xml,' + encodeURIComponent(
-        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" stroke="#000" stroke-width="4.8" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg>'
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + body + '</svg>'
       ) + '")';
     }
 
     var cards = [
       {
-        icon: '<path d="M9 36c11-4 22-8 42-20 3-2 6 1 3 4-12 15-23 25-36 36l-2-12-9-4 12-4 7-12"/><path d="M36 28l14 9"/><path d="M23 44l8 8"/>',
+        icon: '<path d="M2 22h20"/><path d="M6.36 17.4 4 17l-2-4 1.1-.55a2 2 0 0 1 1.8 0l.17.1a2 2 0 0 0 1.8 0L8 12 5 6l1.9-.95a2 2 0 0 1 1.8.1l5.84 3.5 3.16-.85a2 2 0 0 1 2.4 1.4 2 2 0 0 1-1.4 2.4Z"/>',
         bg: "#d9a7cf", title: "Logistics",
         html:
           "<p>Direct flights to <strong>Langkawi (LGK)</strong> are from <strong>KL, Penang &amp; Singapore</strong> only.</p>" +
@@ -297,7 +373,7 @@
           "<p><strong>Duty-free island</strong> — alcohol is cheaper than bottled water (yes, really).</p>",
       },
       {
-        icon: '<path d="M10 42h44"/><path d="M13 42V25c0-4 3-7 7-7h24c4 0 7 3 7 7v17"/><path d="M18 42V31h12v11"/><path d="M34 42V31h12v11"/><path d="M20 22c2-4 6-7 12-7s10 3 12 7"/><path d="M18 50h28"/>',
+        icon: '<path d="M2 5v15"/><path d="M2 11h18a2 2 0 0 1 2 2v7"/><path d="M2 16h20"/><path d="M6 11V8h5v3"/>',
         bg: "#f4b89a", title: "Accommodation",
         html:
           "<p>We've secured a group rate at the hotel below.</p>" +
@@ -316,7 +392,7 @@
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
-        icon: '<path d="M25 11c3 4 11 4 14 0"/><path d="M25 11l-9 14 9 4-8 24c10 4 21 4 30 0l-8-24 9-4-9-14"/><path d="M24 31c5 3 12 3 17 0"/><path d="M21 50c8 2 15 2 22 0"/>',
+        icon: '<path d="M8 4 12 6 16 4"/><path d="M8 4 10 12 6 21h12l-4-9 2-8"/><path d="M10 12h4"/>',
         bg: "#9fc0d6", title: "Dress code",
         html:
           "<p><strong>Formal</strong> Dress to impress!</p>" +
@@ -326,7 +402,7 @@
           "</div>",
       },
       {
-        icon: '<circle cx="22" cy="19" r="7"/><circle cx="42" cy="19" r="7"/><path d="M18 36c0-11 6-18 14-18s14 7 14 18c0 12-6 19-14 19s-14-7-14-19z"/><path d="M25 35h.1"/><path d="M39 35h.1"/><path d="M29 42c2 2 4 2 6 0"/><path d="M16 48l-5 6"/><path d="M48 48l5 6"/>',
+        icon: '<path d="M3 11h13V6A8 8 0 0 0 3 11Z"/><path d="M3 11l3 6h7l3-6"/><path d="M16 6c3 0 5 1.5 6 4"/><circle cx="7" cy="20" r="2"/><circle cx="13" cy="20" r="2"/>',
         bg: "#c9d18a", title: "Kids",
         html:
           "<p>Heads up: this wedding is rated <strong>R18</strong> — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
@@ -460,9 +536,10 @@
       var hbox = hotelGroup.querySelector('[data-framer-name="checkboxes"]');
       var tmpl = hbox ? hbox.querySelector("label") : null;
       if (tmpl) {
+        // single-select: radio buttons (St. Regis / Westin / No)
         var setHotel = function (label, value) {
           var inp = label.querySelector("input");
-          if (inp) { inp.name = "Hotel"; inp.setAttribute("value", value); inp.checked = false; }
+          if (inp) { inp.type = "radio"; inp.name = "Hotel"; inp.setAttribute("value", value); inp.checked = false; inp.removeAttribute("checked"); }
           var lp = label.querySelector("p");
           if (lp) lp.textContent = value;
         };
@@ -470,8 +547,12 @@
         var westin = tmpl.cloneNode(true);
         setHotel(westin, "The Westin Langkawi");
         hbox.appendChild(westin);
+        var noOpt = tmpl.cloneNode(true);
+        setHotel(noOpt, "No / staying elsewhere");
+        hbox.appendChild(noOpt);
+        hotelGroup.id = "wedHotelGroup";
         var note = document.createElement("p");
-        note.textContent = "We've negotiated group rates at both. Tick where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
+        note.textContent = "We've negotiated group rates at both. Select where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
         note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
         hotelGroup.appendChild(note);
       }
@@ -570,7 +651,91 @@
     section.appendChild(wrap);
   }
 
-  function run() { build(); buildTravel(); buildFaq(); enhanceRsvp(); }
+  // "What awaits us" — replace the order-of-events card carousel with a vertical
+  // timeline (text + agenda only), with a scroll-driven heart and per-day reveal.
+  function buildEvents() {
+    var section = document.querySelector('[data-framer-name="itinerary"]');
+    if (!section || document.getElementById("wedTimeline")) return;
+
+    // hide Framer's original card carousel; keep the "The order of events" heading
+    var firstCard = section.querySelector('[data-framer-name="card"]');
+    var cardsBlock = firstCard ? firstCard.closest('[data-framer-name="content"]') : null;
+    if (cardsBlock) cardsBlock.style.display = "none";
+
+    var HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.3 4.6 12.9C2.2 10.5 2.2 6.8 4.6 4.6 6.8 2.6 10 3 12 5.2 14 3 17.2 2.6 19.4 4.6 21.8 6.8 21.8 10.5 19.4 12.9Z"/></svg>';
+
+    var DAYS = [
+      {
+        date: "Friday, Feb 12th",
+        intro: "We are planning a welcome dinner for those who arrive this day, so come kick off the celebration with us!",
+        sched: [["3 pm", "Guest check-in at the hotel/resort"], ["5:30 pm", "Welcome dinner & more (TBD)"]],
+      },
+      {
+        date: "Saturday, Feb 13th",
+        intro: "The big day! We can’t wait to share our vows with all of you, laugh, cry, and celebrate together. After the ceremony, there will be drinks, photos, and plenty of dancing. Tonight is all about love, joy, and making memories — we’re so glad you’ll be a part of it.",
+        sched: [["4:00 pm", "Ceremony"], ["5:30 pm", "Cocktail hour & photos"], ["7 pm", "Reception: dinner, dancing, and celebration"]],
+      },
+      {
+        date: "Sunday, Feb 14th",
+        intro: "Breakfast together. Checkout is at 12pm.",
+        sched: [["9:30 am", "Breakfast together"], ["12 pm", "Checkout"]],
+      },
+    ];
+
+    var tl = document.createElement("div");
+    tl.id = "wedTimeline";
+    tl.innerHTML = '<div class="tl-line"><div class="tl-fill"></div></div><div class="tl-heart">' + HEART + "</div>";
+
+    DAYS.forEach(function (d, i) {
+      var day = document.createElement("div");
+      day.className = "tl-day " + (i % 2 ? "tl-right" : "tl-left");
+      var sched = d.sched.map(function (r) {
+        return '<li><span class="tl-time">' + r[0] + "</span> — " + r[1] + "</li>";
+      }).join("");
+      day.innerHTML =
+        '<span class="tl-node"></span>' +
+        '<div class="tl-card">' +
+          "<h3>" + d.date + "</h3>" +
+          '<p class="tl-intro">' + d.intro + "</p>" +
+          '<ul class="tl-sched">' + sched + "</ul>" +
+        "</div>";
+      tl.appendChild(day);
+    });
+
+    var host = cardsBlock ? cardsBlock.parentElement : section;
+    host.appendChild(tl);
+
+    // colored line "draws" + heart travels down as you scroll through the section
+    var line = tl.querySelector(".tl-line");
+    var fill = tl.querySelector(".tl-fill");
+    var heart = tl.querySelector(".tl-heart");
+    var ticking = false;
+    function update() {
+      ticking = false;
+      var r = line.getBoundingClientRect();
+      var p = window.innerHeight * 0.55 - r.top;
+      p = Math.max(0, Math.min(r.height, p));
+      fill.style.height = p + "px";
+      heart.style.top = p + "px";
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    update();
+
+    // reveal each day (card + node) as it enters the viewport
+    var days = tl.querySelectorAll(".tl-day");
+    if ("IntersectionObserver" in window) {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
+      }, { threshold: 0.25 });
+      Array.prototype.forEach.call(days, function (d) { io.observe(d); });
+    } else {
+      Array.prototype.forEach.call(days, function (d) { d.classList.add("is-in"); });
+    }
+  }
+
+  function run() { build(); buildTravel(); buildEvents(); buildFaq(); enhanceRsvp(); }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
 })();
