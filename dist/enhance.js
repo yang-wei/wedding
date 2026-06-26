@@ -208,9 +208,9 @@
       // "What awaits us" — vertical timeline for the order of events
       "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
       "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
-      "#wedTimeline .tl-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:rgba(42,32,24,.2);border-radius:2px;z-index:0}",
-      "#wedTimeline .tl-fill{position:absolute;left:0;top:0;width:100%;height:0;background:#42421d;border-radius:2px}",
-      "#wedTimeline .tl-heart{position:absolute;left:50%;top:0;width:34px;height:34px;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}",
+      "#wedTimeline .tl-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:rgba(42,32,24,.46);border-radius:2px;z-index:0}",
+      "#wedTimeline .tl-fill{position:absolute;left:0;top:0;width:100%;height:0;background:#2f3218;border-radius:2px}",
+      "#wedTimeline .tl-heart{position:absolute;left:50%;top:0;width:34px;height:34px;transform:translate(-50%,-50%);transition:transform .2s ease;z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}",
       "#wedTimeline .tl-heart svg{width:100%;height:100%;fill:#c92f2f;display:block}",
       "#wedTimeline .tl-day{position:relative;width:50%;margin:0 0 56px;z-index:1}",
       "#wedTimeline .tl-day:last-child{margin-bottom:0}",
@@ -227,7 +227,7 @@
       "#wedTimeline{max-width:520px;padding-left:4px}",
       "#wedTimeline .tl-line{left:19px}",
       "#wedTimeline .tl-heart{left:19px}",
-      "#wedTimeline .tl-day{width:100%;margin-bottom:34px;padding-left:44px!important;padding-right:14px!important;text-align:left!important}",
+      "#wedTimeline .tl-day{width:100%;margin-bottom:96px;padding-left:44px!important;padding-right:14px!important;text-align:left!important}",
       "}",
     ].join("");
     var s = document.createElement("style");
@@ -700,6 +700,7 @@
     var line = tl.querySelector(".tl-line");
     var fill = tl.querySelector(".tl-fill");
     var heart = tl.querySelector(".tl-heart");
+    var days = tl.querySelectorAll(".tl-day");
     var ticking = false;
     function update() {
       ticking = false;
@@ -708,6 +709,13 @@
       p = Math.max(0, Math.min(r.height, p));
       fill.style.height = p + "px";
       heart.style.top = p + "px";
+      var nearest = Infinity;
+      Array.prototype.forEach.call(days, function (d) {
+        nearest = Math.min(nearest, Math.abs(p - (d.offsetTop + 30)));
+      });
+      var hitZone = window.matchMedia("(max-width:809.98px)").matches ? 72 : 58;
+      var scale = nearest <= hitZone ? 1 : 0.68;
+      heart.style.transform = "translate(-50%,-50%) scale(" + scale + ")";
     }
     function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -715,7 +723,6 @@
     update();
 
     // reveal each day card as it enters the viewport
-    var days = tl.querySelectorAll(".tl-day");
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (es) {
         es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add("is-in"); io.unobserve(e.target); } });
