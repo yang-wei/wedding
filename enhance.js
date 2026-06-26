@@ -216,10 +216,6 @@
       "#wedTimeline .tl-day:last-child{margin-bottom:0}",
       "#wedTimeline .tl-left{margin-right:auto;padding-right:46px;text-align:right}",
       "#wedTimeline .tl-right{margin-left:auto;padding-left:46px;text-align:left}",
-      "#wedTimeline .tl-node{position:absolute;top:30px;width:18px;height:18px;border-radius:50%;background:#fefae9;border:2.5px solid rgba(42,32,24,.45);z-index:2;transition:background .25s ease,border-color .25s ease,transform .25s ease}",
-      "#wedTimeline .tl-left .tl-node{right:-10px}",
-      "#wedTimeline .tl-right .tl-node{left:-10px}",
-      "#wedTimeline .tl-day.is-in .tl-node{background:#b8534a;border-color:#42421d;transform:scale(1.18)}",
       "#wedTimeline .tl-card{display:block;text-align:left;background:#f4edd2;border:2.5px solid #2a2018;border-radius:22px 16px 24px 18px/16px 22px 18px 24px;padding:18px 22px 20px;box-shadow:0 12px 26px -16px rgba(0,0,0,.5);opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease}",
       "#wedTimeline .tl-day.is-in .tl-card{opacity:1;transform:none}",
       "#wedTimeline h3{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:1.6rem;line-height:1.05;margin:0 0 9px;color:#42421d}",
@@ -232,7 +228,6 @@
       "#wedTimeline .tl-line{left:19px}",
       "#wedTimeline .tl-heart{left:19px}",
       "#wedTimeline .tl-day{width:100%;margin-bottom:34px;padding-left:44px!important;padding-right:14px!important;text-align:left!important}",
-      "#wedTimeline .tl-node{left:11px!important;right:auto!important}",
       "}",
     ].join("");
     var s = document.createElement("style");
@@ -690,7 +685,6 @@
         return '<li><span class="tl-time">' + r[0] + "</span> — " + r[1] + "</li>";
       }).join("");
       day.innerHTML =
-        '<span class="tl-node"></span>' +
         '<div class="tl-card">' +
           "<h3>" + d.date + "</h3>" +
           '<p class="tl-intro">' + d.intro + "</p>" +
@@ -720,7 +714,7 @@
     window.addEventListener("resize", onScroll);
     update();
 
-    // reveal each day (card + node) as it enters the viewport
+    // reveal each day card as it enters the viewport
     var days = tl.querySelectorAll(".tl-day");
     if ("IntersectionObserver" in window) {
       var io = new IntersectionObserver(function (es) {
