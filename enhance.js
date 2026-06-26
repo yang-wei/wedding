@@ -211,7 +211,7 @@
       "#wedTimeline .tl-line{position:absolute;top:0;bottom:0;left:50%;width:2px;transform:translateX(-50%);background:rgba(42,32,24,.2);border-radius:2px;z-index:0}",
       "#wedTimeline .tl-fill{position:absolute;left:0;top:0;width:100%;height:0;background:#42421d;border-radius:2px}",
       "#wedTimeline .tl-heart{position:absolute;left:50%;top:0;width:34px;height:34px;transform:translate(-50%,-50%);z-index:3;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3))}",
-      "#wedTimeline .tl-heart svg{width:100%;height:100%;fill:#b8534a;display:block}",
+      "#wedTimeline .tl-heart svg{width:100%;height:100%;fill:#c92f2f;display:block}",
       "#wedTimeline .tl-day{position:relative;width:50%;margin:0 0 56px;z-index:1}",
       "#wedTimeline .tl-day:last-child{margin-bottom:0}",
       "#wedTimeline .tl-left{margin-right:auto;padding-right:46px;text-align:right}",
@@ -405,8 +405,7 @@
         icon: '<path d="M3 11h13V6A8 8 0 0 0 3 11Z"/><path d="M3 11l3 6h7l3-6"/><path d="M16 6c3 0 5 1.5 6 4"/><circle cx="7" cy="20" r="2"/><circle cx="13" cy="20" r="2"/>',
         bg: "#c9d18a", title: "Kids",
         html:
-          "<p>Heads up: this wedding is rated <strong>R18</strong> — expect questionable dance moves, late-night shenanigans and grown-ups behaving like kids.</p>" +
-          "<p>If bringing your little one is unavoidable, just let us know and we're happy to help arrange a babysitter for the day so you can relax and enjoy.</p>",
+          "<p>We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night.</p>",
       },
     ];
 
@@ -491,7 +490,7 @@
       if (isFirst) nm.required = true;
       var dt = document.createElement("input");
       dt.type = "text"; dt.className = "wp-diet";
-      dt.placeholder = "Dietary / allergies (optional)";
+      dt.placeholder = "Dietary restrictions";
       row.appendChild(nm); row.appendChild(dt);
       if (!isFirst) {
         var rm = document.createElement("button");
@@ -515,7 +514,7 @@
     // drop the single Name field + the shared dietary field; put the guest list in their place
     if (nameLabel) { nameLabel.parentNode.insertBefore(party, nameLabel); nameLabel.remove(); }
     else { form.insertBefore(party, form.firstChild); }
-    var dietary = form.querySelector('[name="Any dietary restrictions or allergies?"]');
+    var dietary = form.querySelector('[name="Dietary restrictions"]');
     if (dietary) { var dl = dietary.closest("label"); if (dl) dl.remove(); }
 
     // place the optional flight fields after the Email field
@@ -629,10 +628,8 @@
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
-      { q: "What if I need to bring my kids?",
-        a: "We've planned the day as a grown-ups-only celebration, so we gently ask to keep it kids-free, but we totally get that it's not always possible! If your little ones come along, we'll help you sort out a babysitter for the day: BYOM (Bring Your Own Mum, or maid!), or the hotel's childcare service for ages 4–12. They're in good hands, and you get to enjoy the night." },
       { q: "Can I stay anywhere else besides St Regis and Westin?",
-        a: "Absolutely! You're welcome to stay wherever suits you best, so the choice is entirely yours. We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
+        a: "Absolutely! We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
       { q: "Any tips on booking flights?",
         a: "Book early! Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
     ];
@@ -668,17 +665,17 @@
       {
         date: "Friday, Feb 12th",
         intro: "We are planning a welcome dinner for those who arrive this day, so come kick off the celebration with us!",
-        sched: [["3 pm", "Guest check-in at the hotel/resort"], ["5:30 pm", "Welcome dinner & more (TBD)"]],
+        sched: [["3:00pm", "Guest check-in at the hotel/resort"], ["5:30pm", "Welcome dinner & more (TBD)"]],
       },
       {
         date: "Saturday, Feb 13th",
-        intro: "The big day! We can’t wait to share our vows with all of you, laugh, cry, and celebrate together. After the ceremony, there will be drinks, photos, and plenty of dancing. Tonight is all about love, joy, and making memories — we’re so glad you’ll be a part of it.",
-        sched: [["4:00 pm", "Ceremony"], ["5:30 pm", "Cocktail hour & photos"], ["7 pm", "Reception: dinner, dancing, and celebration"]],
+        intro: "The big day! We can’t wait to share our vows with all of you, laugh, cry, and celebrate together. After the ceremony, there will be drinks, photos, and an after party. Tonight is all about love, joy, and making memories — we’re so glad you’ll be a part of it.",
+        sched: [["4:00pm", "Ceremony"], ["5:30pm", "Cocktail hour & photos"], ["7:00pm", "Reception: dinner and after party"]],
       },
       {
         date: "Sunday, Feb 14th",
-        intro: "Breakfast together. Checkout is at 12pm.",
-        sched: [["9:30 am", "Breakfast together"], ["12 pm", "Checkout"]],
+        intro: "Let's have breakfast together for those who stay at St. Regis and can wake up. Checkout is at 12:00pm.",
+        sched: [],
       },
     ];
 
