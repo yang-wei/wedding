@@ -157,7 +157,7 @@
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
-      "#wedUpdateNote{max-width:42ch;margin:0 auto 26px;padding:8px 0 8px 16px;border-left:3px solid rgba(254,250,233,.5);text-align:left;color:#fefae9;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;line-height:1.5;opacity:.92}",
+      "#wedUpdateNote{margin:24px 0 0;padding:10px 0 10px 16px;border-left:3px solid rgba(77,32,8,.45);text-align:left;color:#4d2008;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;line-height:1.5;opacity:.92}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
       "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
       "#wedHotelGroup input[type=radio]:checked,#wedAttendGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
@@ -409,11 +409,13 @@
     form.setAttribute("data-wed-rsvp", "1");
     var rsvpDone = false; // set true once submitted, to silence the leave warning
 
-    // "we'll keep this updated" note, between the Q&A and the form
+    // "we'll keep this updated" note, at the end of the Q&A (light background, not the RSVP panel)
     var updateNote = document.createElement("p");
     updateNote.id = "wedUpdateNote";
     updateNote.textContent = "We'll keep this site updated as we lock in more details — so check back closer to the date for the latest info.";
-    form.parentNode.insertBefore(updateNote, form);
+    var faqHost = document.getElementById("wedFaq") || document.getElementById("wedFaqSection");
+    if (faqHost) faqHost.appendChild(updateNote);
+    else form.parentNode.insertBefore(updateNote, form);
 
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
