@@ -138,7 +138,7 @@
       "#wedMusic .m-eq rect:nth-child(3){animation-delay:.44s}",
       "@keyframes wedEq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}",
       "@media(prefers-reduced-motion:reduce){#wedMusic .m-eq rect{animation:none}}",
-      "#wedFaqSection{padding:clamp(50px,8vw,92px) 0}",
+      "#wedFaqSection{padding:clamp(50px,8vw,92px) 0 clamp(80px,15vw,150px)}",
       "#wedFaq{max-width:660px;margin:0 auto;padding:0 24px;text-align:left;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
       "#wedFaq h3{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:1.9rem;text-align:center;margin:0 0 20px;color:#4d2008}",
       "#wedFaq .faq-item{padding:16px 2px;border-bottom:1px dashed rgba(77,32,8,.25)}",
