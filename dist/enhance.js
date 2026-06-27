@@ -82,8 +82,10 @@
       "#wedTravel .wt-note{font-size:.82rem;opacity:.8;margin-top:10px}",
       "#wedTravel .wt-link{color:inherit;font-weight:600;font-size:1.02rem;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedTravel .wt-link:hover{opacity:.65}",
-      "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:8px;margin-top:6px}",
-      "#wedTravel .wt-dress-row{font-size:.92rem;line-height:1.5}",
+      "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(42,32,24,.25)}",
+      "#wedTravel .wt-dress-row{display:flex;align-items:baseline;gap:12px;font-size:.92rem;line-height:1.5}",
+      "#wedTravel .wt-dress-label{flex:0 0 48px;font-weight:700}",
+      "#wedTravel .wt-dress-val{flex:1}",
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
       "#wedFaqSection{padding:clamp(50px,8vw,92px) 0}",
@@ -256,10 +258,10 @@
         icon: '<path d="M8 4 12 6 16 4"/><path d="M8 4 10 12 6 21h12l-4-9 2-8"/><path d="M10 12h4"/>',
         bg: "#9fc0d6", title: "Dress code",
         html:
-          "<p><strong>Formal</strong> Dress to impress!</p>" +
+          "<p><strong>Formal.</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
-            "<div class='wt-dress-row'><strong>Gents:</strong> Black suits <span class='wt-swatch' style='background:#1c1c1c'></span></div>" +
-            "<div class='wt-dress-row'><strong>Ladies:</strong> Beige <span class='wt-swatch' style='background:#e0cba8'></span> or brown <span class='wt-swatch' style='background:#8a6d4b'></span></div>" +
+            "<div class='wt-dress-row'><span class='wt-dress-label'>Gents</span><span class='wt-dress-val'>Black suits <span class='wt-swatch' style='background:#1c1c1c'></span></span></div>" +
+            "<div class='wt-dress-row'><span class='wt-dress-label'>Ladies</span><span class='wt-dress-val'>Beige <span class='wt-swatch' style='background:#e0cba8'></span> or brown <span class='wt-swatch' style='background:#8a6d4b'></span></span></div>" +
           "</div>",
       },
       {
