@@ -3,7 +3,23 @@
    This re-adds the one interactive piece that needs JS: the draggable photo
    gallery in the blue "Mark your calendars" band. Photos come from /images. */
 (function () {
-  var PHOTOS = [];  // gallery photos removed — add "images/your.jpg" entries here to bring the gallery back
+  // Gallery photos split into two fixed groups, each already sorted oldest -> newest.
+  // On each page load one group is chosen at random and shown in the drag gallery.
+  var GROUP_A = [
+    "images/img_0528-2.jpg", "images/img_6819-2.jpg", "images/img_9869-2.jpg",
+    "images/img_4975-2.jpg", "images/img_1569-2.jpg", "images/img_4073-2.jpg",
+    "images/img_6229-2.jpg", "images/img_7233-2.jpg", "images/img_8126-2.jpg",
+    "images/img_8854-2.jpg", "images/img_3058-2.jpg", "images/img_5913-2.jpg",
+    "images/img_7978-2.jpg", "images/img_0100-2.jpg", "images/img_6735-2.jpg",
+  ];
+  var GROUP_B = [
+    "images/img_3807-2.jpg", "images/img_8845-2.jpg", "images/img_3699-2.jpg",
+    "images/img_9038-2.jpg", "images/img_1838.jpg",   "images/img_5007-2.jpg",
+    "images/img_6809-2.jpg", "images/img_7624-2.jpg", "images/img_8375-2.jpg",
+    "images/img_0900-2.jpg", "images/img_5219-2.jpg", "images/img_2436-2.jpg",
+    "images/img_8890-2.jpg", "images/img_0231.jpg",
+  ];
+  var PHOTO_GROUPS = [GROUP_A, GROUP_B];
 
   // ⬇ RSVP delivery: paste your Google Apps Script Web App URL here.
   //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
@@ -124,62 +140,21 @@
     document.head.appendChild(s);
   }
 
-  // Parse a sortable month index from a photo's caption (e.g. "… · Dec 2024" -> 2024*12+11).
-  // Returns null when the caption has no date.
-  var MONTHS = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
-  function photoDate(src) {
-    var m = (NOTES[src] || "").match(/([A-Z][a-z]{2})\s+(\d{4})/);
-    return (m && m[1] in MONTHS) ? parseInt(m[2], 10) * 12 + MONTHS[m[1]] : null;
-  }
-
-  // Pick `n` photos at random on each load, spread across capture dates so we don't
-  // get several shots from the same trip. Photos are grouped by month; the distinct
-  // months are sorted and split into `n` equal time-ordered segments, and one random
-  // month (then one random photo from it) is drawn per segment — so the picks are
-  // always from different months. If there aren't enough distinct months, the rest
-  // are filled in from undated photos at random.
-  function pickPhotos(n) {
-    n = n || 6;
-    var byDate = {}, undated = [];
-    PHOTOS.forEach(function (src) {
-      var d = photoDate(src);
-      if (d == null) undated.push(src);
-      else (byDate[d] = byDate[d] || []).push(src);
-    });
-    var dates = Object.keys(byDate).map(Number).sort(function (a, b) { return a - b; });
-    function randOf(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-    var chosen = [];
-    if (dates.length >= n) {
-      for (var i = 0; i < n; i++) {
-        var lo = Math.floor(i * dates.length / n);
-        var hi = Math.floor((i + 1) * dates.length / n);
-        if (hi <= lo) hi = lo + 1;
-        chosen.push(randOf(byDate[dates[lo + Math.floor(Math.random() * (hi - lo))]]));
-      }
-    } else {
-      dates.forEach(function (d) { chosen.push(randOf(byDate[d])); });
-      var pool = undated.slice();
-      while (chosen.length < n && pool.length) {
-        chosen.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
-      }
-    }
-    return chosen;
-  }
 
   function build() {
     if (document.getElementById("wedGallery")) return; // guard against double-run
     injectStyles();
 
-    // No gallery photos yet — add filenames to PHOTOS above to bring the gallery back.
-    if (!PHOTOS.length) return;
+    // pick one of the two photo groups at random; each group is already date-sorted
+    var photos = PHOTO_GROUPS[Math.floor(Math.random() * PHOTO_GROUPS.length)];
+    if (!photos.length) return;
 
     var wrap = document.createElement("div");
     wrap.id = "wedGallery";
 
     var track = document.createElement("div");
     track.id = "wedGalleryTrack";
-    pickPhotos(6).forEach(function (src) {
+    photos.forEach(function (src) {
       var note = (NOTES[src] || "").trim();
 
       var fig = document.createElement("figure");
