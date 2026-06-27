@@ -435,6 +435,11 @@
     form.setAttribute("data-wed-rsvp", "1");
     var rsvpDone = false; // set true once submitted, to silence the leave warning
 
+    var deadline = document.createElement("p");
+    deadline.textContent = "Please RSVP by 31 July.";
+    deadline.style.cssText = "text-align:center;color:#fefae9;font-size:1rem;line-height:1.45;max-width:34ch;margin:0 auto 22px";
+    form.parentNode.insertBefore(deadline, form);
+
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
 
