@@ -96,6 +96,17 @@
       "#wedTravel .wt-dress-val{flex:1}",
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
+      // full-screen video thank-you after RSVP (matches hero vibe; no new colors/fonts)
+      "#wedThanks{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#fdf6ec;padding:9vh 22px;opacity:0;visibility:hidden;transition:opacity .6s ease}",
+      "#wedThanks.show{opacity:1;visibility:visible}",
+      "#wedThanks video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}",
+      "#wedThanks .ty-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,20,22,.5) 0%,rgba(20,20,22,.22) 45%,rgba(12,12,14,.62) 100%)}",
+      "#wedThanks .ty-top,#wedThanks .ty-bottom{position:relative;z-index:2;width:100%}",
+      "#wedThanks .ty-title{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;margin:0}",
+      "#wedThanks .ty-date{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(1rem,3.6vw,1.35rem);margin:0 0 22px}",
+      "#wedThanks .ty-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}",
+      "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#fdf6ec;background:rgba(254,250,233,.12);border:1.5px solid rgba(254,250,233,.7);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
+      "#wedThanks .ty-btn:hover{background:rgba(254,250,233,.26)}",
       // minimal floating music toggle for our song
       "#wedMusic{position:fixed;right:18px;bottom:18px;z-index:9999;border:none;background:none;color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:6px;box-shadow:none;opacity:.55;transition:opacity .2s ease}",
       "#wedMusic:hover,#wedMusic.is-playing{opacity:1}",
@@ -448,16 +459,61 @@
     function hidden(n, v) { var i = document.createElement("input"); i.type = "hidden"; i.name = n; i.value = v; form.appendChild(i); return i; }
     var partySizeField = hidden("Party size", "1");
 
+    function saveToCalendar() {
+      var ics = [
+        "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Yang Wei & Yen Wedding//EN",
+        "BEGIN:VEVENT",
+        "DTSTART;TZID=Asia/Kuala_Lumpur:20270213T160000",
+        "DTEND;TZID=Asia/Kuala_Lumpur:20270213T230000",
+        "SUMMARY:The Wedding of Yang Wei & Yen",
+        "LOCATION:Langkawi\\, Malaysia",
+        "DESCRIPTION:Ceremony 4:00PM\\nReception\\, dinner & dancing to follow",
+        "END:VEVENT", "END:VCALENDAR",
+      ].join("\r\n");
+      var url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
+      var a = document.createElement("a");
+      a.href = url; a.download = "yangwei-yen-wedding.ics"; a.click();
+      URL.revokeObjectURL(url);
+    }
+
     function showThanks(ok) {
-      var msg = document.createElement("p");
-      msg.style.cssText = "text-align:center;color:#fefae9;font-size:1.15rem;line-height:1.5;max-width:34ch;margin:26px auto 0";
-      msg.textContent = ok
-        ? "Yay, your RSVP is in! We can't wait to celebrate with you in Langkawi."
-        : "Hmm, that didn't send. Please try again, or message us directly.";
-      if (ok) { rsvpDone = true; form.style.display = "none"; }
-      else { var b = form.querySelector('button[type="submit"]'); if (b) { b.disabled = false; b.style.opacity = "1"; } }
-      form.parentNode.insertBefore(msg, form.nextSibling);
-      msg.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (!ok) {
+        var b = form.querySelector('button[type="submit"]'); if (b) { b.disabled = false; b.style.opacity = "1"; }
+        var msg = document.createElement("p");
+        msg.style.cssText = "text-align:center;color:#fefae9;font-size:1.15rem;line-height:1.5;max-width:34ch;margin:26px auto 0";
+        msg.textContent = "Hmm, that didn't send. Please try again, or message us directly.";
+        form.parentNode.insertBefore(msg, form.nextSibling);
+        msg.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+      rsvpDone = true;
+      if (document.getElementById("wedThanks")) return;
+      var ty = document.createElement("div");
+      ty.id = "wedThanks";
+      ty.innerHTML =
+        '<video autoplay loop muted playsinline><source src="assets/video/thankyou.mp4" type="video/mp4"></video>' +
+        '<div class="ty-overlay"></div>' +
+        '<div class="ty-top"><p class="ty-title">Thank you!</p></div>' +
+        '<div class="ty-bottom"><p class="ty-date">See you on 13th February 2027</p>' +
+          '<div class="ty-btns">' +
+            '<button type="button" class="ty-btn" id="tyCal">Save to Calendar</button>' +
+            '<button type="button" class="ty-btn" id="tyBack">Back to Details</button>' +
+          "</div></div>";
+      document.body.appendChild(ty);
+      document.body.style.overflow = "hidden";
+      var v = ty.querySelector("video");
+      if (v) { v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+      requestAnimationFrame(function () { ty.classList.add("show"); });
+      ty.querySelector("#tyCal").addEventListener("click", saveToCalendar);
+      ty.querySelector("#tyBack").addEventListener("click", function () {
+        ty.classList.remove("show");
+        document.body.style.overflow = "";
+        setTimeout(function () {
+          ty.remove();
+          var d = document.querySelector('[data-framer-name="itinerary"]');
+          if (d) d.scrollIntoView({ behavior: "smooth" });
+        }, 550);
+      });
     }
 
     form.addEventListener("submit", function (e) {
