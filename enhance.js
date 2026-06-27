@@ -40,6 +40,9 @@
       ".framer-xwh9m6{display:none!important}",
       // tighten the large gap above the "How it all started" story section (was 120/96px)
       ".framer-1dqoksv{padding-top:clamp(46px,7vw,60px)!important}",
+      // hero title line "The Wedding of Yang Wei & Yen": tighter gap, gentler tilt than the old 2-name layout
+      ".wed-hero__names{gap:14px!important;flex-wrap:wrap}",
+      ".wed-hero__names span:first-child{transform:rotate(2deg)!important}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
@@ -316,11 +319,6 @@
     if (!form || form.getAttribute("data-wed-rsvp")) return;
     form.setAttribute("data-wed-rsvp", "1");
     var rsvpDone = false; // set true once submitted, to silence the leave warning
-
-    var deadline = document.createElement("p");
-    deadline.textContent = "Please RSVP by 31 July.";
-    deadline.style.cssText = "text-align:center;color:#fefae9;font-size:1rem;line-height:1.45;max-width:34ch;margin:0 auto 22px";
-    form.parentNode.insertBefore(deadline, form);
 
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
