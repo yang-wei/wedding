@@ -45,8 +45,8 @@
       ".wed-hero__names span{transform:none!important;white-space:pre}",
       ".wed-hero__names .whn-couple{display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center}",
       // curvy arc like the date: tilt the names, keep the & flat
-      ".wed-hero__names .whn-couple>span:first-child{transform:rotate(-9deg)!important}",
-      ".wed-hero__names .whn-couple>span:last-child{transform:rotate(6deg)!important}",
+      ".wed-hero__names .whn-couple>span:first-child{transform:rotate(9deg)!important}",
+      ".wed-hero__names .whn-couple>span:last-child{transform:rotate(-6deg)!important}",
       // mobile: vertically center the whole hero text block in the (dynamic) viewport
       "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}}",
       // "How it all started" — blank line between each story paragraph
