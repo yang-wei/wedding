@@ -41,7 +41,7 @@
       // tighten the large gap above the "How it all started" story section (was 120/96px)
       ".framer-1dqoksv{padding-top:clamp(46px,7vw,60px)!important}",
       // hero title "The Wedding of / Yang Wei & Yen": two lines, wide gap between the name words (like the reference)
-      ".wed-hero__names{display:flex!important;flex-direction:column;align-items:center;gap:14px;line-height:1.35;letter-spacing:.04em}",
+      ".wed-hero__names{display:flex!important;flex-direction:column;align-items:center;gap:14px;line-height:1.35;letter-spacing:.04em;margin-top:18px}",
       ".wed-hero__names span{transform:none!important;white-space:pre}",
       ".wed-hero__names .whn-couple{display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center}",
       // curvy arc like the date: tilt the names, keep the & flat
