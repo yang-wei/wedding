@@ -76,12 +76,12 @@
       "#wedTravel .wt-off{display:inline-block;background:#e4b2d2;color:#4d2008;font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-size:.95rem;line-height:1;padding:4px 11px 3px;border:1.5px solid #4d2008;border-radius:14px 9px 13px 10px/9px 13px 10px 14px;transform:rotate(-3.5deg);box-shadow:1px 2px 0 rgba(77,32,8,.25)}",
       "#wedTravel .wt-prices{margin-top:4px}",
       "#wedTravel .wt-was{text-decoration:line-through;opacity:.55;font-size:.85rem;margin-right:7px}",
-      "#wedTravel .wt-now{font-weight:800;font-size:1.08rem}",
+      "#wedTravel .wt-now{font-weight:700;font-size:.95rem}",
       "#wedTravel .wt-per{font-size:.8rem;opacity:.8}",
       "#wedTravel .wt-room{font-size:.76rem;opacity:.7;margin-top:1px}",
       "#wedTravel .wt-note{font-size:.82rem;opacity:.8;margin-top:10px}",
-      "#wedTravel .wt-link{color:#2f6fae;font-weight:700;font-size:1.18rem;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:2px;white-space:nowrap}",
-      "#wedTravel .wt-link:hover{color:#1c4f86}",
+      "#wedTravel .wt-link{color:inherit;font-weight:600;font-size:1.02rem;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
+      "#wedTravel .wt-link:hover{opacity:.65}",
       "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:8px;margin-top:6px}",
       "#wedTravel .wt-dress-row{font-size:.92rem;line-height:1.5}",
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
@@ -249,7 +249,7 @@
             "<div class='wt-prices'><span class='wt-was'>RM1,235</span><span class='wt-now'>RM680</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
-          "<p class='wt-note'>Group rates are available at both hotels (10–16 Feb).</p>" +
+          "<p class='wt-note'>Group rates are applicable from 10 - 16th February.</p>" +
           "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
       },
       {
