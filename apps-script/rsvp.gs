@@ -64,12 +64,19 @@ function doPost(e) {
     var arrivalT  = p["Flight arrival time"] || "";
     var retT      = p["Flight return time"] || "";
 
-    // Header row, written once.
+    // Header row — written on an empty sheet, OR if an existing sheet predates the
+    // "Attending" column, insert that column so old rows stay aligned (no manual clearing).
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(["Timestamp", "Email", "Attending", "Guest name", "Dietary", "Party size",
                        "Hotel", "Welcome dinner (Fri)",
                        "Flight arrival", "Flight arrival time",
                        "Flight return", "Flight return time"]);
+    } else {
+      var hdr = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+      if (hdr.indexOf("Attending") === -1) {
+        sheet.insertColumnAfter(2);            // new column C, just after Email
+        sheet.getRange(1, 3).setValue("Attending");
+      }
     }
 
     // ONE ROW PER GUEST — shared fields repeat down the rows.

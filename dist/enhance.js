@@ -155,7 +155,7 @@
       ".framer-cpd6n{padding-top:clamp(44px,8vw,64px)!important}",
       "form.framer-e1hfmq .framer-form-input{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
       "form.framer-e1hfmq .framer-text{--framer-font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
-      "form.framer-e1hfmq input[type=datetime-local]::-webkit-calendar-picker-indicator{filter:invert(1);opacity:.85;cursor:pointer}",
+      "form.framer-e1hfmq input[type=datetime-local]::-webkit-calendar-picker-indicator{display:none}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
       "#wedParty .wp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}",
       "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:1rem;color:#fefae9;background:transparent;border:1px solid rgba(254,250,233,.55);border-radius:27px;padding:16px 20px}",
@@ -459,9 +459,8 @@
       if (inp) {
         inp.name = fieldName; inp.value = ""; inp.required = false; inp.removeAttribute("required");
         if (type) {
+          // native datetime field: type into the segments, or click the calendar icon to pick
           inp.type = type; inp.removeAttribute("placeholder"); inp.style.colorScheme = "dark";
-          // tapping the field opens the native date/time picker (calendar)
-          inp.addEventListener("click", function () { if (inp.showPicker) { try { inp.showPicker(); } catch (e) {} } });
         }
         else { inp.placeholder = ph; }
       }
@@ -474,9 +473,9 @@
     // arrival must be in 2027 and no later than the wedding (Sat 13 Feb 2027, 3pm);
     // return must be after the wedding starts.
     var faTin = faT && faT.querySelector("input");
-    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; }
+    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; faTin.step = "3600"; }
     var frTin = frT && frT.querySelector("input");
-    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:59"; }
+    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; frTin.step = "3600"; }
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -610,6 +609,12 @@
       [emailLabel, fa, faT, fr, frT, hotelGroup, cbGroup].forEach(function (el) {
         if (el) el.style.display = yes ? "" : "none";
       });
+      // not coming: just the one name — no "Add guest", no extra rows, no dietary
+      if (addBtn) addBtn.style.display = yes ? "" : "none";
+      if (!yes) {
+        var extra = rows.querySelectorAll(".wp-row");
+        for (var k = extra.length - 1; k >= 1; k--) extra[k].remove();
+      }
       [].forEach.call(rows.querySelectorAll(".wp-diet"), function (d) { d.style.display = yes ? "" : "none"; });
       [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = yes; });
       if (emailInput) emailInput.required = yes;
