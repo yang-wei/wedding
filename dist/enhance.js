@@ -151,6 +151,8 @@
       "#wedRsvpSub{text-align:center;color:#fefae9;opacity:.85;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.98rem;margin:0 auto}",
       // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
       ".framer-1vgcbq7{gap:26px!important}",
+      // RSVP panel had 120px top padding — too much
+      ".framer-cpd6n{padding-top:clamp(44px,8vw,64px)!important}",
       "form.framer-e1hfmq .framer-form-input{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
       "form.framer-e1hfmq .framer-text{--framer-font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
