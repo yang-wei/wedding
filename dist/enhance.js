@@ -48,7 +48,7 @@
       ".wed-hero__names .whn-couple>span:first-child{transform:rotate(9deg)!important}",
       ".wed-hero__names .whn-couple>span:last-child{transform:rotate(-6deg)!important}",
       // mobile: vertically center the whole hero text block in the (dynamic) viewport
-      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}.wed-hero__title{font-size:80px!important}}",
+      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}.wed-hero__title{font-size:70px!important}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       // mobile: give each "important details" card a full-screen view (scroll one at a time)
@@ -619,15 +619,18 @@
       }
       rsvpDone = true;
       if (document.getElementById("wedThanks")) return;
+      var att = form.querySelector('input[name="Attending"]:checked');
+      var notAttending = att && !/^yes/i.test(att.value);
       var ty = document.createElement("div");
       ty.id = "wedThanks";
       ty.innerHTML =
         '<video autoplay loop muted playsinline><source src="assets/video/thankyou.mp4" type="video/mp4"></video>' +
         '<div class="ty-overlay"></div>' +
         '<div class="ty-top"><p class="ty-title">Thank you!</p></div>' +
-        '<div class="ty-bottom"><p class="ty-date">See you on 13th February 2027</p>' +
+        '<div class="ty-bottom"><p class="ty-date">' +
+          (notAttending ? "In case you change your mind, let us know" : "See you on 13th February 2027") + "</p>" +
           '<div class="ty-btns">' +
-            '<button type="button" class="ty-btn" id="tyCal">Save to Calendar</button>' +
+            (notAttending ? "" : '<button type="button" class="ty-btn" id="tyCal">Save to Calendar</button>') +
             '<button type="button" class="ty-btn" id="tyBack">Back to Details</button>' +
           "</div></div>";
       document.body.appendChild(ty);
@@ -635,7 +638,7 @@
       var v = ty.querySelector("video");
       if (v) { v.muted = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
       requestAnimationFrame(function () { ty.classList.add("show"); });
-      ty.querySelector("#tyCal").addEventListener("click", saveToCalendar);
+      var tyCal = ty.querySelector("#tyCal"); if (tyCal) tyCal.addEventListener("click", saveToCalendar);
       ty.querySelector("#tyBack").addEventListener("click", function () {
         ty.classList.remove("show");
         document.body.style.overflow = "";
