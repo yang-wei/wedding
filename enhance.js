@@ -40,11 +40,10 @@
       ".framer-xwh9m6{display:none!important}",
       // tighten the large gap above the "How it all started" story section (was 120/96px)
       ".framer-1dqoksv{padding-top:clamp(46px,7vw,60px)!important}",
-      // hero title "The Wedding of / Yang Wei & Yen": plain even spacing, break before the names
-      ".wed-hero__names{display:block!important;text-align:center;line-height:1.4}",
-      // sub-hero (Mark your calendars) photo -> full-bleed, full-viewport-height
-      // sub-hero photo full-bleed on mobile only; desktop keeps its original size
-      "@media(max-width:809.98px){#story-image{width:100vw!important;max-width:100vw!important;height:100vh!important;height:100svh!important;aspect-ratio:auto!important;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important;border-radius:0!important}#story-image>div{border-radius:0!important}#story-image img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:0!important}}",
+      // hero title "The Wedding of / Yang Wei & Yen": plain even spacing, break before the names, wider tracking
+      ".wed-hero__names{display:block!important;text-align:center;line-height:1.4;letter-spacing:.14em}",
+      // mobile: vertically center the whole hero text block in the viewport
+      "@media(max-width:809.98px){.wed-hero__text{min-height:100svh;min-height:100vh;justify-content:center}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
@@ -69,6 +68,11 @@
       "#wedLightbox .lb-cap{margin:0;color:#fdf6ec;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.92rem;text-align:center;max-width:60ch}",
       "#wedLightbox .lb-close{position:fixed;top:16px;right:18px;width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(254,250,233,.55);background:rgba(0,0,0,.25);color:#fdf6ec;font-size:1.6rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}",
       "#wedLightbox .lb-close:hover{background:rgba(0,0,0,.45)}",
+      "#wedLightbox .lb-nav{position:fixed;top:50%;transform:translateY(-50%);width:46px;height:46px;border-radius:50%;border:1.5px solid rgba(254,250,233,.5);background:rgba(0,0,0,.25);color:#fdf6ec;font-size:1.9rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0 0 4px}",
+      "#wedLightbox .lb-prev{left:14px}",
+      "#wedLightbox .lb-next{right:14px}",
+      "#wedLightbox .lb-nav:hover{background:rgba(0,0,0,.45)}",
+      "@media(max-width:809.98px){#wedLightbox .lb-nav{display:none}}",
       // travel-info paper-note cards
       "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:safe center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding:0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;cursor:grab;user-select:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
       "#wedTravel .wt-card{scroll-snap-align:center}",
@@ -196,7 +200,7 @@
 
     var track = document.createElement("div");
     track.id = "wedGalleryTrack";
-    photos.forEach(function (src) {
+    photos.forEach(function (src, idx) {
       var note = (NOTES[src] || "").trim();
 
       var fig = document.createElement("figure");
@@ -220,14 +224,14 @@
 
       // tap/click a photo to view it large (ignored if it was a drag)
       fig.style.cursor = "zoom-in";
-      fig.addEventListener("click", function () { if (!moved) openLightbox(src, note); });
+      fig.addEventListener("click", function () { if (!moved) openLightbox(idx); });
 
       track.appendChild(fig);
     });
 
     var hint = document.createElement("p");
     hint.id = "wedGalleryHint";
-    hint.textContent = "← drag · tap to enlarge →";
+    hint.textContent = "← drag to explore →";
 
     wrap.appendChild(track);
     wrap.appendChild(hint);
@@ -246,28 +250,53 @@
     function end() { down = false; wrap.classList.remove("is-dragging"); }
 
     // lightbox: enlarge a photo; click the backdrop / close button / Escape to dismiss
-    function openLightbox(src, caption) {
-      var lb = document.getElementById("wedLightbox");
-      if (!lb) {
-        lb = document.createElement("div");
-        lb.id = "wedLightbox";
-        lb.innerHTML = '<button class="lb-close" type="button" aria-label="Close">×</button><img class="lb-img" alt=""><p class="lb-cap"></p>';
-        document.body.appendChild(lb);
-        lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-close")) closeLightbox(); });
-        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
+    var lbEl = null, lbIndex = 0;
+    function lbShow(i) {
+      lbIndex = (i % photos.length + photos.length) % photos.length;
+      var src = photos[lbIndex];
+      lbEl.querySelector(".lb-img").src = src;
+      var note = (NOTES[src] || "").trim();
+      var cap = lbEl.querySelector(".lb-cap");
+      cap.textContent = note;
+      cap.style.display = note ? "block" : "none";
+    }
+    function openLightbox(index) {
+      if (!lbEl) {
+        lbEl = document.createElement("div");
+        lbEl.id = "wedLightbox";
+        lbEl.innerHTML =
+          '<button class="lb-close" type="button" aria-label="Close">×</button>' +
+          '<button class="lb-nav lb-prev" type="button" aria-label="Previous photo">‹</button>' +
+          '<img class="lb-img" alt="">' +
+          '<button class="lb-nav lb-next" type="button" aria-label="Next photo">›</button>' +
+          '<p class="lb-cap"></p>';
+        document.body.appendChild(lbEl);
+        lbEl.addEventListener("click", function (e) {
+          var c = e.target.classList;
+          if (e.target === lbEl || c.contains("lb-close")) closeLightbox();
+          else if (c.contains("lb-prev")) lbShow(lbIndex - 1);
+          else if (c.contains("lb-next")) lbShow(lbIndex + 1);
+        });
+        document.addEventListener("keydown", function (e) {
+          if (!lbEl.classList.contains("show")) return;
+          if (e.key === "Escape") closeLightbox();
+          else if (e.key === "ArrowLeft") lbShow(lbIndex - 1);
+          else if (e.key === "ArrowRight") lbShow(lbIndex + 1);
+        });
+        // swipe left/right to go next/previous
+        var sx = 0, sy = 0;
+        lbEl.addEventListener("touchstart", function (e) { var t = e.changedTouches[0]; sx = t.clientX; sy = t.clientY; }, { passive: true });
+        lbEl.addEventListener("touchend", function (e) {
+          var t = e.changedTouches[0], dx = t.clientX - sx, dy = t.clientY - sy;
+          if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) lbShow(lbIndex + (dx < 0 ? 1 : -1));
+        }, { passive: true });
       }
-      lb.querySelector(".lb-img").src = src;
-      var cap = lb.querySelector(".lb-cap");
-      cap.textContent = caption || "";
-      cap.style.display = caption ? "block" : "none";
-      lb.classList.add("show");
+      lbShow(index);
+      lbEl.classList.add("show");
       document.body.style.overflow = "hidden";
     }
     function closeLightbox() {
-      var lb = document.getElementById("wedLightbox");
-      if (!lb) return;
-      lb.classList.remove("show");
-      document.body.style.overflow = "";
+      if (lbEl) { lbEl.classList.remove("show"); document.body.style.overflow = ""; }
     }
     wrap.addEventListener("mousedown", function (e) { start(e.pageX); });
     window.addEventListener("mousemove", function (e) { move(e.pageX); });
