@@ -45,7 +45,7 @@
       ".wed-hero__names span{transform:none!important;white-space:pre}",
       ".wed-hero__names .whn-couple{display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;justify-content:center}",
       // mobile: vertically center the whole hero text block in the (dynamic) viewport
-      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center}}",
+      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
@@ -423,10 +423,10 @@
       }
       return c;
     }
-    var fa  = makeField("Arrival flight number (optional)", "Flight arrival code", "e.g. AK6293");
-    var faT = makeField("Arrival date & time (optional)", "Flight arrival time", "", "datetime-local");
-    var fr  = makeField("Return flight number (optional)", "Flight return code", "e.g. AK6296");
-    var frT = makeField("Return date & time (optional)", "Flight return time", "", "datetime-local");
+    var fa  = makeField("Arrival flight number", "Flight arrival code", "e.g. AK6293");
+    var faT = makeField("Arrival date & time", "Flight arrival time", "", "datetime-local");
+    var fr  = makeField("Return flight number", "Flight return code", "e.g. AK6296");
+    var frT = makeField("Return date & time", "Flight return time", "", "datetime-local");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -687,7 +687,7 @@
       },
       {
         date: "Sunday, Feb 14th",
-        intro: "Let's have breakfast together for those who stay at St. Regis and can wake up. Checkout is at 12:00pm.",
+        intro: "Happy Valentine's Day! Let's have breakfast together for those who stay at St. Regis and can wake up. Checkout is at 12:00pm.",
         sched: [],
       },
     ];
