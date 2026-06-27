@@ -643,7 +643,7 @@
       ty.innerHTML =
         '<video autoplay loop muted playsinline><source src="assets/video/thankyou.mp4" type="video/mp4"></video>' +
         '<div class="ty-overlay"></div>' +
-        '<div class="ty-top"><p class="ty-title">Thank you!</p></div>' +
+        '<div class="ty-top"><p class="ty-title">Thank you !</p></div>' +
         '<div class="ty-bottom"><p class="ty-date">' +
           (notAttending ? "In case you change your mind, let us know" : "See you on 13th February 2027") + "</p>" +
           '<div class="ty-btns">' +
