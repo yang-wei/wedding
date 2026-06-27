@@ -147,8 +147,12 @@
       // RSVP dynamic guest list
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
-      "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(1.7rem,5vw,2.2rem);line-height:1.15;text-align:center;color:#fefae9;max-width:18ch;margin:0 auto 8px}",
-      "#wedRsvpSub{text-align:center;color:#fefae9;opacity:.85;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.98rem;margin:0 auto 28px}",
+      "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
+      "#wedRsvpSub{text-align:center;color:#fefae9;opacity:.85;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.98rem;margin:0 auto}",
+      // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
+      ".framer-1vgcbq7{gap:26px!important}",
+      "form.framer-e1hfmq .framer-form-input{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
+      "form.framer-e1hfmq .framer-text{--framer-font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
       "#wedParty .wp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}",
       "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:1rem;color:#fefae9;background:transparent;border:1px solid rgba(254,250,233,.55);border-radius:27px;padding:16px 20px}",
