@@ -97,7 +97,7 @@
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
       // full-screen video thank-you after RSVP (matches hero vibe; no new colors/fonts)
-      "#wedThanks{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#fdf6ec;padding:9vh 22px;opacity:0;visibility:hidden;transition:opacity .6s ease}",
+      "#wedThanks{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#fdf6ec;background:#15101f;padding:9vh 22px;opacity:0;visibility:hidden;transition:opacity .6s ease}",
       "#wedThanks.show{opacity:1;visibility:visible}",
       "#wedThanks video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}",
       "#wedThanks .ty-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(20,20,22,.5) 0%,rgba(20,20,22,.22) 45%,rgba(12,12,14,.62) 100%)}",
@@ -107,6 +107,8 @@
       "#wedThanks .ty-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}",
       "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#fdf6ec;background:rgba(254,250,233,.12);border:1.5px solid rgba(254,250,233,.7);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
       "#wedThanks .ty-btn:hover{background:rgba(254,250,233,.26)}",
+      // desktop: portrait video can't fill a wide screen, so show it as a centered card with text stacked
+      "@media(min-width:810px){#wedThanks{justify-content:center;gap:20px;padding:5vh 22px}#wedThanks video{position:relative;inset:auto;width:auto;height:clamp(300px,58vh,560px);max-width:44vw;object-fit:contain;border-radius:16px;z-index:2;order:2;box-shadow:0 18px 50px -20px rgba(0,0,0,.7)}#wedThanks .ty-overlay{display:none}#wedThanks .ty-top{order:1;width:auto}#wedThanks .ty-bottom{order:3;width:auto}#wedThanks .ty-date{margin:0 0 16px}}",
       // minimal floating music toggle for our song
       "#wedMusic{position:fixed;right:18px;bottom:18px;z-index:9999;border:none;background:none;color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:6px;box-shadow:none;opacity:.55;transition:opacity .2s ease}",
       "#wedMusic:hover,#wedMusic.is-playing{opacity:1}",
