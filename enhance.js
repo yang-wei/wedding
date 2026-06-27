@@ -38,6 +38,8 @@
       ".framer-l0t3vs{display:none!important}",
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
+      // tighten the large gap above the "How it all started" story section (was 120/96px)
+      ".framer-1dqoksv{padding-top:clamp(46px,7vw,60px)!important}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
@@ -88,6 +90,18 @@
       "#wedTravel .wt-dress-val{flex:1}",
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
+      // minimal floating music toggle for our song
+      "#wedMusic{position:fixed;right:16px;bottom:16px;z-index:9999;width:38px;height:38px;border-radius:50%;border:1.5px solid #2a2018;background:rgba(244,237,210,.82);color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:0;box-shadow:0 6px 16px -10px rgba(0,0,0,.55);opacity:.55;transition:opacity .2s ease,background .2s ease}",
+      "#wedMusic:hover,#wedMusic.is-playing{opacity:1;background:#f4edd2}",
+      "#wedMusic svg{width:17px;height:17px}",
+      "#wedMusic .m-eq{display:none}",
+      "#wedMusic.is-playing .m-note{display:none}",
+      "#wedMusic.is-playing .m-eq{display:block}",
+      "#wedMusic .m-eq rect{transform-origin:bottom;transform-box:fill-box;animation:wedEq 1s ease-in-out infinite}",
+      "#wedMusic .m-eq rect:nth-child(2){animation-delay:.22s}",
+      "#wedMusic .m-eq rect:nth-child(3){animation-delay:.44s}",
+      "@keyframes wedEq{0%,100%{transform:scaleY(.35)}50%{transform:scaleY(1)}}",
+      "@media(prefers-reduced-motion:reduce){#wedMusic .m-eq rect{animation:none}}",
       "#wedFaqSection{padding:clamp(50px,8vw,92px) 0}",
       "#wedFaq{max-width:660px;margin:0 auto;padding:0 24px;text-align:left;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif}",
       "#wedFaq h3{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:1.9rem;text-align:center;margin:0 0 20px;color:#4d2008}",
@@ -608,7 +622,51 @@
     }
   }
 
-  function run() { build(); buildTravel(); buildEvents(); buildFaq(); enhanceRsvp(); }
+  // floating button to play our song (browsers block autoplay-with-sound, so it's tap-to-play)
+  function buildMusic() {
+    if (document.getElementById("wedMusic")) return;
+    var audio = new Audio("assets/song.mp3");
+    audio.loop = true;
+    audio.preload = "auto";
+    audio.volume = 0.55;
+
+    var btn = document.createElement("button");
+    btn.id = "wedMusic";
+    btn.type = "button";
+    btn.title = "Play our song";
+    btn.setAttribute("aria-label", "Play our song");
+    btn.innerHTML =
+      '<svg class="m-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>' +
+      '<svg class="m-eq" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="4" height="16" rx="1.2"/><rect x="10" y="4" width="4" height="16" rx="1.2"/><rect x="16" y="4" width="4" height="16" rx="1.2"/></svg>';
+    document.body.appendChild(btn);
+
+    function setPlaying(on) {
+      btn.classList.toggle("is-playing", on);
+      var label = on ? "Pause our song" : "Play our song";
+      btn.setAttribute("aria-label", label);
+      btn.title = label;
+    }
+    btn.addEventListener("click", function () {
+      if (audio.paused) { audio.play().catch(function () {}); }
+      else { audio.pause(); }
+    });
+    audio.addEventListener("play", function () { setPlaying(true); });
+    audio.addEventListener("pause", function () { setPlaying(false); });
+
+    // Autoplay on entry. Browsers block autoplay-with-sound until a user gesture,
+    // so if the initial attempt is rejected we start on the first interaction
+    // (tap / key / scroll) anywhere except the toggle button itself.
+    function armFirstGesture() {
+      var evs = ["pointerdown", "keydown", "touchstart", "scroll"];
+      function start(e) { if (btn.contains(e.target)) return; audio.play().catch(function () {}); }
+      function cleanup() { evs.forEach(function (ev) { window.removeEventListener(ev, start); }); }
+      evs.forEach(function (ev) { window.addEventListener(ev, start, { passive: true }); });
+      audio.addEventListener("play", cleanup, { once: true });
+    }
+    audio.play().catch(armFirstGesture);
+  }
+
+  function run() { build(); buildTravel(); buildEvents(); buildFaq(); enhanceRsvp(); buildMusic(); }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
 })();
