@@ -43,7 +43,10 @@
       // hero title "The Wedding of / Yang Wei & Yen": two lines, wide gap between the name words (like the reference)
       ".wed-hero__names{display:flex!important;flex-direction:column;align-items:center;gap:14px;line-height:1.35;letter-spacing:.04em}",
       ".wed-hero__names span{transform:none!important;white-space:pre}",
-      ".wed-hero__names .whn-couple{display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;justify-content:center}",
+      ".wed-hero__names .whn-couple{display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center}",
+      // curvy arc like the date: tilt the names, keep the & flat
+      ".wed-hero__names .whn-couple>span:first-child{transform:rotate(-9deg)!important}",
+      ".wed-hero__names .whn-couple>span:last-child{transform:rotate(6deg)!important}",
       // mobile: vertically center the whole hero text block in the (dynamic) viewport
       "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}}",
       // "How it all started" — blank line between each story paragraph
@@ -153,9 +156,9 @@
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
-      "#wedHotelGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
-      "#wedHotelGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
-      "#wedHotelGroup input[type=radio]:before,#wedHotelGroup input[type=radio]:after{display:none!important;content:none!important}",
+      "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
+      "#wedHotelGroup input[type=radio]:checked,#wedAttendGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
+      "#wedHotelGroup input[type=radio]:before,#wedHotelGroup input[type=radio]:after,#wedAttendGroup input[type=radio]:before,#wedAttendGroup input[type=radio]:after{display:none!important;content:none!important}",
       // "What awaits us" — vertical timeline for the order of events
       "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
       "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
@@ -522,6 +525,49 @@
       }
       cbGroup.parentNode.insertBefore(hotelGroup, cbGroup.nextSibling);
     }
+
+    // "Will you be attending?" — radios placed first; choosing "No" collapses the
+    // form to just the names of who can't come.
+    var attendGroup = null;
+    if (cbGroup) {
+      attendGroup = cbGroup.cloneNode(true);
+      attendGroup.id = "wedAttendGroup";
+      var apr = attendGroup.querySelector("p");
+      if (apr) apr.textContent = "Will you be attending?";
+      var abox2 = attendGroup.querySelector('[data-framer-name="checkboxes"]');
+      var atmpl = abox2 ? abox2.querySelector("label") : null;
+      if (atmpl) {
+        var setAtt = function (lab, text, value) {
+          var inp = lab.querySelector("input");
+          if (inp) { inp.type = "radio"; inp.name = "Attending"; inp.setAttribute("value", value); inp.checked = false; inp.removeAttribute("checked"); inp.required = true; }
+          var lp = lab.querySelector("p"); if (lp) lp.textContent = text;
+        };
+        setAtt(atmpl, "Yes, we'll be there", "Yes");
+        var attNo = atmpl.cloneNode(true);
+        setAtt(attNo, "No, we can't make it", "No");
+        abox2.appendChild(attNo);
+      }
+      party.parentNode.insertBefore(attendGroup, party);
+    }
+
+    // attendee-only fields are hidden (and de-required) when "No" is chosen
+    function setAttending(yes) {
+      plabel.textContent = yes
+        ? "Who's coming? (add yourself, then your guests)"
+        : "Who's not coming?";
+      [emailLabel, fa, faT, fr, frT, hotelGroup, cbGroup].forEach(function (el) {
+        if (el) el.style.display = yes ? "" : "none";
+      });
+      [].forEach.call(rows.querySelectorAll(".wp-diet"), function (d) { d.style.display = yes ? "" : "none"; });
+      [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = yes; });
+      if (emailInput) emailInput.required = yes;
+    }
+    if (attendGroup) {
+      [].forEach.call(attendGroup.querySelectorAll('input[name="Attending"]'), function (r) {
+        r.addEventListener("change", function () { setAttending(r.value === "Yes"); });
+      });
+    }
+    setAttending(true); // default attendee view (flights required) until "No" is chosen
 
     // strip Framer's honeypots and wire to Web3Forms
     [].forEach.call(form.querySelectorAll('input[aria-hidden="true"][tabindex="-1"]'), function (i) { i.remove(); });
