@@ -51,6 +51,7 @@ function doPost(e) {
 
     var ts        = new Date();
     var email     = p["Email"] || "";
+    var attending = p["Attending"] || "";
     var partySize = p["Party size"] || String(guests.length);
     var hotel     = (pp["Hotel"] || (p["Hotel"] ? [p["Hotel"]] : [])).join(" + ");
     // "No / staying elsewhere" is a valid answer but means NOT booking a group-rate room.
@@ -63,7 +64,7 @@ function doPost(e) {
 
     // Header row, written once.
     if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Email", "Guest name", "Dietary", "Party size",
+      sheet.appendRow(["Timestamp", "Email", "Attending", "Guest name", "Dietary", "Party size",
                        "Hotel", "Welcome dinner (Fri)",
                        "Flight arrival", "Flight arrival time",
                        "Flight return", "Flight return time"]);
@@ -71,10 +72,10 @@ function doPost(e) {
 
     // ONE ROW PER GUEST — shared fields repeat down the rows.
     if (guests.length === 0) {
-      sheet.appendRow([ts, email, "", "", partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
+      sheet.appendRow([ts, email, attending, "", "", partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
     } else {
       guests.forEach(function (g) {
-        sheet.appendRow([ts, email, g.name, g.diet, partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
+        sheet.appendRow([ts, email, attending, g.name, g.diet, partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
       });
     }
 
@@ -112,6 +113,7 @@ function doPost(e) {
         CONFIG.notifyEmail,
         "New RSVP: " + ((guests[0] && guests[0].name) || email || "(no name)"),
         "New RSVP received:\n\n" +
+        "Attending: " + (attending || "(not specified)") + "\n" +
         "Email: " + email + "\n" +
         "Party size: " + partySize + "\n" +
         "Guests: " + guestSummary.join("; ") + "\n" +
