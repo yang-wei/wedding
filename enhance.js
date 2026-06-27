@@ -474,7 +474,7 @@
     var srcLabelP = nameLabel ? nameLabel.querySelector("p") : null;
     var plabel = srcLabelP ? srcLabelP.cloneNode(true) : document.createElement("p");
     plabel.classList.add("wp-label");
-    plabel.textContent = "Who's coming? (add yourself, then your guests)";
+    plabel.textContent = "Who's coming?";
     party.appendChild(plabel);
     var rows = document.createElement("div");
     rows.id = "wedPartyRows";
@@ -594,7 +594,7 @@
     // attendee-only fields are hidden (and de-required) when "No" is chosen
     function setAttending(yes) {
       plabel.textContent = yes
-        ? "Who's coming? (add yourself, then your guests)"
+        ? "Who's coming?"
         : "Who's not coming?";
       [emailLabel, fa, faT, fr, frT, hotelGroup, cbGroup].forEach(function (el) {
         if (el) el.style.display = yes ? "" : "none";
