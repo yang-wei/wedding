@@ -119,7 +119,7 @@
       "#wedThanks video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}",
       "#wedThanks .ty-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(246,245,244,.62) 0%,rgba(246,245,244,.12) 42%,rgba(246,245,244,.72) 100%)}",
       "#wedThanks .ty-top,#wedThanks .ty-bottom{position:relative;z-index:2;width:100%}",
-      "#wedThanks .ty-title{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;margin:0;color:#4d2008}",
+      "#wedThanks .ty-title{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;margin:0;color:#6e4d2e}",
       "#wedThanks .ty-date{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(1rem,3.6vw,1.35rem);margin:0 0 22px}",
       "#wedThanks .ty-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}",
       "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#2a2018;background:rgba(42,32,24,.05);border:1.5px solid rgba(42,32,24,.5);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
@@ -147,9 +147,11 @@
       // RSVP dynamic guest list
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
+      "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(1.7rem,5vw,2.2rem);line-height:1.15;text-align:center;color:#fefae9;max-width:18ch;margin:0 auto 8px}",
+      "#wedRsvpSub{text-align:center;color:#fefae9;opacity:.85;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.98rem;margin:0 auto 28px}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
       "#wedParty .wp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}",
-      "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:.95rem;color:#fefae9;background:transparent;border:1.5px solid rgba(254,250,233,.55);border-radius:999px;padding:14px 20px}",
+      "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:1rem;color:#fefae9;background:transparent;border:1px solid rgba(254,250,233,.55);border-radius:27px;padding:16px 20px}",
       "#wedParty .wp-row input::placeholder{color:rgba(254,250,233,.6)}",
       "#wedParty .wp-row input:focus{outline:none;border-color:#fefae9}",
       "#wedParty .wp-remove{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(254,250,233,.55);background:transparent;color:#fefae9;cursor:pointer;font-size:1.1rem;line-height:1}",
@@ -157,7 +159,7 @@
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
-      "#wedUpdateNote{margin:24px 0 0;padding:0;text-align:left;color:#4d2008;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;line-height:1.5;opacity:.92}",
+      "#wedUpdateNote{margin:24px 0 0;padding:0;text-align:left;color:#4d2008;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-style:italic;font-size:.95rem;line-height:1.5;opacity:.92}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
       "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
       "#wedHotelGroup input[type=radio]:checked,#wedAttendGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
@@ -419,6 +421,21 @@
     if (faqHost) faqHost.appendChild(updateNote);
     else form.parentNode.insertBefore(updateNote, form);
 
+    // replace the "Please RSVP by…" line with an h2 heading + a sub-note, above the form
+    var rsvpSec = document.querySelector('[data-framer-name="rsvp"]');
+    if (rsvpSec) {
+      var pr = [].slice.call(rsvpSec.querySelectorAll("p")).filter(function (p) { return /^Please RSVP by/.test(p.textContent.trim()); })[0];
+      if (pr) { var prc = pr.closest('[data-framer-component-type="RichTextContainer"]') || pr; prc.style.display = "none"; }
+    }
+    var rsvpHead = document.createElement("h2");
+    rsvpHead.id = "wedRsvpHeading";
+    rsvpHead.textContent = "Will you be there to celebrate our new beginning?";
+    var rsvpSub = document.createElement("p");
+    rsvpSub.id = "wedRsvpSub";
+    rsvpSub.textContent = "Please fill the form before the 31st of July, 2026";
+    form.parentNode.insertBefore(rsvpHead, form);
+    form.parentNode.insertBefore(rsvpSub, form);
+
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
 
@@ -538,7 +555,7 @@
         elsewhere.name = "Staying elsewhere";
         elsewhere.id = "wedStayElsewhere";
         elsewhere.placeholder = "Where will you be staying?";
-        elsewhere.style.cssText = "display:none;margin:12px 0 0;width:100%;font-family:inherit;font-size:.95rem;color:#fefae9;background:transparent;border:1.5px solid rgba(254,250,233,.55);border-radius:999px;padding:14px 20px;box-sizing:border-box";
+        elsewhere.style.cssText = "display:none;margin:12px 0 0;width:100%;font-family:inherit;font-size:1rem;color:#fefae9;background:transparent;border:1px solid rgba(254,250,233,.55);border-radius:27px;padding:16px 20px;box-sizing:border-box";
         hbox.appendChild(elsewhere);
         var syncElsewhere = function () {
           var sel = hotelGroup.querySelector('input[name="Hotel"]:checked');
@@ -693,8 +710,14 @@
       e.returnValue = "";
     });
 
-    // preview the thank-you screen without submitting: load the page with #thankyou
-    if (location.hash === "#thankyou") showThanks(true);
+    // preview the thank-you screen without submitting: #thankyou (attending) or #thankyou-no (declined)
+    if (location.hash === "#thankyou-no") {
+      var noPreview = [].slice.call(attendRadios).filter(function (r) { return !/^yes/i.test(r.value); })[0];
+      if (noPreview) noPreview.checked = true;
+      showThanks(true);
+    } else if (location.hash === "#thankyou") {
+      showThanks(true);
+    }
   }
 
   function buildFaq() {
