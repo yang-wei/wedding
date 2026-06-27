@@ -41,14 +41,14 @@
       // tighten the large gap above the "How it all started" story section (was 120/96px)
       ".framer-1dqoksv{padding-top:clamp(46px,7vw,60px)!important}",
       // hero title "The Wedding of / Yang Wei & Yen": two lines, wide gap between the name words (like the reference)
-      ".wed-hero__names{display:flex!important;flex-direction:column;align-items:center;gap:14px;line-height:1.35;letter-spacing:.04em;margin-top:18px}",
+      ".wed-hero__names{display:flex!important;flex-direction:column;align-items:center;gap:14px;line-height:1.35;letter-spacing:.04em;transform:translateY(18px)}",
       ".wed-hero__names span{transform:none!important;white-space:pre}",
       ".wed-hero__names .whn-couple{display:flex;align-items:center;gap:32px;flex-wrap:wrap;justify-content:center}",
       // curvy arc like the date: tilt the names, keep the & flat
       ".wed-hero__names .whn-couple>span:first-child{transform:rotate(9deg)!important}",
       ".wed-hero__names .whn-couple>span:last-child{transform:rotate(-6deg)!important}",
       // mobile: vertically center the whole hero text block in the (dynamic) viewport
-      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}}",
+      "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}.wed-hero__title{font-size:80px!important}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       // mobile: give each "important details" card a full-screen view (scroll one at a time)
