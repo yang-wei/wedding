@@ -108,7 +108,7 @@
       "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#2a2018;background:rgba(42,32,24,.05);border:1.5px solid rgba(42,32,24,.5);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
       "#wedThanks .ty-btn:hover{background:rgba(42,32,24,.13)}",
       // desktop: portrait video can't fill a wide screen, so show it as a centered card with text stacked
-      "@media(min-width:810px){#wedThanks{justify-content:center;gap:20px;padding:5vh 22px}#wedThanks video{position:relative;inset:auto;width:auto;height:clamp(300px,58vh,560px);max-width:44vw;object-fit:contain;z-index:2;order:2}#wedThanks .ty-overlay{display:none}#wedThanks .ty-top{order:1;width:auto}#wedThanks .ty-bottom{order:3;width:auto}#wedThanks .ty-date{margin:0 0 16px}}",
+      "@media(min-width:810px){#wedThanks{justify-content:center;gap:20px;padding:5vh 22px}#wedThanks video{position:relative;inset:auto;width:auto;height:clamp(340px,64vh,640px);max-width:48vw;object-fit:contain;z-index:2;order:2}#wedThanks .ty-overlay{display:none}#wedThanks .ty-top{order:1;width:auto}#wedThanks .ty-bottom{order:3;width:auto}#wedThanks .ty-date{margin:0 0 16px}}",
       // minimal floating music toggle for our song
       "#wedMusic{position:fixed;right:18px;bottom:18px;z-index:9999;border:none;background:none;color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:6px;box-shadow:none;opacity:.55;transition:opacity .2s ease}",
       "#wedMusic:hover,#wedMusic.is-playing{opacity:1}",
