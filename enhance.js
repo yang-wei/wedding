@@ -62,6 +62,13 @@
       "#wedGalleryTrack .wg-item:hover .wg-cap{opacity:1}",
       "#wedGallery.is-dragging .wg-cap{opacity:0!important}",
       "#wedGalleryHint{text-align:center;margin:22px 0 0;font-size:.78rem;letter-spacing:.14em;opacity:.75}",
+      // lightbox for enlarging a gallery photo
+      "#wedLightbox{position:fixed;inset:0;z-index:10001;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:rgba(18,16,14,.86);padding:5vh 4vw;opacity:0;visibility:hidden;transition:opacity .25s ease;cursor:zoom-out}",
+      "#wedLightbox.show{opacity:1;visibility:visible}",
+      "#wedLightbox .lb-img{max-width:92vw;max-height:84vh;object-fit:contain;border-radius:10px;box-shadow:0 24px 60px -22px rgba(0,0,0,.85);cursor:default}",
+      "#wedLightbox .lb-cap{margin:0;color:#fdf6ec;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.92rem;text-align:center;max-width:60ch}",
+      "#wedLightbox .lb-close{position:fixed;top:16px;right:18px;width:42px;height:42px;border-radius:50%;border:1.5px solid rgba(254,250,233,.55);background:rgba(0,0,0,.25);color:#fdf6ec;font-size:1.6rem;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}",
+      "#wedLightbox .lb-close:hover{background:rgba(0,0,0,.45)}",
       // travel-info paper-note cards
       "#wedTravel{display:flex;flex-wrap:nowrap;justify-content:safe center;align-items:stretch;gap:26px;width:100%;max-width:1180px;margin:24px auto 0;padding:44px 24px 22px;overflow-x:auto;overflow-y:visible;scrollbar-width:none;scroll-snap-type:x mandatory;scroll-padding:0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;cursor:grab;user-select:none;touch-action:pan-x;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}",
       "#wedTravel .wt-card{scroll-snap-align:center}",
@@ -182,6 +189,7 @@
     // pick one of the two photo groups at random; each group is already date-sorted
     var photos = PHOTO_GROUPS[Math.floor(Math.random() * PHOTO_GROUPS.length)];
     if (!photos.length) return;
+    var moved = false; // set true while dragging so a drag doesn't open the lightbox
 
     var wrap = document.createElement("div");
     wrap.id = "wedGallery";
@@ -210,12 +218,16 @@
         fig.appendChild(cap);
       }
 
+      // tap/click a photo to view it large (ignored if it was a drag)
+      fig.style.cursor = "zoom-in";
+      fig.addEventListener("click", function () { if (!moved) openLightbox(src, note); });
+
       track.appendChild(fig);
     });
 
     var hint = document.createElement("p");
     hint.id = "wedGalleryHint";
-    hint.textContent = "← drag to explore →";
+    hint.textContent = "← drag · tap to enlarge →";
 
     wrap.appendChild(track);
     wrap.appendChild(hint);
@@ -229,9 +241,34 @@
 
     // drag-to-scroll (mouse + touch)
     var down = false, startX = 0, startScroll = 0;
-    function start(x) { down = true; startX = x; startScroll = track.scrollLeft; wrap.classList.add("is-dragging"); }
-    function move(x) { if (!down) return; track.scrollLeft = startScroll - (x - startX); }
+    function start(x) { down = true; moved = false; startX = x; startScroll = track.scrollLeft; wrap.classList.add("is-dragging"); }
+    function move(x) { if (!down) return; if (Math.abs(x - startX) > 6) moved = true; track.scrollLeft = startScroll - (x - startX); }
     function end() { down = false; wrap.classList.remove("is-dragging"); }
+
+    // lightbox: enlarge a photo; click the backdrop / close button / Escape to dismiss
+    function openLightbox(src, caption) {
+      var lb = document.getElementById("wedLightbox");
+      if (!lb) {
+        lb = document.createElement("div");
+        lb.id = "wedLightbox";
+        lb.innerHTML = '<button class="lb-close" type="button" aria-label="Close">×</button><img class="lb-img" alt=""><p class="lb-cap"></p>';
+        document.body.appendChild(lb);
+        lb.addEventListener("click", function (e) { if (e.target === lb || e.target.classList.contains("lb-close")) closeLightbox(); });
+        document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLightbox(); });
+      }
+      lb.querySelector(".lb-img").src = src;
+      var cap = lb.querySelector(".lb-cap");
+      cap.textContent = caption || "";
+      cap.style.display = caption ? "block" : "none";
+      lb.classList.add("show");
+      document.body.style.overflow = "hidden";
+    }
+    function closeLightbox() {
+      var lb = document.getElementById("wedLightbox");
+      if (!lb) return;
+      lb.classList.remove("show");
+      document.body.style.overflow = "";
+    }
     wrap.addEventListener("mousedown", function (e) { start(e.pageX); });
     window.addEventListener("mousemove", function (e) { move(e.pageX); });
     window.addEventListener("mouseup", end);
