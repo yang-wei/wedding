@@ -43,9 +43,8 @@
       // hero title "The Wedding of / Yang Wei & Yen": plain even spacing, break before the names
       ".wed-hero__names{display:block!important;text-align:center;line-height:1.4}",
       // sub-hero (Mark your calendars) photo -> full-bleed, full-viewport-height
-      "#story-image{width:100vw!important;max-width:100vw!important;height:100vh!important;height:100svh!important;aspect-ratio:auto!important;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important;border-radius:0!important}",
-      "#story-image>div{border-radius:0!important}",
-      "#story-image img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:0!important}",
+      // sub-hero photo full-bleed on mobile only; desktop keeps its original size
+      "@media(max-width:809.98px){#story-image{width:100vw!important;max-width:100vw!important;height:100vh!important;height:100svh!important;aspect-ratio:auto!important;margin-left:calc(50% - 50vw)!important;margin-right:calc(50% - 50vw)!important;border-radius:0!important}#story-image>div{border-radius:0!important}#story-image img{width:100%!important;height:100%!important;object-fit:cover!important;border-radius:0!important}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
