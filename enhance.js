@@ -51,6 +51,8 @@
       "@media(max-width:809.98px){.wed-hero{min-height:100svh;min-height:100dvh}.wed-hero__text{min-height:100svh;min-height:100dvh;justify-content:center;padding-top:13vh}}",
       // "How it all started" — blank line between each story paragraph
       '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
+      // mobile: give each "important details" card a full-screen view (scroll one at a time)
+      "@media(max-width:809.98px){.wed-detail-cards{gap:0!important}.wed-detail-card{min-height:100svh!important;min-height:100dvh!important;display:flex!important;flex-direction:column;justify-content:center}}",
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%;touch-action:pan-x;overscroll-behavior-x:contain}",
@@ -155,6 +157,7 @@
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
+      "#wedUpdateNote{max-width:42ch;margin:0 auto 26px;padding:8px 0 8px 16px;border-left:3px solid rgba(254,250,233,.5);text-align:left;color:#fefae9;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;line-height:1.5;opacity:.92}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
       "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
       "#wedHotelGroup input[type=radio]:checked,#wedAttendGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
@@ -406,6 +409,12 @@
     form.setAttribute("data-wed-rsvp", "1");
     var rsvpDone = false; // set true once submitted, to silence the leave warning
 
+    // "we'll keep this updated" note, between the Q&A and the form
+    var updateNote = document.createElement("p");
+    updateNote.id = "wedUpdateNote";
+    updateNote.textContent = "We'll keep this site updated as we lock in more details — so check back closer to the date for the latest info.";
+    form.parentNode.insertBefore(updateNote, form);
+
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
 
@@ -426,9 +435,9 @@
       }
       return c;
     }
-    var fa  = makeField("Arrival flight number", "Flight arrival code", "e.g. AK6293");
+    var fa  = makeField("Arrival flight/ferry number", "Flight arrival code", "e.g. AK6293");
     var faT = makeField("Arrival date & time", "Flight arrival time", "", "datetime-local");
-    var fr  = makeField("Return flight number", "Flight return code", "e.g. AK6296");
+    var fr  = makeField("Return flight/ferry number", "Flight return code", "e.g. AK6296");
     var frT = makeField("Return date & time", "Flight return time", "", "datetime-local");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
@@ -841,7 +850,15 @@
     audio.play().catch(armFirstGesture);
   }
 
-  function run() { build(); buildTravel(); buildEvents(); buildFaq(); enhanceRsvp(); buildMusic(); }
+  // tag the "important details" cards so each can fill the screen on mobile
+  function buildDetails() {
+    var wrap = document.querySelector('[data-framer-name="cards wrapper"]');
+    if (!wrap || wrap.classList.contains("wed-detail-cards")) return;
+    wrap.classList.add("wed-detail-cards");
+    [].forEach.call(wrap.children, function (c) { c.classList.add("wed-detail-card"); });
+  }
+
+  function run() { build(); buildTravel(); buildEvents(); buildDetails(); buildFaq(); enhanceRsvp(); buildMusic(); }
   if (document.readyState !== "loading") run();
   else document.addEventListener("DOMContentLoaded", run);
 })();
