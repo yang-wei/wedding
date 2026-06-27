@@ -91,9 +91,9 @@
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
       // minimal floating music toggle for our song
-      "#wedMusic{position:fixed;right:16px;bottom:16px;z-index:9999;width:38px;height:38px;border-radius:50%;border:1.5px solid #2a2018;background:rgba(244,237,210,.82);color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:0;box-shadow:0 6px 16px -10px rgba(0,0,0,.55);opacity:.55;transition:opacity .2s ease,background .2s ease}",
-      "#wedMusic:hover,#wedMusic.is-playing{opacity:1;background:#f4edd2}",
-      "#wedMusic svg{width:17px;height:17px}",
+      "#wedMusic{position:fixed;right:18px;bottom:18px;z-index:9999;border:none;background:none;color:#2a2018;cursor:pointer;display:grid;place-items:center;padding:6px;box-shadow:none;opacity:.55;transition:opacity .2s ease}",
+      "#wedMusic:hover,#wedMusic.is-playing{opacity:1}",
+      "#wedMusic svg{width:22px;height:22px;display:block;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35))}",
       "#wedMusic .m-eq{display:none}",
       "#wedMusic.is-playing .m-note{display:none}",
       "#wedMusic.is-playing .m-eq{display:block}",
