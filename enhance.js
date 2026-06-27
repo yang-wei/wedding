@@ -114,7 +114,7 @@
       "#wedTravel .wt-swatch{display:inline-block;vertical-align:middle;width:18px;height:18px;border-radius:50%;border:2px solid #2a2018;box-shadow:0 2px 4px -2px rgba(0,0,0,.5);margin:0 1px}",
       // FAQ / Q&A (its own section, just before the RSVP)
       // full-screen video thank-you after RSVP (matches hero vibe; no new colors/fonts)
-      "#wedThanks{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#2a2018;background:#f6f5f4;padding:9vh 22px;opacity:0;visibility:hidden;transition:opacity .6s ease}",
+      "#wedThanks{position:fixed;inset:0;z-index:10000;display:flex;flex-direction:column;align-items:center;justify-content:space-between;text-align:center;color:#6e4d2e;background:#f6f5f4;padding:9vh 22px;opacity:0;visibility:hidden;transition:opacity .6s ease}",
       "#wedThanks.show{opacity:1;visibility:visible}",
       "#wedThanks video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}",
       "#wedThanks .ty-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(246,245,244,.62) 0%,rgba(246,245,244,.12) 42%,rgba(246,245,244,.72) 100%)}",
@@ -122,8 +122,8 @@
       "#wedThanks .ty-title{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;margin:0;color:#6e4d2e}",
       "#wedThanks .ty-date{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(1rem,3.6vw,1.35rem);margin:0 0 22px}",
       "#wedThanks .ty-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}",
-      "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#2a2018;background:rgba(42,32,24,.05);border:1.5px solid rgba(42,32,24,.5);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
-      "#wedThanks .ty-btn:hover{background:rgba(42,32,24,.13)}",
+      "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#6e4d2e;background:rgba(110,77,46,.06);border:1.5px solid rgba(110,77,46,.5);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
+      "#wedThanks .ty-btn:hover{background:rgba(110,77,46,.14)}",
       // desktop: portrait video can't fill a wide screen, so show it as a centered card with text stacked
       "@media(min-width:810px){#wedThanks{justify-content:center;gap:20px;padding:5vh 22px}#wedThanks video{position:relative;inset:auto;width:auto;height:clamp(340px,64vh,640px);max-width:48vw;object-fit:contain;z-index:2;order:2}#wedThanks .ty-overlay{display:none}#wedThanks .ty-top{order:1;width:auto}#wedThanks .ty-bottom{order:3;width:auto}#wedThanks .ty-date{margin:0 0 16px}}",
       // minimal floating music toggle for our song
