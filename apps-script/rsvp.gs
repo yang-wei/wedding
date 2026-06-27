@@ -54,8 +54,10 @@ function doPost(e) {
     var attending = p["Attending"] || "";
     var partySize = p["Party size"] || String(guests.length);
     var hotel     = (pp["Hotel"] || (p["Hotel"] ? [p["Hotel"]] : [])).join(" + ");
-    // "No / staying elsewhere" is a valid answer but means NOT booking a group-rate room.
-    var stayingAtGroupHotel = hotel && hotel.indexOf("No /") !== 0;
+    var elsewhere = (p["Staying elsewhere"] || "").trim();
+    if (elsewhere) hotel = hotel + " (" + elsewhere + ")";
+    // "No, somewhere else" is a valid answer but means NOT booking a group-rate room.
+    var stayingAtGroupHotel = hotel && hotel.indexOf("No,") !== 0 && hotel.indexOf("No /") !== 0;
     var welcome   = p["Welcome drinks"] ? "Yes" : "";
     var arrival   = p["Flight arrival code"] || "";
     var ret       = p["Flight return code"] || "";

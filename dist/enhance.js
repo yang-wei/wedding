@@ -162,6 +162,8 @@
       "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
       "#wedHotelGroup input[type=radio]:checked,#wedAttendGroup input[type=radio]:checked{border-color:#fefae9;box-shadow:inset 0 0 0 4px #fefae9}",
       "#wedHotelGroup input[type=radio]:before,#wedHotelGroup input[type=radio]:after,#wedAttendGroup input[type=radio]:before,#wedAttendGroup input[type=radio]:after{display:none!important;content:none!important}",
+      "#wedStayElsewhere::placeholder{color:rgba(254,250,233,.6)}",
+      "#wedStayElsewhere:focus{outline:none;border-color:#fefae9}",
       // "What awaits us" — vertical timeline for the order of events
       "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
       "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
@@ -526,9 +528,29 @@
         setHotel(westin, "The Westin Langkawi");
         hbox.appendChild(westin);
         var noOpt = tmpl.cloneNode(true);
-        setHotel(noOpt, "No / staying elsewhere");
+        setHotel(noOpt, "No, somewhere else");
         hbox.appendChild(noOpt);
         hotelGroup.id = "wedHotelGroup";
+
+        // "No, somewhere else" reveals a text field for where they're staying
+        var elsewhere = document.createElement("input");
+        elsewhere.type = "text";
+        elsewhere.name = "Staying elsewhere";
+        elsewhere.id = "wedStayElsewhere";
+        elsewhere.placeholder = "Where will you be staying?";
+        elsewhere.style.cssText = "display:none;margin:12px 0 0;width:100%;font-family:inherit;font-size:.95rem;color:#fefae9;background:transparent;border:1.5px solid rgba(254,250,233,.55);border-radius:999px;padding:14px 20px;box-sizing:border-box";
+        hbox.appendChild(elsewhere);
+        var syncElsewhere = function () {
+          var sel = hotelGroup.querySelector('input[name="Hotel"]:checked');
+          var isNo = !!(sel && /somewhere else/i.test(sel.value));
+          elsewhere.style.display = isNo ? "block" : "none";
+          elsewhere.required = isNo;
+          if (!isNo) elsewhere.value = "";
+        };
+        [].forEach.call(hotelGroup.querySelectorAll('input[name="Hotel"]'), function (r) {
+          r.addEventListener("change", syncElsewhere);
+        });
+
         var note = document.createElement("p");
         note.textContent = "We've negotiated group rates at both. Select where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
         note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
@@ -537,28 +559,13 @@
       cbGroup.parentNode.insertBefore(hotelGroup, cbGroup.nextSibling);
     }
 
-    // "Will you be attending?" — radios placed first; choosing "No" collapses the
-    // form to just the names of who can't come.
-    var attendGroup = null;
-    if (cbGroup) {
-      attendGroup = cbGroup.cloneNode(true);
-      attendGroup.id = "wedAttendGroup";
-      var apr = attendGroup.querySelector("p");
-      if (apr) apr.textContent = "Will you be attending?";
-      var abox2 = attendGroup.querySelector('[data-framer-name="checkboxes"]');
-      var atmpl = abox2 ? abox2.querySelector("label") : null;
-      if (atmpl) {
-        var setAtt = function (lab, text, value) {
-          var inp = lab.querySelector("input");
-          if (inp) { inp.type = "radio"; inp.name = "Attending"; inp.setAttribute("value", value); inp.checked = false; inp.removeAttribute("checked"); inp.required = true; }
-          var lp = lab.querySelector("p"); if (lp) lp.textContent = text;
-        };
-        setAtt(atmpl, "Yes, we'll be there", "Yes");
-        var attNo = atmpl.cloneNode(true);
-        setAtt(attNo, "No, we can't make it", "No");
-        abox2.appendChild(attNo);
-      }
-      party.parentNode.insertBefore(attendGroup, party);
+    // "Will you be attending?" — use the form's EXISTING radio group; place it first.
+    // Choosing "No" collapses the form to just the names of who can't come.
+    var attendGroup = form.querySelector('[data-framer-name="Radio Group"]');
+    var attendRadios = attendGroup ? attendGroup.querySelectorAll('input[type="radio"]') : [];
+    [].forEach.call(attendRadios, function (r) { r.name = "Attending"; }); // normalize name for the sheet
+    if (attendGroup && party.parentNode) {
+      party.parentNode.insertBefore(attendGroup, party); // attending question comes first
     }
 
     // attendee-only fields are hidden (and de-required) when "No" is chosen
@@ -573,11 +580,9 @@
       [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = yes; });
       if (emailInput) emailInput.required = yes;
     }
-    if (attendGroup) {
-      [].forEach.call(attendGroup.querySelectorAll('input[name="Attending"]'), function (r) {
-        r.addEventListener("change", function () { setAttending(r.value === "Yes"); });
-      });
-    }
+    [].forEach.call(attendRadios, function (r) {
+      r.addEventListener("change", function () { setAttending(/^yes/i.test(r.value)); });
+    });
     setAttending(true); // default attendee view (flights required) until "No" is chosen
 
     // strip Framer's honeypots and wire to Web3Forms
