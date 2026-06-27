@@ -3,71 +3,7 @@
    This re-adds the one interactive piece that needs JS: the draggable photo
    gallery in the blue "Mark your calendars" band. Photos come from /images. */
 (function () {
-  var PHOTOS = [
-    "images/photo-070.jpg",
-    "images/photo-024.jpg",
-    "images/photo-065.jpg",
-    "images/photo-007.jpg",
-    "images/photo-078.jpg",
-    "images/photo-015.jpg",
-    "images/photo-023.jpg",
-    "images/photo-025.jpg",
-    "images/photo-026.jpg",
-    "images/photo-045.jpg",
-    "images/photo-047.jpg",
-    "images/photo-056.jpg",
-    "images/photo-061.jpg",
-    "images/photo-067.jpg",
-    "images/photo-033.jpg",
-    "images/photo-069.jpg",
-    "images/photo-005.jpg",
-    "images/photo-086.jpg",
-    "images/photo-028.jpg",
-    "images/photo-089.jpg",
-    "images/photo-031.jpg",
-    "images/photo-060.jpg",
-    "images/photo-093.jpg",
-    "images/photo-037.jpg",
-    "images/photo-066.jpg",
-    "images/photo-068.jpg",
-    "images/photo-055.jpg",
-    "images/photo-074.jpg",
-    "images/photo-079.jpg",
-    "images/photo-012.jpg",
-    "images/photo-013.jpg",
-    "images/photo-080.jpg",
-    "images/photo-020.jpg",
-    "images/photo-027.jpg",
-    "images/photo-030.jpg",
-    "images/photo-096.jpg",
-    "images/photo-043.jpg",
-    "images/photo-048.jpg",
-    "images/photo-050.jpg",
-    "images/photo-051.jpg",
-    "images/photo-054.jpg",
-    "images/photo-057.jpg",
-    "images/photo-111.jpg",
-    "images/photo-115.jpg",
-    "images/photo-008.jpg",
-    "images/photo-022.jpg",
-    "images/photo-085.jpg",
-    "images/photo-091.jpg",
-    "images/photo-034.jpg",
-    "images/photo-036.jpg",
-    "images/photo-039.jpg",
-    "images/photo-042.jpg",
-    "images/photo-044.jpg",
-    "images/photo-046.jpg",
-    "images/photo-049.jpg",
-    "images/photo-021.jpg",
-    "images/photo-052.jpg",
-    "images/photo-053.jpg",
-    "images/photo-064.jpg",
-    "images/photo-002.jpg",
-    "images/photo-072.jpg",
-    "images/photo-003.jpg",
-    "images/photo-099.jpg",
-  ];
+  var PHOTOS = [];  // gallery photos removed — add "images/your.jpg" entries here to bring the gallery back
 
   // ⬇ RSVP delivery: paste your Google Apps Script Web App URL here.
   //    Setup is in apps-script/rsvp.gs. It saves each RSVP to your Google Sheet
@@ -76,57 +12,7 @@
   // Fill in the place + your note for each photo, e.g.:
   //   "images/photo-005.jpg": "Yen's 29th birthday @Bali",
   // Leave a value as "" (empty) to show no caption for that photo.
-  var NOTES = {
-    "images/photo-002.jpg": "Toyama, Japan · Sep 2025",
-    "images/photo-003.jpg": "",
-    "images/photo-005.jpg": "",
-    "images/photo-007.jpg": "Amsterdam canals · May 2022",
-    "images/photo-008.jpg": "Tokyo Tower · Aug 2024",
-    "images/photo-012.jpg": "",
-    "images/photo-013.jpg": "Twelve Apostles, Great Ocean Road · Oct 2023",
-    "images/photo-015.jpg": "",
-    "images/photo-020.jpg": "Great Ocean Road · Oct 2023",
-    "images/photo-021.jpg": "Marina Bay Sands, Singapore · Mar 2025",
-    "images/photo-022.jpg": "Yosemite National Park · Sep 2024",
-    "images/photo-023.jpg": "The Louvre, Paris · May 2022",
-    "images/photo-024.jpg": "",
-    "images/photo-025.jpg": "Picnic by the Eiffel Tower · May 2022",
-    "images/photo-026.jpg": "Breakfast with an Eiffel Tower view · May 2022",
-    "images/photo-027.jpg": "Where the snow meets the sea — Suzu · Dec 2023",
-    "images/photo-028.jpg": "Kusama's Yellow Pumpkin, Naoshima · Apr 2023",
-    "images/photo-030.jpg": "",
-    "images/photo-031.jpg": "A little town in Spain · May 2023",
-    "images/photo-033.jpg": "",
-    "images/photo-034.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
-    "images/photo-036.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
-    "images/photo-037.jpg": "La Zambra Resort, Málaga · May 2023",
-    "images/photo-039.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
-    "images/photo-042.jpg": "AlUla desert, Saudi Arabia · Dec 2024",
-    "images/photo-043.jpg": "",
-    "images/photo-044.jpg": "",
-    "images/photo-045.jpg": "Kouan — our favourite campsite · Sep 2022",
-    "images/photo-046.jpg": "Flying home from the proposal trip · Dec 2024",
-    "images/photo-047.jpg": "Kochia season, Japan · Oct 2022",
-    "images/photo-048.jpg": "Vorderer Gosausee, Austria · Feb 2024",
-    "images/photo-049.jpg": "",
-    "images/photo-050.jpg": "",
-    "images/photo-051.jpg": "",
-    "images/photo-052.jpg": "",
-    "images/photo-053.jpg": "The Bund, Shanghai · Apr 2025",
-    "images/photo-054.jpg": "Old Town Square, Prague · Feb 2024",
-    "images/photo-055.jpg": "A campsite somewhere in Nagano · Aug 2023",
-    "images/photo-056.jpg": "",
-    "images/photo-057.jpg": "",
-    "images/photo-060.jpg": "",
-    "images/photo-061.jpg": "",
-    "images/photo-064.jpg": "",
-    "images/photo-065.jpg": "",
-    "images/photo-066.jpg": "Plaza de España, Seville · May 2023",
-    "images/photo-067.jpg": "Bali · Dec 2022",
-    "images/photo-068.jpg": "",
-    "images/photo-069.jpg": "Ubud, Bali · Dec 2022",
-    "images/photo-070.jpg": "Okinawa · Jul 2021",
-  };
+  var NOTES = {};  // optional captions for gallery photos: "images/your.jpg": "Place · Mon YYYY"
 
   var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbxOD2lNkoY6uQZM6xOXSDLF6B2JgYI-WndJOWExRMIuYlaYTKe9VJeFHgMc-vLfxMZvqg/exec";
 
@@ -136,6 +22,8 @@
       ".framer-l0t3vs{display:none!important}",
       // remove the empty spacer block under 'How it all started'
       ".framer-xwh9m6{display:none!important}",
+      // "How it all started" — blank line between each story paragraph
+      '[data-framer-name="story"] p.framer-text{margin:0 0 1.1em !important}',
       "@media(max-width:809.98px){.framer-1u52ydy,.framer-1py9a9j,.framer-1ej0jd0,.framer-10h98ge,.framer-slwhx0,.framer-rivr1n{display:none!important}}",
       "@media(max-width:809.98px){.framer-wazbi1{padding-top:0!important}}",
       "#wedGallery{padding:18px 0 56px;cursor:grab;user-select:none;width:100%;touch-action:pan-x;overscroll-behavior-x:contain}",
@@ -190,7 +78,7 @@
       "#wedFaq .faq-a{margin:0;font-size:.93rem;line-height:1.5;color:#4d2008;opacity:.9}",
       // RSVP dynamic guest list
       "#wedParty,#wedParty *{box-sizing:border-box}",
-      "#wedParty .wp-label{display:block;font-size:1.05rem;color:#fefae9;margin:0 0 12px}",
+      "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
       "#wedParty .wp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}",
       "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:.95rem;color:#fefae9;background:transparent;border:1.5px solid rgba(254,250,233,.55);border-radius:999px;padding:14px 20px}",
@@ -282,6 +170,9 @@
   function build() {
     if (document.getElementById("wedGallery")) return; // guard against double-run
     injectStyles();
+
+    // No gallery photos yet — add filenames to PHOTOS above to bring the gallery back.
+    if (!PHOTOS.length) return;
 
     var wrap = document.createElement("div");
     wrap.id = "wedGallery";
@@ -468,8 +359,10 @@
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
     party.id = "wedParty";
-    var plabel = document.createElement("p");
-    plabel.className = "wp-label";
+    // clone the Framer field label's <p> so this prompt matches the other RSVP labels exactly
+    var srcLabelP = nameLabel ? nameLabel.querySelector("p") : null;
+    var plabel = srcLabelP ? srcLabelP.cloneNode(true) : document.createElement("p");
+    plabel.classList.add("wp-label");
     plabel.textContent = "Who's coming? (add yourself, then your guests)";
     party.appendChild(plabel);
     var rows = document.createElement("div");
