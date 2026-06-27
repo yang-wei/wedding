@@ -466,8 +466,8 @@
         "DTSTART;TZID=Asia/Kuala_Lumpur:20270213T160000",
         "DTEND;TZID=Asia/Kuala_Lumpur:20270213T230000",
         "SUMMARY:The Wedding of Yang Wei & Yen",
-        "LOCATION:Langkawi\\, Malaysia",
-        "DESCRIPTION:Ceremony 4:00PM\\nReception\\, dinner & dancing to follow",
+        "LOCATION:The St. Regis Langkawi\\, Malaysia",
+        "DESCRIPTION:Ceremony 4:00PM\\nCocktail hour & photos 5:30PM\\nReception (dinner & after party) 7:00PM",
         "END:VEVENT", "END:VCALENDAR",
       ].join("\r\n");
       var url = URL.createObjectURL(new Blob([ics], { type: "text/calendar;charset=utf-8" }));
@@ -558,6 +558,9 @@
       e.preventDefault();
       e.returnValue = "";
     });
+
+    // preview the thank-you screen without submitting: load the page with #thankyou
+    if (location.hash === "#thankyou") showThanks(true);
   }
 
   function buildFaq() {
