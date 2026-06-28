@@ -919,6 +919,17 @@
     audio.addEventListener("play", function () { setPlaying(true); });
     audio.addEventListener("pause", function () { setPlaying(false); });
 
+    // Stop the song when the visitor leaves the tab / switches app, and pick it
+    // back up when they return — but only if WE paused it (a manual pause stays paused).
+    var resumeOnReturn = false;
+    document.addEventListener("visibilitychange", function () {
+      if (document.hidden) {
+        if (!audio.paused) { resumeOnReturn = true; audio.pause(); }
+      } else if (resumeOnReturn) {
+        resumeOnReturn = false; audio.play().catch(function () {});
+      }
+    });
+
     // Autoplay on entry. Browsers block autoplay-with-sound until a user gesture,
     // so if the initial attempt is rejected we start on the first interaction
     // (tap / key / scroll) anywhere except the toggle button itself.
