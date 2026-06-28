@@ -749,8 +749,8 @@
       }
       rsvpDone = true;
       if (document.getElementById("wedThanks")) return;
-      var att = form.querySelector('input[name="Attending"]:checked');
-      var notAttending = att && !/^yes/i.test(att.value);
+      var att = form.querySelector('input[name="Attending"]');
+      var notAttending = att && /^no/i.test(att.value);
       var ty = document.createElement("div");
       ty.id = "wedThanks";
       ty.innerHTML =
@@ -827,6 +827,7 @@
     if (location.hash === "#thankyou-no") {
       var noPreview = [].slice.call(attendRadios).filter(function (r) { return !/^yes/i.test(r.value); })[0];
       if (noPreview) noPreview.checked = true;
+      attendingField.value = "No";
       showThanks(true);
     } else if (location.hash === "#thankyou") {
       showThanks(true);
