@@ -194,5 +194,6 @@ function doPost(e) {
 }
 
 function doGet() {
-  return ContentService.createTextOutput("RSVP endpoint is live.");
+  // The version tag lets us confirm which code is actually deployed.
+  return ContentService.createTextOutput("RSVP endpoint is live. v2-attending");
 }
