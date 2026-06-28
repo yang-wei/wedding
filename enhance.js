@@ -30,7 +30,7 @@
   // Leave a value as "" (empty) to show no caption for that photo.
   var NOTES = {};  // optional captions for gallery photos: "images/your.jpg": "Place · Mon YYYY"
 
-  var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbyT8cD-HKQK1eWsAgmB5TAIMAiT70A_9D38jWZ4ew8IIdBkiC5eZYEcbsdOBhA6uzgmUg/exec";
+  var RSVP_ENDPOINT = "https://script.google.com/macros/s/AKfycbyQ-M6fNEoY9Uc8hDefVcdxu9liSe3xIB5RpExdWaRhAJsBKlm_5t-SC2Rqg1bZIjgU0w/exec";
 
   function injectStyles() {
     var css = [
