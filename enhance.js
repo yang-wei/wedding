@@ -483,6 +483,7 @@
       "AK6306": ["Kuala Lumpur", "09:45"], "AK6320": ["Kuala Lumpur", "11:35"], "AK6304": ["Kuala Lumpur", "12:55"],
       "AK6324": ["Kuala Lumpur", "13:55"], "AK6331": ["Kuala Lumpur", "16:00"], "OD2205": ["Kuala Lumpur", "16:05"],
       "AK6316": ["Kuala Lumpur", "16:35"], "AK6314": ["Kuala Lumpur", "19:05"], "AK6322": ["Kuala Lumpur", "20:10"],
+      "MH1432": ["Kuala Lumpur", "10:35"], "MH1438": ["Kuala Lumpur", "13:05"], "MH1436": ["Kuala Lumpur", "14:20"], "MH1446": ["Kuala Lumpur", "17:00"],
       "AK6241": ["Penang", "10:25"], "MH5294": ["Penang", "11:50"], "FY2700": ["Penang", "11:50"],
       "AK6242": ["Penang", "14:35"], "MH5486": ["Penang", "17:55"], "FY2702": ["Penang", "17:55"],
       "AK733": ["Singapore", "12:20"], "TR476": ["Singapore", "15:10"]
