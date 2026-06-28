@@ -634,13 +634,22 @@
     // Choosing "No" collapses the form to just the names of who can't come.
     var attendGroup = form.querySelector('[data-framer-name="Radio Group"]');
     var attendRadios = attendGroup ? attendGroup.querySelectorAll('input[type="radio"]') : [];
-    [].forEach.call(attendRadios, function (r) { r.name = "Attending"; }); // normalize name for the sheet
+    // Record the Yes/No answer in a dedicated hidden field, set deterministically in
+    // setAttending() below. Don't rename the radios to "Attending": Framer's native radio
+    // input isn't reliably submitted (which left the Attending column blank), and the name
+    // collision once leaked the guest's name into that column instead of "No".
+    var attendingField = document.createElement("input");
+    attendingField.type = "hidden";
+    attendingField.name = "Attending";
+    attendingField.value = "Yes";
+    form.appendChild(attendingField);
     if (attendGroup && party.parentNode) {
       party.parentNode.insertBefore(attendGroup, party); // attending question comes first
     }
 
     // attendee-only fields are hidden (and de-required) when "No" is chosen
     function setAttending(yes) {
+      attendingField.value = yes ? "Yes" : "No";
       plabel.textContent = yes
         ? "Who's coming?"
         : "Who's not coming?";
