@@ -34,7 +34,7 @@ var CONFIG = {
 };
 
 var RSVP_HEADERS = [
-  "Timestamp", "Email", "Attending", "Guest name", "Dietary", "Party size",
+  "Timestamp", "Email", "Attending", "Main guest", "Guest name", "Dietary",
   "Hotel", "Welcome dinner (Fri)",
   "Flight arrival", "Flight arrival time",
   "Flight return", "Flight return time"
@@ -99,7 +99,8 @@ function doPost(e) {
     var ts        = new Date();
     var email     = p["Email"] || "";
     var attending = p["Attending"] || "";
-    var partySize = p["Party size"] || String(guests.length);
+    var mainGuest = (guests[0] && guests[0].name) || "";
+    var partySize = guests.length; // for the notification email only (not stored)
     var hotel     = (pp["Hotel"] || (p["Hotel"] ? [p["Hotel"]] : [])).join(" + ");
     var elsewhere = (p["Staying elsewhere"] || "").trim();
     if (elsewhere) hotel = hotel + " (" + elsewhere + ")";
@@ -120,9 +121,9 @@ function doPost(e) {
         "Timestamp": ts,
         "Email": email,
         "Attending": attending,
+        "Main guest": mainGuest,
         "Guest name": guestName,
         "Dietary": diet,
-        "Party size": partySize,
         "Hotel": hotel,
         "Welcome dinner (Fri)": welcome,
         "Flight arrival": arrival,
@@ -175,6 +176,7 @@ function doPost(e) {
         "New RSVP received:\n\n" +
         "Attending: " + (attending || "(not specified)") + "\n" +
         "Email: " + email + "\n" +
+        "Main guest: " + (mainGuest || "(none)") + "\n" +
         "Party size: " + partySize + "\n" +
         "Guests: " + guestSummary.join("; ") + "\n" +
         "Hotel: " + (hotel || "(none selected)") + "\n" +
@@ -195,5 +197,5 @@ function doPost(e) {
 
 function doGet() {
   // The version tag lets us confirm which code is actually deployed.
-  return ContentService.createTextOutput("RSVP endpoint is live. v2-attending");
+  return ContentService.createTextOutput("RSVP endpoint is live. v3-mainguest");
 }
