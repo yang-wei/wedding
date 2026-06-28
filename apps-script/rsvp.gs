@@ -144,26 +144,51 @@ function doPost(e) {
       return g.diet ? (g.name + " (" + g.diet + ")") : g.name;
     });
 
-    // Confirmation email to the guest.
+    // Confirmation email to the guest. Sent as HTML so the text flows naturally —
+    // plain-text email gets hard-wrapped at ~78 chars, which split sentences mid-line.
     if (email) {
       var who = (guests[0] && guests[0].name) || "there";
+
+      // shared detail rows
+      var rows = [];
+      rows.push(["Guests", guestSummary.join(", ")]);
+      if (hotel)              rows.push(["Hotel", hotel]);
+      if (welcome)            rows.push(["Welcome dinner (Friday)", "Yes"]);
+      if (arrival || arrivalT) rows.push(["Flight arrival", [arrival, arrivalT].filter(String).join(", ")]);
+      if (ret || retT)         rows.push(["Flight return", [ret, retT].filter(String).join(", ")]);
+
+      // plain-text fallback (for clients that don't render HTML)
       var body =
         "Hi " + who + ",\n\n" +
-        "We've received your RSVP — thank you! We can't wait to celebrate " +
-        "with you in Langkawi.\n\n" +
+        "We've received your RSVP — thank you! We can't wait to celebrate with you in Langkawi.\n\n" +
         "Here's what we have on file:\n" +
-        "  • Guests: " + guestSummary.join(", ") + "\n" +
-        (hotel   ? "  • Hotel: " + hotel + "\n" : "") +
-        (welcome ? "  • Joining the welcome dinner (Friday): Yes\n" : "") +
-        (arrival || arrivalT ? "  • Flight arrival: " + [arrival, arrivalT].filter(String).join(", ") + "\n" : "") +
-        (ret || retT ? "  • Flight return: " + [ret, retT].filter(String).join(", ") + "\n" : "") +
+        rows.map(function (r) { return "  • " + r[0] + ": " + r[1]; }).join("\n") + "\n" +
         (stayingAtGroupHotel
-          ? "\nWe've negotiated a group rate at your chosen hotel and will email " +
-            "you a reservation link as soon as the hotel sends it through.\n"
+          ? "\nWe've negotiated a group rate at your chosen hotel and will email you a reservation link as soon as the hotel sends it through.\n"
           : "") +
         "\nIf anything looks wrong, just reply to this email and we'll fix it.\n\n" +
         "With love,\nYen & Yang Wei";
-      var opts = { name: CONFIG.fromName };
+
+      function esc(s) {
+        return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+      }
+      var rowsHtml = rows.map(function (r) {
+        return '<li style="margin:2px 0"><strong>' + esc(r[0]) + ":</strong> " + esc(r[1]) + "</li>";
+      }).join("");
+      var html =
+        '<div style="font-family:Georgia,\'Times New Roman\',serif;font-size:16px;line-height:1.6;color:#43321f">' +
+          "<p>Hi " + esc(who) + ",</p>" +
+          "<p>We&rsquo;ve received your RSVP &mdash; thank you! We can&rsquo;t wait to celebrate with you in Langkawi.</p>" +
+          "<p>Here&rsquo;s what we have on file:</p>" +
+          '<ul style="padding-left:20px;margin:0 0 16px">' + rowsHtml + "</ul>" +
+          (stayingAtGroupHotel
+            ? "<p>We&rsquo;ve negotiated a group rate at your chosen hotel and will email you a reservation link as soon as the hotel sends it through.</p>"
+            : "") +
+          "<p>If anything looks wrong, just reply to this email and we&rsquo;ll fix it.</p>" +
+          "<p>With love,<br>Yen &amp; Yang Wei</p>" +
+        "</div>";
+
+      var opts = { name: CONFIG.fromName, htmlBody: html };
       if (CONFIG.fromAlias) opts.from = CONFIG.fromAlias;
       MailApp.sendEmail(email, "Your RSVP is in — Yen & Yang Wei", body, opts);
     }
@@ -197,5 +222,5 @@ function doPost(e) {
 
 function doGet() {
   // The version tag lets us confirm which code is actually deployed.
-  return ContentService.createTextOutput("RSVP endpoint is live. v3-mainguest");
+  return ContentService.createTextOutput("RSVP endpoint is live. v4-htmlmail");
 }
