@@ -170,6 +170,7 @@
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
       "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
+      ".wp-err{margin:7px 2px 0;color:#ffd9cf;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.84rem;line-height:1.35}",
       "#wedUpdateNote{margin:24px 0 0;padding:0;text-align:left;color:#4d2008;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-style:italic;font-size:.95rem;line-height:1.5;opacity:.92}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
       "#wedHotelGroup input[type=radio],#wedAttendGroup input[type=radio]{appearance:none;-webkit-appearance:none;width:20px;height:20px;min-width:20px;border-radius:50%;border:2px solid rgba(254,250,233,.55);background:transparent;box-shadow:none;cursor:pointer;transition:border-color .15s ease,box-shadow .15s ease}",
@@ -423,6 +424,9 @@
                document.querySelector('[data-framer-name="rsvp"] form');
     if (!form || form.getAttribute("data-wed-rsvp")) return;
     form.setAttribute("data-wed-rsvp", "1");
+    // turn off native validation so our submit handler runs and we can show inline
+    // errors (the native popup is unreliable / off-screen on mobile)
+    form.setAttribute("novalidate", "");
     var rsvpDone = false; // set true once submitted, to silence the leave warning
 
     // "we'll keep this updated" note, at the end of the Q&A (light background, not the RSVP panel)
@@ -476,11 +480,20 @@
     var fr  = makeField("Return flight/ferry number (optional)", "Flight return code", "e.g. AK6296");
     var frT = makeField("Return date & time (optional)", "Flight return time", "", "datetime-local");
     // arrival must be in 2027 and no later than the wedding (Sat 13 Feb 2027, 3pm);
-    // return must be after the wedding starts. No prefill / no autocomplete — plain inputs.
+    // return must be after the wedding starts.
     var faTin = faT && faT.querySelector("input");
     if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; }
     var frTin = frT && frT.querySelector("input");
     if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; }
+    // Smart default: the field stays EMPTY (nothing submitted unless they pick), but the
+    // first time it's focused we seed a sensible date so the native picker opens there —
+    // arrival 12 Feb 2027 12pm, return 14 Feb 2027 12pm. They can then just adjust.
+    function seedOnFocus(input, when) {
+      if (!input) return;
+      input.addEventListener("focus", function () { if (!input.value) input.value = when; });
+    }
+    seedOnFocus(faTin, "2027-02-12T12:00");
+    seedOnFocus(frTin, "2027-02-14T12:00");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -705,6 +718,34 @@
       });
     }
 
+    // Inline validation messages — the native browser bubble is unreliable on mobile
+    // (it can sit off-screen or get clipped), so we render the error under the field.
+    function clearErrs() {
+      [].forEach.call(form.querySelectorAll(".wp-err"), function (e) { e.remove(); });
+    }
+    function friendlyMsg(el) {
+      if (el === faTin) return "Pick an arrival between Jan and the wedding day (Sat 13 Feb 2027, 3pm).";
+      if (el === frTin) return "Pick a return after the wedding starts (Sat 13 Feb 2027, 3pm).";
+      return el.validationMessage;
+    }
+    function showInvalid() {
+      clearErrs();
+      var bad = [].slice.call(form.querySelectorAll(":invalid")).filter(function (el) {
+        return el.offsetParent !== null; // visible fields only
+      });
+      if (!bad.length) return;
+      bad.forEach(function (el) {
+        var e = document.createElement("div");
+        e.className = "wp-err";
+        e.textContent = friendlyMsg(el);
+        el.insertAdjacentElement("afterend", e);
+      });
+      var first = bad[0];
+      try { first.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (_) { first.scrollIntoView(); }
+      first.focus({ preventScroll: true });
+    }
+    form.addEventListener("input", clearErrs);
+
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       // number the guests sequentially so the email reads Guest 1, Guest 2, ...
@@ -722,7 +763,8 @@
       if (!attendingYes) {
         [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.value = ""; });
       }
-      if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (!form.checkValidity()) { showInvalid(); return; }
+      clearErrs();
       if (/PASTE-YOUR/.test(RSVP_ENDPOINT)) {
         alert("RSVP isn't connected yet, add your Apps Script Web App URL near the top of enhance.js.");
         return;
