@@ -33,6 +33,53 @@ var CONFIG = {
   fromAlias: ""
 };
 
+var RSVP_HEADERS = [
+  "Timestamp", "Email", "Attending", "Guest name", "Dietary", "Party size",
+  "Hotel", "Welcome dinner (Fri)",
+  "Flight arrival", "Flight arrival time",
+  "Flight return", "Flight return time"
+];
+
+function ensureHeaders(sheet) {
+  if (sheet.getLastRow() === 0) {
+    sheet.appendRow(RSVP_HEADERS);
+  } else {
+    var lastCol = sheet.getLastColumn();
+    var headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+
+    // Keep older sheets readable: if Attending is missing, put it after Email.
+    if (headers.indexOf("Attending") === -1) {
+      sheet.insertColumnAfter(2);
+      sheet.getRange(1, 3).setValue("Attending");
+      lastCol = sheet.getLastColumn();
+      headers = sheet.getRange(1, 1, 1, lastCol).getValues()[0];
+    }
+
+    RSVP_HEADERS.forEach(function (name) {
+      if (headers.indexOf(name) === -1) {
+        sheet.insertColumnAfter(sheet.getLastColumn());
+        sheet.getRange(1, sheet.getLastColumn()).setValue(name);
+        headers.push(name);
+      }
+    });
+  }
+
+  var hdr = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
+  var cols = {};
+  hdr.forEach(function (name, i) {
+    if (name) cols[name] = i + 1;
+  });
+  return cols;
+}
+
+function appendRsvpRow(sheet, cols, values) {
+  var row = new Array(sheet.getLastColumn());
+  Object.keys(values).forEach(function (name) {
+    if (cols[name]) row[cols[name] - 1] = values[name];
+  });
+  sheet.getRange(sheet.getLastRow() + 1, 1, 1, row.length).setValues([row]);
+}
+
 function doPost(e) {
   var lock = LockService.getScriptLock();
   lock.tryLock(10000); // avoid two submissions writing at once
@@ -64,27 +111,31 @@ function doPost(e) {
     var arrivalT  = p["Flight arrival time"] || "";
     var retT      = p["Flight return time"] || "";
 
-    // Header row — written on an empty sheet, OR if an existing sheet predates the
-    // "Attending" column, insert that column so old rows stay aligned (no manual clearing).
-    if (sheet.getLastRow() === 0) {
-      sheet.appendRow(["Timestamp", "Email", "Attending", "Guest name", "Dietary", "Party size",
-                       "Hotel", "Welcome dinner (Fri)",
-                       "Flight arrival", "Flight arrival time",
-                       "Flight return", "Flight return time"]);
-    } else {
-      var hdr = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
-      if (hdr.indexOf("Attending") === -1) {
-        sheet.insertColumnAfter(2);            // new column C, just after Email
-        sheet.getRange(1, 3).setValue("Attending");
-      }
-    }
+    // Header row — tolerate older sheets whose columns are missing or moved.
+    var cols = ensureHeaders(sheet);
 
     // ONE ROW PER GUEST — shared fields repeat down the rows.
+    function rowValues(guestName, diet) {
+      return {
+        "Timestamp": ts,
+        "Email": email,
+        "Attending": attending,
+        "Guest name": guestName,
+        "Dietary": diet,
+        "Party size": partySize,
+        "Hotel": hotel,
+        "Welcome dinner (Fri)": welcome,
+        "Flight arrival": arrival,
+        "Flight arrival time": arrivalT,
+        "Flight return": ret,
+        "Flight return time": retT
+      };
+    }
     if (guests.length === 0) {
-      sheet.appendRow([ts, email, attending, "", "", partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
+      appendRsvpRow(sheet, cols, rowValues("", ""));
     } else {
       guests.forEach(function (g) {
-        sheet.appendRow([ts, email, attending, g.name, g.diet, partySize, hotel, welcome, arrival, arrivalT, ret, retT]);
+        appendRsvpRow(sheet, cols, rowValues(g.name, g.diet));
       });
     }
 

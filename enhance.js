@@ -145,6 +145,9 @@
       "#wedFaq .faq-q{margin:0 0 6px;font-weight:700;font-size:1rem;color:#4d2008}",
       "#wedFaq .faq-a{margin:0;font-size:.93rem;line-height:1.5;color:#4d2008;opacity:.9}",
       // RSVP dynamic guest list
+      "form[data-wed-rsvp],form[data-wed-rsvp] label,form[data-wed-rsvp] p,form[data-wed-rsvp] input,form[data-wed-rsvp] textarea,form[data-wed-rsvp] button{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-size:1rem!important;line-height:1.4!important;letter-spacing:0!important}",
+      "form[data-wed-rsvp] input,form[data-wed-rsvp] textarea{font-weight:400!important}",
+      "form[data-wed-rsvp] button{font-weight:700!important}",
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
       "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
@@ -158,13 +161,13 @@
       "form.framer-e1hfmq input[type=datetime-local]::-webkit-calendar-picker-indicator{display:none}",
       "#wedPartyRows{display:flex;flex-direction:column;gap:12px}",
       "#wedParty .wp-row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}",
-      "#wedParty .wp-row input{flex:1 1 150px;font-family:inherit;font-size:1rem;color:#fefae9;background:transparent;border:1px solid rgba(254,250,233,.55);border-radius:27px;padding:16px 20px}",
+      "#wedParty .wp-row input{flex:1 1 150px;color:#fefae9;background:transparent;border:1.5px solid rgba(254,250,233,.55);border-radius:999px;padding:14px 20px}",
       "#wedParty .wp-row input::placeholder{color:rgba(254,250,233,.6)}",
       "#wedParty .wp-row input:focus{outline:none;border-color:#fefae9}",
       "#wedParty .wp-remove{flex:0 0 auto;width:36px;height:36px;border-radius:50%;border:1.5px solid rgba(254,250,233,.55);background:transparent;color:#fefae9;cursor:pointer;font-size:1.1rem;line-height:1}",
       "#wedParty .wp-remove-spacer{flex:0 0 auto;width:36px}",
       "#wedParty .wp-remove:hover{background:rgba(254,250,233,.18)}",
-      "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer;font-family:inherit;font-size:.92rem}",
+      "#wedParty .wp-add{margin:12px 0 0;background:rgba(254,250,233,.22);color:#fefae9;border:none;border-radius:999px;padding:11px 20px;cursor:pointer}",
       "#wedParty .wp-add:hover{background:rgba(254,250,233,.34)}",
       "#wedUpdateNote{margin:24px 0 0;padding:0;text-align:left;color:#4d2008;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-style:italic;font-size:.95rem;line-height:1.5;opacity:.92}",
       // hotel question rendered as single-select radios (override Framer's boolean-input look)
@@ -802,6 +805,8 @@
       var fd = new FormData(form);
       var params = new URLSearchParams();
       fd.forEach(function (v, k) { params.append(k, v); });
+      // Make the RSVP choice explicit even if Framer changes the form DOM.
+      params.set("Attending", attendingField.value);
       // Opaque (no-cors) response — the row is still written and emails still send.
       fetch(RSVP_ENDPOINT, { method: "POST", mode: "no-cors", body: params })
         .then(function () { showThanks(true); })
