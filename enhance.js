@@ -121,6 +121,7 @@
       "#wedThanks .ty-top,#wedThanks .ty-bottom{position:relative;z-index:2;width:100%}",
       "#wedThanks .ty-title{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.6rem,9vw,4.6rem);line-height:1;margin:0;color:#6e4d2e}",
       "#wedThanks .ty-date{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(1rem,3.6vw,1.35rem);margin:0 0 22px}",
+      "#wedThanks .ty-note{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:clamp(.82rem,2.8vw,.95rem);color:#6e4d2e;opacity:.78;margin:-10px 0 22px}",
       "#wedThanks .ty-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}",
       "#wedThanks .ty-btn{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.95rem;color:#6e4d2e;background:rgba(110,77,46,.06);border:1.5px solid rgba(110,77,46,.5);border-radius:999px;padding:13px 24px;cursor:pointer;transition:background .2s ease}",
       "#wedThanks .ty-btn:hover{background:rgba(110,77,46,.14)}",
@@ -761,6 +762,7 @@
         '<div class="ty-top"><p class="ty-title">Thank you !</p></div>' +
         '<div class="ty-bottom"><p class="ty-date">' +
           (notAttending ? "In case you change your mind, let us know" : "See you on 13th February 2027") + "</p>" +
+          (notAttending ? "" : '<p class="ty-note">A confirmation email is on its way to your inbox.</p>') +
           '<div class="ty-btns">' +
             (notAttending ? "" : '<button type="button" class="ty-btn" id="tyCal">Save to Calendar</button>') +
             '<button type="button" class="ty-btn" id="tyBack">Back to Details</button>' +
@@ -857,6 +859,8 @@
         a: "Absolutely! We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
       { q: "Any tips on booking flights?",
         a: "Book early! Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
+      { q: "What if I need to update my info later?",
+        a: "Come back to this website, we'll add a Google Form here later so you can update your details anytime." },
     ];
 
     var wrap = document.createElement("div");
