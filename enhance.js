@@ -178,13 +178,6 @@
       "#wedStayElsewhere::placeholder{color:rgba(254,250,233,.6)}",
       "#wedStayElsewhere:focus{outline:none;border-color:#fefae9}",
       // flight-code autocomplete dropdown (airline badges, fixed height + scroll)
-      ".wf-box{position:relative}",
-      ".wf-dd{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:50;margin:0;padding:6px;list-style:none;max-height:236px;overflow-y:auto;background:#5e4632;border:1px solid rgba(254,250,233,.4);border-radius:18px;box-shadow:0 16px 32px -12px rgba(0,0,0,.6);display:none;-webkit-overflow-scrolling:touch}",
-      ".wf-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;cursor:pointer;color:#fefae9;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.92rem}",
-      ".wf-opt:hover{background:rgba(254,250,233,.13)}",
-      ".wf-badge{flex:0 0 auto;min-width:30px;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em;padding:4px 6px;border-radius:6px}",
-      ".wf-code{font-weight:600}",
-      ".wf-meta{margin-left:auto;opacity:.82;font-size:.85rem;text-align:right;white-space:nowrap}",
       // "What awaits us" — vertical timeline for the order of events
       "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
       "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
@@ -483,83 +476,11 @@
     var fr  = makeField("Return flight/ferry number (optional)", "Flight return code", "e.g. AK6296");
     var frT = makeField("Return date & time (optional)", "Flight return time", "", "datetime-local");
     // arrival must be in 2027 and no later than the wedding (Sat 13 Feb 2027, 3pm);
-    // return must be after the wedding starts.
+    // return must be after the wedding starts. No prefill / no autocomplete — plain inputs.
     var faTin = faT && faT.querySelector("input");
-    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; faTin.value = "2027-02-12T12:00"; }
+    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; }
     var frTin = frT && frT.querySelector("input");
-    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; frTin.value = "2027-02-14T12:00"; }
-
-    // Langkawi direct flights (current schedules — verify nearer the date). [city, time]
-    // Selecting/typing a code autofills the date + exact time. Edit freely.
-    var ARRIVE = { // INTO Langkawi (prefills arrival date 12 Feb)
-      "AK6306": ["Kuala Lumpur", "09:45"], "AK6320": ["Kuala Lumpur", "11:35"], "AK6304": ["Kuala Lumpur", "12:55"],
-      "AK6324": ["Kuala Lumpur", "13:55"], "AK6331": ["Kuala Lumpur", "16:00"], "OD2205": ["Kuala Lumpur", "16:05"],
-      "AK6316": ["Kuala Lumpur", "16:35"], "AK6314": ["Kuala Lumpur", "19:05"], "AK6322": ["Kuala Lumpur", "20:10"],
-      "MH1432": ["Kuala Lumpur", "10:35"], "MH1438": ["Kuala Lumpur", "13:05"], "MH1436": ["Kuala Lumpur", "14:20"], "MH1446": ["Kuala Lumpur", "17:00"],
-      "OD2203": ["Kuala Lumpur", "13:05"],
-      "AK6241": ["Penang", "10:25"], "MH5294": ["Penang", "11:50"], "FY2700": ["Penang", "11:50"],
-      "AK6242": ["Penang", "14:35"], "MH5486": ["Penang", "17:55"], "FY2702": ["Penang", "17:55"],
-      "AK733": ["Singapore", "12:20"], "TR476": ["Singapore", "15:10"]
-    };
-    var DEPART = { // FROM Langkawi (prefills return date 14 Feb)
-      "AK6307": ["Kuala Lumpur", "10:10"], "AK6335": ["Kuala Lumpur", "11:15"], "AK6321": ["Kuala Lumpur", "12:45"],
-      "AK6305": ["Kuala Lumpur", "13:20"], "AK6325": ["Kuala Lumpur", "14:30"], "AK6319": ["Kuala Lumpur", "15:20"],
-      "AK6332": ["Kuala Lumpur", "16:25"], "AK6317": ["Kuala Lumpur", "17:10"], "AK6315": ["Kuala Lumpur", "19:30"],
-      "AK6323": ["Kuala Lumpur", "20:35"],
-      "MH1433": ["Kuala Lumpur", "11:15"], "MH1437": ["Kuala Lumpur", "14:55"],
-      "OD2202": ["Kuala Lumpur", "12:05"], "OD2204": ["Kuala Lumpur", "15:00"], "OD2206": ["Kuala Lumpur", "17:20"],
-      "MH5295": ["Penang", "12:30"], "MH4743": ["Penang", "18:35"], "FY2703": ["Penang", "18:55"],
-      "AK728": ["Singapore", "12:05"], "TR477": ["Singapore", "16:00"]
-    };
-    // airline brand badge (code prefix + colour) shown in the dropdown
-    var AIRLINES = {
-      AK: { name: "AirAsia", bg: "#e1141a", fg: "#fff" },
-      MH: { name: "Malaysia Airlines", bg: "#012a5e", fg: "#fff" },
-      OD: { name: "Batik Air", bg: "#e2231a", fg: "#fff" },
-      FY: { name: "Firefly", bg: "#f47216", fg: "#fff" },
-      TR: { name: "Scoot", bg: "#fbe122", fg: "#1a1a1a" },
-    };
-    function airlineOf(code) { return AIRLINES[code.replace(/[0-9].*$/, "")] || { bg: "#5a5a5a", fg: "#fff" }; }
-
-    // custom autocomplete dropdown (logos/badges, fixed height + scrollable)
-    function attachFlights(codeWrap, timeInp, map, dateStr) {
-      var codeInp = codeWrap && codeWrap.querySelector("input");
-      if (!codeInp || !timeInp) return;
-      codeInp.setAttribute("autocomplete", "off");
-      var box = document.createElement("div"); box.className = "wf-box";
-      codeInp.parentNode.insertBefore(box, codeInp); box.appendChild(codeInp);
-      var dd = document.createElement("ul"); dd.className = "wf-dd"; box.appendChild(dd);
-      var codes = Object.keys(map);
-      function render() {
-        var f = codeInp.value.trim().toUpperCase().replace(/\s+/g, "");
-        var shown = f ? codes.filter(function (c) { return c.indexOf(f) >= 0; }) : codes;
-        dd.innerHTML = "";
-        if (!shown.length) { dd.style.display = "none"; return; }
-        shown.forEach(function (c) {
-          var a = airlineOf(c), li = document.createElement("li");
-          li.className = "wf-opt";
-          li.innerHTML =
-            '<span class="wf-badge" style="background:' + a.bg + ';color:' + a.fg + '">' + c.replace(/[0-9].*$/, "") + "</span>" +
-            '<span class="wf-code">' + c + "</span>" +
-            '<span class="wf-meta">' + map[c][0] + " · " + map[c][1] + "</span>";
-          li.addEventListener("mousedown", function (e) {
-            e.preventDefault();
-            codeInp.value = c; timeInp.value = dateStr + "T" + map[c][1]; dd.style.display = "none";
-          });
-          dd.appendChild(li);
-        });
-        dd.style.display = "block";
-      }
-      codeInp.addEventListener("focus", render);
-      codeInp.addEventListener("input", function () {
-        render();
-        var f = map[codeInp.value.trim().toUpperCase().replace(/\s+/g, "")];
-        if (f) timeInp.value = dateStr + "T" + f[1];
-      });
-      codeInp.addEventListener("blur", function () { setTimeout(function () { dd.style.display = "none"; }, 150); });
-    }
-    attachFlights(fa, faTin, ARRIVE, "2027-02-12");
-    attachFlights(fr, frTin, DEPART, "2027-02-14");
+    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; }
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
@@ -796,8 +717,8 @@
       });
       var attendingYes = !/^no/i.test(attendingField.value);
       partySizeField.value = attendingYes ? String(rs.length) : "0";
-      // a decline shouldn't carry the prefilled flight defaults (the fields are hidden,
-      // but hidden inputs still submit) — clear them so the sheet stays empty for "No"
+      // a decline shouldn't carry any flight values the guest may have typed before
+      // switching to "No" (the fields are hidden, but hidden inputs still submit)
       if (!attendingYes) {
         [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.value = ""; });
       }
