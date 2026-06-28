@@ -473,9 +473,47 @@
     // arrival must be in 2027 and no later than the wedding (Sat 13 Feb 2027, 3pm);
     // return must be after the wedding starts.
     var faTin = faT && faT.querySelector("input");
-    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; faTin.step = "3600"; }
+    if (faTin) { faTin.min = "2027-01-01T00:00"; faTin.max = "2027-02-13T15:00"; faTin.value = "2027-02-12T12:00"; }
     var frTin = frT && frT.querySelector("input");
-    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; frTin.step = "3600"; }
+    if (frTin) { frTin.min = "2027-02-13T15:00"; frTin.max = "2027-12-31T23:00"; frTin.value = "2027-02-14T12:00"; }
+
+    // Langkawi direct flights (current schedules — verify nearer the date). [city, time]
+    // Selecting/typing a code autofills the date + exact time. Edit freely.
+    var ARRIVE = { // INTO Langkawi (prefills arrival date 12 Feb)
+      "AK6306": ["Kuala Lumpur", "09:45"], "AK6320": ["Kuala Lumpur", "11:35"], "AK6304": ["Kuala Lumpur", "12:55"],
+      "AK6324": ["Kuala Lumpur", "13:55"], "AK6331": ["Kuala Lumpur", "16:00"], "OD2205": ["Kuala Lumpur", "16:05"],
+      "AK6316": ["Kuala Lumpur", "16:35"], "AK6314": ["Kuala Lumpur", "19:05"], "AK6322": ["Kuala Lumpur", "20:10"],
+      "AK6241": ["Penang", "10:25"], "MH5294": ["Penang", "11:50"], "FY2700": ["Penang", "11:50"],
+      "AK6242": ["Penang", "14:35"], "MH5486": ["Penang", "17:55"], "FY2702": ["Penang", "17:55"],
+      "AK733": ["Singapore", "12:20"], "TR476": ["Singapore", "15:10"]
+    };
+    var DEPART = { // FROM Langkawi (prefills return date 14 Feb)
+      "AK6307": ["Kuala Lumpur", "10:10"], "AK6335": ["Kuala Lumpur", "11:15"], "AK6321": ["Kuala Lumpur", "12:45"],
+      "AK6305": ["Kuala Lumpur", "13:20"], "AK6325": ["Kuala Lumpur", "14:30"], "AK6319": ["Kuala Lumpur", "15:20"],
+      "AK6332": ["Kuala Lumpur", "16:25"], "AK6317": ["Kuala Lumpur", "17:10"], "AK6315": ["Kuala Lumpur", "19:30"],
+      "AK6323": ["Kuala Lumpur", "20:35"],
+      "MH5295": ["Penang", "12:30"], "MH4743": ["Penang", "18:35"], "FY2703": ["Penang", "18:55"],
+      "AK728": ["Singapore", "12:05"], "TR477": ["Singapore", "16:00"]
+    };
+    function attachFlights(codeWrap, timeInp, map, dateStr, listId) {
+      var codeInp = codeWrap && codeWrap.querySelector("input");
+      if (!codeInp || !timeInp) return;
+      var dl = document.createElement("datalist"); dl.id = listId;
+      Object.keys(map).forEach(function (code) {
+        var o = document.createElement("option");
+        o.value = code; o.label = map[code][0] + " · " + map[code][1];
+        dl.appendChild(o);
+      });
+      codeInp.setAttribute("list", listId);
+      codeInp.setAttribute("autocomplete", "off");
+      (codeInp.parentNode || document.body).appendChild(dl);
+      codeInp.addEventListener("input", function () {
+        var f = map[codeInp.value.trim().toUpperCase().replace(/\s+/g, "")];
+        if (f) timeInp.value = dateStr + "T" + f[1];
+      });
+    }
+    attachFlights(fa, faTin, ARRIVE, "2027-02-12", "wedArrFlights");
+    attachFlights(fr, frTin, DEPART, "2027-02-14", "wedRetFlights");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
