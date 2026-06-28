@@ -792,7 +792,13 @@
         if (nm) nm.name = "Guest " + n;
         if (dt) dt.name = dt.value.trim() ? "Guest " + n + " dietary" : "";
       });
-      partySizeField.value = String(rs.length);
+      var attendingYes = !/^no/i.test(attendingField.value);
+      partySizeField.value = attendingYes ? String(rs.length) : "0";
+      // a decline shouldn't carry the prefilled flight defaults (the fields are hidden,
+      // but hidden inputs still submit) — clear them so the sheet stays empty for "No"
+      if (!attendingYes) {
+        [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.value = ""; });
+      }
       if (!form.checkValidity()) { form.reportValidity(); return; }
       if (/PASTE-YOUR/.test(RSVP_ENDPOINT)) {
         alert("RSVP isn't connected yet, add your Apps Script Web App URL near the top of enhance.js.");
