@@ -474,8 +474,8 @@
       }
       return c;
     }
-    var fa  = makeField("Arrival flight/ferry number", "Flight arrival code", "e.g. AK6293");
-    var faT = makeField("Arrival date & time", "Flight arrival time", "", "datetime-local");
+    var fa  = makeField("Arrival flight/ferry number (optional)", "Flight arrival code", "e.g. AK6293");
+    var faT = makeField("Arrival date & time (optional)", "Flight arrival time", "", "datetime-local");
     var fr  = makeField("Return flight/ferry number", "Flight return code", "e.g. AK6296");
     var frT = makeField("Return date & time", "Flight return time", "", "datetime-local");
     // arrival must be in 2027 and no later than the wedding (Sat 13 Feb 2027, 3pm);
@@ -705,7 +705,9 @@
         for (var k = extra.length - 1; k >= 1; k--) extra[k].remove();
       }
       [].forEach.call(rows.querySelectorAll(".wp-diet"), function (d) { d.style.display = yes ? "" : "none"; });
-      [fa, faT, fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = yes; });
+      // return flight + time required when attending; arrival is optional
+      [fr, frT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = yes; });
+      [fa, faT].forEach(function (w) { var i = w && w.querySelector("input"); if (i) i.required = false; });
       if (emailInput) emailInput.required = yes;
     }
     [].forEach.call(attendRadios, function (r) {
