@@ -173,6 +173,14 @@
       "#wedHotelGroup input[type=radio]:before,#wedHotelGroup input[type=radio]:after,#wedAttendGroup input[type=radio]:before,#wedAttendGroup input[type=radio]:after{display:none!important;content:none!important}",
       "#wedStayElsewhere::placeholder{color:rgba(254,250,233,.6)}",
       "#wedStayElsewhere:focus{outline:none;border-color:#fefae9}",
+      // flight-code autocomplete dropdown (airline badges, fixed height + scroll)
+      ".wf-box{position:relative}",
+      ".wf-dd{position:absolute;left:0;right:0;top:calc(100% + 4px);z-index:50;margin:0;padding:6px;list-style:none;max-height:236px;overflow-y:auto;background:#5e4632;border:1px solid rgba(254,250,233,.4);border-radius:18px;box-shadow:0 16px 32px -12px rgba(0,0,0,.6);display:none;-webkit-overflow-scrolling:touch}",
+      ".wf-opt{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:12px;cursor:pointer;color:#fefae9;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.92rem}",
+      ".wf-opt:hover{background:rgba(254,250,233,.13)}",
+      ".wf-badge{flex:0 0 auto;min-width:30px;text-align:center;font-weight:800;font-size:.72rem;letter-spacing:.03em;padding:4px 6px;border-radius:6px}",
+      ".wf-code{font-weight:600}",
+      ".wf-meta{margin-left:auto;opacity:.82;font-size:.85rem;text-align:right;white-space:nowrap}",
       // "What awaits us" — vertical timeline for the order of events
       "#wedTimeline,#wedTimeline *{box-sizing:border-box}",
       "#wedTimeline{position:relative;max-width:900px;margin:38px auto 0;padding:8px 0 24px;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;color:#2a2018}",
@@ -499,25 +507,55 @@
       "MH5295": ["Penang", "12:30"], "MH4743": ["Penang", "18:35"], "FY2703": ["Penang", "18:55"],
       "AK728": ["Singapore", "12:05"], "TR477": ["Singapore", "16:00"]
     };
-    function attachFlights(codeWrap, timeInp, map, dateStr, listId) {
+    // airline brand badge (code prefix + colour) shown in the dropdown
+    var AIRLINES = {
+      AK: { name: "AirAsia", bg: "#e1141a", fg: "#fff" },
+      MH: { name: "Malaysia Airlines", bg: "#012a5e", fg: "#fff" },
+      OD: { name: "Batik Air", bg: "#e2231a", fg: "#fff" },
+      FY: { name: "Firefly", bg: "#f47216", fg: "#fff" },
+      TR: { name: "Scoot", bg: "#fbe122", fg: "#1a1a1a" },
+    };
+    function airlineOf(code) { return AIRLINES[code.replace(/[0-9].*$/, "")] || { bg: "#5a5a5a", fg: "#fff" }; }
+
+    // custom autocomplete dropdown (logos/badges, fixed height + scrollable)
+    function attachFlights(codeWrap, timeInp, map, dateStr) {
       var codeInp = codeWrap && codeWrap.querySelector("input");
       if (!codeInp || !timeInp) return;
-      var dl = document.createElement("datalist"); dl.id = listId;
-      Object.keys(map).forEach(function (code) {
-        var o = document.createElement("option");
-        o.value = code; o.label = map[code][0] + " · " + map[code][1];
-        dl.appendChild(o);
-      });
-      codeInp.setAttribute("list", listId);
       codeInp.setAttribute("autocomplete", "off");
-      (codeInp.parentNode || document.body).appendChild(dl);
+      var box = document.createElement("div"); box.className = "wf-box";
+      codeInp.parentNode.insertBefore(box, codeInp); box.appendChild(codeInp);
+      var dd = document.createElement("ul"); dd.className = "wf-dd"; box.appendChild(dd);
+      var codes = Object.keys(map);
+      function render() {
+        var f = codeInp.value.trim().toUpperCase().replace(/\s+/g, "");
+        var shown = f ? codes.filter(function (c) { return c.indexOf(f) >= 0; }) : codes;
+        dd.innerHTML = "";
+        if (!shown.length) { dd.style.display = "none"; return; }
+        shown.forEach(function (c) {
+          var a = airlineOf(c), li = document.createElement("li");
+          li.className = "wf-opt";
+          li.innerHTML =
+            '<span class="wf-badge" style="background:' + a.bg + ';color:' + a.fg + '">' + c.replace(/[0-9].*$/, "") + "</span>" +
+            '<span class="wf-code">' + c + "</span>" +
+            '<span class="wf-meta">' + map[c][0] + " · " + map[c][1] + "</span>";
+          li.addEventListener("mousedown", function (e) {
+            e.preventDefault();
+            codeInp.value = c; timeInp.value = dateStr + "T" + map[c][1]; dd.style.display = "none";
+          });
+          dd.appendChild(li);
+        });
+        dd.style.display = "block";
+      }
+      codeInp.addEventListener("focus", render);
       codeInp.addEventListener("input", function () {
+        render();
         var f = map[codeInp.value.trim().toUpperCase().replace(/\s+/g, "")];
         if (f) timeInp.value = dateStr + "T" + f[1];
       });
+      codeInp.addEventListener("blur", function () { setTimeout(function () { dd.style.display = "none"; }, 150); });
     }
-    attachFlights(fa, faTin, ARRIVE, "2027-02-12", "wedArrFlights");
-    attachFlights(fr, frTin, DEPART, "2027-02-14", "wedRetFlights");
+    attachFlights(fa, faTin, ARRIVE, "2027-02-12");
+    attachFlights(fr, frTin, DEPART, "2027-02-14");
 
     // dynamic guest list (first row is you, prefilled). Replaces the single Name + shared dietary fields.
     var party = document.createElement("div");
