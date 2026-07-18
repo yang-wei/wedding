@@ -105,6 +105,8 @@
       "#wedTravel .wt-per{font-size:.8rem;opacity:.8}",
       "#wedTravel .wt-room{font-size:.76rem;opacity:.7;margin-top:1px}",
       "#wedTravel .wt-note{font-size:.82rem;opacity:.8;margin-top:10px}",
+      "#wedTravel .wt-jump{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-size:1.12rem;color:#4d2008;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;white-space:nowrap}",
+      "#wedTravel .wt-jump:hover{opacity:.6}",
       "#wedTravel .wt-link{color:inherit;font-weight:600;font-size:1.02rem;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedTravel .wt-link:hover{opacity:.65}",
       "#wedTravel .wt-dress{display:flex;flex-direction:column;gap:10px;margin-top:12px;padding-top:12px;border-top:1px dashed rgba(42,32,24,.25)}",
@@ -145,6 +147,16 @@
       "#wedFaq .faq-item{padding:16px 2px;border-bottom:1px dashed rgba(77,32,8,.25)}",
       "#wedFaq .faq-q{margin:0 0 6px;font-weight:700;font-size:1rem;color:#4d2008}",
       "#wedFaq .faq-a{margin:0;font-size:.93rem;line-height:1.5;color:#4d2008;opacity:.9}",
+      "#wedFaq .faq-item#wedRates{scroll-margin-top:80px}",
+      "#wedFaq .fr-grid{display:flex;flex-wrap:wrap;gap:26px 40px;margin-top:12px}",
+      "#wedFaq .fr-hotel{flex:1 1 240px;min-width:0}",
+      "#wedFaq .fr-name{font-weight:700;font-size:1rem;color:#4d2008;margin-bottom:6px}",
+      "#wedFaq .fr-list{list-style:none;margin:0;padding:0}",
+      "#wedFaq .fr-list li{display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:.9rem;line-height:1.5;padding:5px 0;border-bottom:1px dotted rgba(77,32,8,.2)}",
+      "#wedFaq .fr-list li em{font-style:italic;opacity:.6;font-size:.8rem}",
+      "#wedFaq .fr-p{font-weight:700;white-space:nowrap}",
+      "#wedFaq .fr-cheap{color:#4d2008}",
+      "#wedFaq .fr-note{margin:14px 0 0;font-size:.85rem;line-height:1.5;color:#4d2008;opacity:.75}",
       // RSVP dynamic guest list
       "form[data-wed-rsvp],form[data-wed-rsvp] label,form[data-wed-rsvp] p,form[data-wed-rsvp] input,form[data-wed-rsvp] textarea,form[data-wed-rsvp] button{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-size:1rem!important;line-height:1.4!important;letter-spacing:0!important}",
       "form[data-wed-rsvp] input,form[data-wed-rsvp] textarea{font-weight:400!important}",
@@ -375,7 +387,7 @@
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
           "<p class='wt-note'>Group rates are applicable from 10 - 16th February.</p>" +
-          "<p class='wt-note'>Other room types are also available at a discounted rate.</p>",
+          "<p class='wt-note'>Prefer a bigger room? <a class='wt-jump' href='#wedRates'>See all room rates &#8595;</a></p>",
       },
       {
         icon: '<path d="M8 4 12 6 16 4"/><path d="M8 4 10 12 6 21h12l-4-9 2-8"/><path d="M10 12h4"/>',
@@ -816,10 +828,42 @@
     section.id = "wedFaqSection";
     rsvpSection.parentNode.insertBefore(section, rsvpSection);
 
+    // Full room-rate list (group rates). ROH is the cheapest; other types shown too.
+    var ratesHtml =
+      "<div class='fr-grid'>" +
+        "<div class='fr-hotel'>" +
+          "<div class='fr-name'>St. Regis</div>" +
+          "<ul class='fr-list'>" +
+            "<li><span>Run of House</span><span class='fr-p'>RM1,200</span></li>" +
+            "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
+            "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
+            "<li><span>Panoramic Suite</span><span class='fr-p'>RM2,400</span></li>" +
+            "<li><span>Penthouse Suite</span><span class='fr-p'>RM2,600</span></li>" +
+            "<li><span>Sunset Villa</span><span class='fr-p'>RM4,200</span></li>" +
+            "<li><span>Astor Suite</span><span class='fr-p'>RM4,500</span></li>" +
+            "<li><span>Sunset Royal Villa <em>(8 guests)</em></span><span class='fr-p'>RM15,000</span></li>" +
+          "</ul>" +
+        "</div>" +
+        "<div class='fr-hotel'>" +
+          "<div class='fr-name'>Westin</div>" +
+          "<ul class='fr-list'>" +
+            "<li><span>Run of House</span><span class='fr-p'>RM680</span></li>" +
+            "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
+            "<li><span>Premium Ocean View</span><span class='fr-p'>RM1,000</span></li>" +
+            "<li><span>Superior Suite</span><span class='fr-p'>RM1,450</span></li>" +
+            "<li><span>One Bedroom Ocean Front Suite</span><span class='fr-p'>RM1,680</span></li>" +
+          "</ul>" +
+        "</div>" +
+      "</div>" +
+      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. We'll send a reservation link to registered guests for the Run of House rate. If you'd like a different room type, just let us know separately.</p>";
+
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
       { q: "Can I stay anywhere else besides St Regis and Westin?",
         a: "Absolutely! We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
+      { id: "wedRates",
+        q: "What are the rates for the other room types?",
+        html: ratesHtml },
       { q: "Any tips on booking flights?",
         a: "Book early! Fares only climb the closer we get, so grab yours sooner rather than later, future-you will thank you." },
       { q: "What if I need to update my info later?",
@@ -833,8 +877,10 @@
     wrap.appendChild(h);
     items.forEach(function (it) {
       var d = document.createElement("div"); d.className = "faq-item";
+      if (it.id) d.id = it.id;
       var q = document.createElement("p"); q.className = "faq-q"; q.textContent = it.q;
-      var a = document.createElement("p"); a.className = "faq-a"; a.textContent = it.a;
+      var a = document.createElement("div"); a.className = "faq-a";
+      if (it.html) a.innerHTML = it.html; else a.textContent = it.a;
       d.appendChild(q); d.appendChild(a); wrap.appendChild(d);
     });
     section.appendChild(wrap);
