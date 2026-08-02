@@ -164,7 +164,6 @@
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
       "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
-      "#wedRsvpSub{text-align:center;color:#fefae9;opacity:.85;font-family:'Asta Sans','Asta Sans Placeholder',sans-serif;font-size:.98rem;margin:0 auto}",
       // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
       ".framer-1vgcbq7{gap:26px!important}",
       // RSVP panel had 120px top padding — too much
@@ -449,7 +448,7 @@
     if (faqHost) faqHost.appendChild(updateNote);
     else form.parentNode.insertBefore(updateNote, form);
 
-    // replace the "Please RSVP by…" line with an h2 heading + a sub-note, above the form
+    // replace the original RSVP deadline line with a heading above the form
     var rsvpSec = document.querySelector('[data-framer-name="rsvp"]');
     if (rsvpSec) {
       var pr = [].slice.call(rsvpSec.querySelectorAll("p")).filter(function (p) { return /^Please RSVP by/.test(p.textContent.trim()); })[0];
@@ -458,11 +457,7 @@
     var rsvpHead = document.createElement("h2");
     rsvpHead.id = "wedRsvpHeading";
     rsvpHead.textContent = "Will you be there to celebrate our new beginning?";
-    var rsvpSub = document.createElement("p");
-    rsvpSub.id = "wedRsvpSub";
-    rsvpSub.textContent = "Please fill the form before the 31st of July, 2026";
     form.parentNode.insertBefore(rsvpHead, form);
-    form.parentNode.insertBefore(rsvpSub, form);
 
     var nameInput = form.querySelector('input[name="Name"]');
     var nameLabel = nameInput ? nameInput.closest("label") : null;
