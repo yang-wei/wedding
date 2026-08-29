@@ -395,7 +395,7 @@
           "<p><strong>Formal.</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
             "<div class='wt-dress-row'><span class='wt-dress-label'>Gents</span><span class='wt-dress-val'>Black suit <span class='wt-swatch' style='background:#1c1c1c'></span></span></div>" +
-            "<div class='wt-dress-row'><span class='wt-dress-label'>Ladies</span><span class='wt-dress-val'>Beige <span class='wt-swatch' style='background:#e0cba8'></span> or brown <span class='wt-swatch' style='background:#8a6d4b'></span></span></div>" +
+            "<div class='wt-dress-row'><span class='wt-dress-label'>Ladies</span><span class='wt-dress-val'>Burgundy <span class='wt-swatch' style='background:#7b1f2b'></span> or brown <span class='wt-swatch' style='background:#8a6d4b'></span></span></div>" +
           "</div>",
       },
       {
