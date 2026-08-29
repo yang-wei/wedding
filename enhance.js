@@ -395,7 +395,7 @@
           "<p><strong>Formal.</strong> Dress to impress!</p>" +
           "<div class='wt-dress'>" +
             "<div class='wt-dress-row'><span class='wt-dress-label'>Gents</span><span class='wt-dress-val'>Black suit <span class='wt-swatch' style='background:#1c1c1c'></span></span></div>" +
-            "<div class='wt-dress-row'><span class='wt-dress-label'>Ladies</span><span class='wt-dress-val'>Burgundy <span class='wt-swatch' style='background:#7b1f2b'></span>, maroon <span class='wt-swatch' style='background:#5c1a1a'></span> or dark brown <span class='wt-swatch' style='background:#4a3226'></span></span></div>" +
+            "<div class='wt-dress-row'><span class='wt-dress-label'>Ladies</span><span class='wt-dress-val'>Burgundy / maroon <span class='wt-swatch' style='background:#5c1a1a'></span> or dark brown <span class='wt-swatch' style='background:#4a3226'></span></span></div>" +
           "</div>",
       },
       {
@@ -823,13 +823,13 @@
     section.id = "wedFaqSection";
     rsvpSection.parentNode.insertBefore(section, rsvpSection);
 
-    // Full room-rate list (group rates). ROH is the cheapest; other types shown too.
+    // Full room-rate list (group rates). Guest room is the cheapest; other types shown too.
     var ratesHtml =
       "<div class='fr-grid'>" +
         "<div class='fr-hotel'>" +
           "<div class='fr-name'>St. Regis</div>" +
           "<ul class='fr-list'>" +
-            "<li><span>Run of House</span><span class='fr-p'>RM1,200</span></li>" +
+            "<li><span>Guest room</span><span class='fr-p'>RM1,200</span></li>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
             "<li><span>Panoramic Suite</span><span class='fr-p'>RM2,400</span></li>" +
@@ -842,7 +842,7 @@
         "<div class='fr-hotel'>" +
           "<div class='fr-name'>Westin</div>" +
           "<ul class='fr-list'>" +
-            "<li><span>Run of House</span><span class='fr-p'>RM680</span></li>" +
+            "<li><span>Guest room</span><span class='fr-p'>RM680</span></li>" +
             "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
             "<li><span>Premium Ocean View</span><span class='fr-p'>RM1,000</span></li>" +
             "<li><span>Superior Suite</span><span class='fr-p'>RM1,450</span></li>" +
@@ -850,7 +850,7 @@
           "</ul>" +
         "</div>" +
       "</div>" +
-      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. We'll send a reservation link to registered guests for the Run of House rate. If you'd like a different room type, just let us know separately.</p>";
+      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. We'll send a reservation link to registered guests for the Guest room rate. If you'd like a different room type, just let us know separately.</p>";
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
