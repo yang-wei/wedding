@@ -171,7 +171,6 @@
       "[data-framer-name=\"rsvp\"]{padding-bottom:max(120px,10vw)!important}",
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
-      "form[data-wed-rsvp] .wh-link{color:#fefae9;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
       // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
       ".framer-1vgcbq7{gap:26px!important}",
@@ -618,11 +617,6 @@
         [].forEach.call(hotelGroup.querySelectorAll('input[name="Hotel"]'), function (r) {
           r.addEventListener("change", syncElsewhere);
         });
-
-        var note = document.createElement("p");
-        note.innerHTML = "We've negotiated group rates at both. Select where you'd like to stay, then book it yourself: <a class='wh-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> &middot; <a class='wh-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a>.";
-        note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
-        hotelGroup.appendChild(note);
       }
       cbGroup.parentNode.insertBefore(hotelGroup, cbGroup.nextSibling);
       // the original "Welcome dinner (Friday)" checkbox is no longer offered
