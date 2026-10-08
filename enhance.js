@@ -377,7 +377,6 @@
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>66% off!</span></div>" +
-            "<div class='wt-prices'><span class='wt-was'>RM3,500</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Guest room</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
@@ -615,6 +614,8 @@
         hotelGroup.appendChild(note);
       }
       cbGroup.parentNode.insertBefore(hotelGroup, cbGroup.nextSibling);
+      // the original "Welcome dinner (Friday)" checkbox is no longer offered
+      cbGroup.remove();
     }
 
     // "Will you be attending?" — use the form's EXISTING radio group; place it first.
@@ -829,7 +830,6 @@
         "<div class='fr-hotel'>" +
           "<div class='fr-name'>St. Regis</div>" +
           "<ul class='fr-list'>" +
-            "<li><span>Guest room</span><span class='fr-p'>RM1,200</span></li>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
             "<li><span>Panoramic Suite</span><span class='fr-p'>RM2,400</span></li>" +
