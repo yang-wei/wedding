@@ -149,9 +149,6 @@
       "#wedFaq .faq-a{margin:0;font-size:.93rem;line-height:1.5;color:#4d2008;opacity:.9}",
       "#wedFaq .faq-a p{margin:0}",
       "#wedFaq .faq-link{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
-      "#wedFaq .faq-booking{list-style:none;margin:8px 0;padding:0;display:flex;flex-wrap:wrap;gap:8px 26px}",
-      "#wedFaq .faq-booking li{margin:0}",
-      "#wedFaq .faq-booking .faq-link{font-size:1rem}",
       "#wedFaq .faq-item#wedRates{scroll-margin-top:80px}",
       "#wedFaq .fr-grid{display:flex;flex-wrap:wrap;gap:26px 40px;margin-top:12px}",
       "#wedFaq .fr-hotel{flex:1 1 240px;min-width:0}",
@@ -161,7 +158,7 @@
       "#wedFaq .fr-list li em{font-style:italic;opacity:.6;font-size:.8rem}",
       "#wedFaq .fr-p{font-weight:700;white-space:nowrap}",
       "#wedFaq .fr-cheap{color:#4d2008}",
-      "#wedFaq .fr-note{margin:14px 0 0;font-size:.85rem;line-height:1.5;color:#4d2008;opacity:.75}",
+      "#wedFaq .fr-note{margin:28px 0 0;font-size:.85rem;line-height:1.5;color:#4d2008;opacity:.75}",
       // RSVP dynamic guest list
       "form[data-wed-rsvp],form[data-wed-rsvp] label,form[data-wed-rsvp] p,form[data-wed-rsvp] input,form[data-wed-rsvp] textarea,form[data-wed-rsvp] button{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-size:1rem!important;line-height:1.4!important;letter-spacing:0!important}",
       "form[data-wed-rsvp] input,form[data-wed-rsvp] textarea{font-weight:400!important}",
@@ -387,10 +384,11 @@
         html:
           "<p>We've secured a group rate at the hotel below.</p>" +
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
+          "<p class='wt-note'>Tap a hotel name below to go straight to its booking page, with our group rate already applied.</p>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>62% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM4,500</span><span class='wt-now'>RM1,700</span><span class='wt-per'>/night</span></div>" +
-            "<div class='wt-room'>Guest room</div>" +
+            "<div class='wt-room'>St. Regis Suite</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a><span class='wt-off'>45% off!</span></div>" +
@@ -841,7 +839,7 @@
     var ratesHtml =
       "<div class='fr-grid'>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a></div>" +
+          "<div class='fr-name'>St. Regis</div>" +
           "<ul class='fr-list'>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
@@ -853,7 +851,7 @@
           "</ul>" +
         "</div>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a></div>" +
+          "<div class='fr-name'>Westin</div>" +
           "<ul class='fr-list'>" +
             "<li><span>Guest room</span><span class='fr-p'>RM680</span></li>" +
             "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
@@ -863,14 +861,12 @@
           "</ul>" +
         "</div>" +
       "</div>" +
-      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. The hotel names above link straight to the group-rate booking page for the Guest room. If you'd like a different room type, just let us know separately.</p>";
+      "<p class='fr-note'>All rates are per room per night and include breakfast. You can book through these links: <a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> and <a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a>. They book the lowest-priced room at each hotel. If you'd like any other room type, just let us know.</p>";
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
-      { q: "Where can I book the hotel?",
-        html: "<p>Through the links below &mdash; they open our group rate for the Guest room, already applied:</p><ul class='faq-booking'><li><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>The St. Regis Langkawi</a></li><li><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>The Westin Langkawi</a></li></ul><p>Group rates apply 10&ndash;16 Feb. If you'd like a different room type, just let us know separately.</p>" },
       { q: "Can I stay anywhere else besides St Regis and Westin?",
-        html: "<p>Absolutely! We've recommended <a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> and <a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a> (with group rates) because that's where we'll be staying, but feel free to pick your own spot. Those links book the group rate directly.</p>" },
+        html: "<p>Absolutely! We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot.</p>" },
       { id: "wedRates",
         q: "What are the rates for the other room types?",
         html: ratesHtml },
