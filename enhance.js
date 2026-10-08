@@ -171,6 +171,7 @@
       "[data-framer-name=\"rsvp\"]{padding-bottom:max(120px,10vw)!important}",
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
+      "form[data-wed-rsvp] .wh-link{color:#fefae9;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
       // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
       ".framer-1vgcbq7{gap:26px!important}",
@@ -618,7 +619,7 @@
         });
 
         var note = document.createElement("p");
-        note.textContent = "We've negotiated group rates at both. Select where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
+        note.innerHTML = "We've negotiated group rates at both. Select where you'd like to stay, then book it yourself: <a class='wh-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> &middot; <a class='wh-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a>.";
         note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
         hotelGroup.appendChild(note);
       }
@@ -837,7 +838,7 @@
     var ratesHtml =
       "<div class='fr-grid'>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>St. Regis</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
@@ -849,7 +850,7 @@
           "</ul>" +
         "</div>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>Westin</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>Guest room</span><span class='fr-p'>RM680</span></li>" +
             "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
@@ -859,7 +860,7 @@
           "</ul>" +
         "</div>" +
       "</div>" +
-      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. We'll send a reservation link to registered guests for the Guest room rate. If you'd like a different room type, just let us know separately.</p>";
+      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. The hotel names above link straight to the group-rate booking page for the Guest room. If you'd like a different room type, just let us know separately.</p>";
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
