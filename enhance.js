@@ -147,6 +147,8 @@
       "#wedFaq .faq-item{padding:16px 2px;border-bottom:1px dashed rgba(77,32,8,.25)}",
       "#wedFaq .faq-q{margin:0 0 6px;font-weight:700;font-size:1rem;color:#4d2008}",
       "#wedFaq .faq-a{margin:0;font-size:.93rem;line-height:1.5;color:#4d2008;opacity:.9}",
+      "#wedFaq .faq-a p{margin:0}",
+      "#wedFaq .faq-link{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedFaq .faq-item#wedRates{scroll-margin-top:80px}",
       "#wedFaq .fr-grid{display:flex;flex-wrap:wrap;gap:26px 40px;margin-top:12px}",
       "#wedFaq .fr-hotel{flex:1 1 240px;min-width:0}",
@@ -161,8 +163,15 @@
       "form[data-wed-rsvp],form[data-wed-rsvp] label,form[data-wed-rsvp] p,form[data-wed-rsvp] input,form[data-wed-rsvp] textarea,form[data-wed-rsvp] button{font-family:'Asta Sans','Asta Sans Placeholder',sans-serif!important;font-size:1rem!important;line-height:1.4!important;letter-spacing:0!important}",
       "form[data-wed-rsvp] input,form[data-wed-rsvp] textarea{font-weight:400!important}",
       "form[data-wed-rsvp] button{font-weight:700!important}",
+      // The scalloped edge is absolutely positioned (z-index:1) against the bottom of
+      // the RSVP panel and its circles scale with vw, so past ~2400px wide they climb
+      // over the Submit button. Keep Submit above them, and scale the panel's bottom
+      // padding with the viewport so the clearance holds on big screens.
+      "form[data-wed-rsvp] button[type=\"submit\"]{position:relative;z-index:2}",
+      "[data-framer-name=\"rsvp\"]{padding-bottom:max(120px,10vw)!important}",
       "#wedParty,#wedParty *{box-sizing:border-box}",
       "#wedParty .wp-label{display:block;color:#fefae9;margin:0 0 12px}",
+      "form[data-wed-rsvp] .wh-link{color:#fefae9;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedRsvpHeading{font-family:'Hershey-Noailles-Times',cursive;font-style:italic;font-weight:400;font-size:clamp(2.1rem,7.5vw,3rem);line-height:1.12;text-align:center;color:#fefae9;max-width:16ch;margin:0 auto}",
       // tighten the form column's big 72px gaps + make the form use the site font (Asta Sans)
       ".framer-1vgcbq7{gap:26px!important}",
@@ -376,11 +385,12 @@
           "<p>We've secured a group rate at the hotel below.</p>" +
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>66% off!</span></div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>62% off!</span></div>" +
+            "<div class='wt-prices'><span class='wt-was'>RM4,500</span><span class='wt-now'>RM1,700</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Guest room</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkwi-the-westin-langkawi-resort-and-spa/overview/' target='_blank' rel='noopener'>Westin</a><span class='wt-off'>45% off!</span></div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a><span class='wt-off'>45% off!</span></div>" +
             "<div class='wt-prices'><span class='wt-was'>RM1,235</span><span class='wt-now'>RM680</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Standard room</div>" +
           "</div>" +
@@ -609,7 +619,7 @@
         });
 
         var note = document.createElement("p");
-        note.textContent = "We've negotiated group rates at both. Select where you'd like to stay and we'll email you a reservation link once the hotel sends it through.";
+        note.innerHTML = "We've negotiated group rates at both. Select where you'd like to stay, then book it yourself: <a class='wh-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> &middot; <a class='wh-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a>.";
         note.style.cssText = "margin:10px 2px 0;font-size:.85rem;line-height:1.45;color:#fefae9;opacity:.8";
         hotelGroup.appendChild(note);
       }
@@ -828,7 +838,7 @@
     var ratesHtml =
       "<div class='fr-grid'>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>St. Regis</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
@@ -840,7 +850,7 @@
           "</ul>" +
         "</div>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>Westin</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>Guest room</span><span class='fr-p'>RM680</span></li>" +
             "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
@@ -850,12 +860,12 @@
           "</ul>" +
         "</div>" +
       "</div>" +
-      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. We'll send a reservation link to registered guests for the Guest room rate. If you'd like a different room type, just let us know separately.</p>";
+      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. The hotel names above link straight to the group-rate booking page for the Guest room. If you'd like a different room type, just let us know separately.</p>";
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
       { q: "Can I stay anywhere else besides St Regis and Westin?",
-        a: "Absolutely! We've recommended St. Regis and Westin (with group rates) because that's where we'll be staying, but feel free to pick your own spot." },
+        html: "<p>Absolutely! We've recommended <a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a> and <a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a> (with group rates) because that's where we'll be staying, but feel free to pick your own spot. Those links book the group rate directly.</p>" },
       { id: "wedRates",
         q: "What are the rates for the other room types?",
         html: ratesHtml },
@@ -895,11 +905,6 @@
     var HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.3 4.6 12.9C2.2 10.5 2.2 6.8 4.6 4.6 6.8 2.6 10 3 12 5.2 14 3 17.2 2.6 19.4 4.6 21.8 6.8 21.8 10.5 19.4 12.9Z"/></svg>';
 
     var DAYS = [
-      {
-        date: "Friday, Feb 12th",
-        intro: "We are planning a welcome dinner for those who arrive this day, so come kick off the celebration with us!",
-        sched: [["3:00pm", "Guest check-in at the hotel/resort"], ["5:30pm", "Welcome dinner & more (TBD)"]],
-      },
       {
         date: "Saturday, Feb 13th",
         intro: "The big day! We can’t wait to share our vows with all of you, laugh, cry, and celebrate together. After the ceremony, there will be drinks, photos, and an after party. Tonight is all about love, joy, and making memories — we’re so glad you’ll be a part of it.",
