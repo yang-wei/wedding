@@ -376,7 +376,8 @@
           "<p>We've secured a group rate at the hotel below.</p>" +
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>66% off!</span></div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/en-us/hotels/lgkxr-the-st-regis-langkawi/overview/' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>62% off!</span></div>" +
+            "<div class='wt-prices'><span class='wt-was'>RM4,500</span><span class='wt-now'>RM1,700</span><span class='wt-per'>/night</span></div>" +
             "<div class='wt-room'>Guest room</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
@@ -895,11 +896,6 @@
     var HEART = '<svg viewBox="0 0 24 24"><path d="M12 20.3 4.6 12.9C2.2 10.5 2.2 6.8 4.6 4.6 6.8 2.6 10 3 12 5.2 14 3 17.2 2.6 19.4 4.6 21.8 6.8 21.8 10.5 19.4 12.9Z"/></svg>';
 
     var DAYS = [
-      {
-        date: "Friday, Feb 12th",
-        intro: "We are planning a welcome dinner for those who arrive this day, so come kick off the celebration with us!",
-        sched: [["3:00pm", "Guest check-in at the hotel/resort"], ["5:30pm", "Welcome dinner & more (TBD)"]],
-      },
       {
         date: "Saturday, Feb 13th",
         intro: "The big day! We can’t wait to share our vows with all of you, laugh, cry, and celebrate together. After the ceremony, there will be drinks, photos, and an after party. Tonight is all about love, joy, and making memories — we’re so glad you’ll be a part of it.",
