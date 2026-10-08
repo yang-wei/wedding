@@ -150,9 +150,6 @@
       "#wedFaq .faq-a p{margin:0}",
       "#wedFaq .faq-link{color:inherit;font-weight:600;text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1.5px;white-space:nowrap}",
       "#wedFaq .faq-item#wedRates{scroll-margin-top:80px}",
-      "#wedFaq .fr-links{margin:0 0 6px;font-weight:600}",
-      "#wedFaq .fr-booking{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px}",
-      "#wedFaq .fr-booking li{margin:0}",
       "#wedFaq .fr-grid{display:flex;flex-wrap:wrap;gap:26px 40px;margin-top:12px}",
       "#wedFaq .fr-hotel{flex:1 1 240px;min-width:0}",
       "#wedFaq .fr-name{font-weight:700;font-size:1rem;color:#4d2008;margin-bottom:6px}",
@@ -839,11 +836,9 @@
 
     // Full room-rate list (group rates). Guest room is the cheapest; other types shown too.
     var ratesHtml =
-      "<p class='fr-links'>Below are the reservation links:</p>" +
-      "<ul class='fr-booking'><li><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a></li><li><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a></li></ul>" +
       "<div class='fr-grid'>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>St. Regis</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
@@ -855,7 +850,7 @@
           "</ul>" +
         "</div>" +
         "<div class='fr-hotel'>" +
-          "<div class='fr-name'>Westin</div>" +
+          "<div class='fr-name'><a class='faq-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a></div>" +
           "<ul class='fr-list'>" +
             "<li><span>Guest room</span><span class='fr-p'>RM680</span></li>" +
             "<li><span>Premium Partial Ocean View</span><span class='fr-p'>RM850</span></li>" +
@@ -865,7 +860,7 @@
           "</ul>" +
         "</div>" +
       "</div>" +
-      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. The links above book the Guest room group rate. If you'd like a different room type, just let us know separately.</p>";
+      "<p class='fr-note'>All rates per room / night, breakfast included. Group rates apply 10&ndash;16 Feb. The hotel names above link straight to the group-rate booking page for the Guest room. If you'd like a different room type, just let us know separately.</p>";
 
     // Edit / add Q&As here, keep the warm, cheeky, "we've got you" vibe.
     var items = [
