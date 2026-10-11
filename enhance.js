@@ -385,9 +385,9 @@
           "<p>The two hotels are connected, so you can travel between them by hotel buggy car.</p>" +
           "<p class='wt-note'>Tap a hotel name below to go straight to its booking page, with our group rate already applied.</p>" +
           "<div class='wt-rate'>" +
-            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>62% off!</span></div>" +
-            "<div class='wt-prices'><span class='wt-was'>RM4,500</span><span class='wt-now'>RM1,700</span><span class='wt-per'>/night</span></div>" +
-            "<div class='wt-room'>St. Regis Suite</div>" +
+            "<div class='wt-hotelrow'><a class='wt-link' href='https://www.marriott.com/event-reservations/reservation-link.mi?id=1782351342562&amp;key=GRP&amp;app=resvlink&amp;_branch_match_id=1591809695544840409&amp;_branch_referrer=H4sIAAAAAAAAA8soKSkottLXTywo0MtNLCrKzC8p0UvOz9UvSi0uy0wtN7IHytiCODmZedlqmSm2huYWRsamhsYmRqZmRmrZqZW27kEBanVFqWmpQO156fFJRfnlxalFts4ZRfm5qQBcY2YDYQAAAA%3D%3D' target='_blank' rel='noopener'>St. Regis</a><span class='wt-off'>74% off!</span></div>" +
+            "<div class='wt-prices'><span class='wt-was'>RM4,555</span><span class='wt-now'>RM1,200</span><span class='wt-per'>/night</span></div>" +
+            "<div class='wt-room'>Guest room</div>" +
           "</div>" +
           "<div class='wt-rate'>" +
             "<div class='wt-hotelrow'><a class='wt-link' href='https://app.marriott.com/resview2?id=1783389667730&amp;key=GRP&amp;app=resvlink' target='_blank' rel='noopener'>Westin</a><span class='wt-off'>45% off!</span></div>" +
@@ -646,7 +646,7 @@
       plabel.textContent = yes
         ? "Who's coming?"
         : "Who's not coming?";
-      [emailLabel, fa, faT, fr, frT, hotelGroup, cbGroup].forEach(function (el) {
+      [emailLabel, fa, faT, fr, frT, hotelGroup].forEach(function (el) {
         if (el) el.style.display = yes ? "" : "none";
       });
       // not coming: just the one name — no "Add guest", no extra rows, no dietary
@@ -835,6 +835,7 @@
         "<div class='fr-hotel'>" +
           "<div class='fr-name'>St. Regis</div>" +
           "<ul class='fr-list'>" +
+            "<li><span>Guest room</span><span class='fr-p'>RM1,200</span></li>" +
             "<li><span>St. Regis Suite</span><span class='fr-p'>RM1,700</span></li>" +
             "<li><span>St. Regis Pool Suite</span><span class='fr-p'>RM2,100</span></li>" +
             "<li><span>Panoramic Suite</span><span class='fr-p'>RM2,400</span></li>" +
